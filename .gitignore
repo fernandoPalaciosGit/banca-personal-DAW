@@ -1,0 +1,22 @@
+# default
+img/
+media/
+lib/
+vendor/
+
+# Java Files
+*.class
+*.jar
+*.war
+*.ear
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Laravel Files
+/bootstrap/compiled.php
+.env.*.php
+.env.php
