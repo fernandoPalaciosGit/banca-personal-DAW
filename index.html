@@ -20,14 +20,56 @@
         </div>
     </div>
 
-    <div class="row" ng-app="">
+    <!-- inicializamos propiedades de acceso global con valores por defecto -->
+    <div ng-app="" class="row"
+         ng-init="  nuevoMovimiento = { esIngreso: 1, esGasto: 0 };
+                    total = { ingresos: 0, gastos: 0 };
+                    movimientos = [];
+                    maestros = {
+                       categoriasIngresos : ['Nomina', 'Ventas', 'Intereses depositos'],
+                       categoriasGastos : ['Hipoteca', 'Compras', 'Impuestos']
+                    }; ">
+
     	<div class="col-md-12 text-center">
-    		{{'aplicacion web con '+'AngularJS'}}
+
+            <!-- APLICATION : mostrar ingresos, gastos y balance -->
+            <div class="container">
+    		  <header>
+                  <h1>{{'Controlar el Cash Flow con'+' - '+'AngularJS'}}</h1>
+              </header>
+              <div class="row-fluid">
+                  <div class="row placeholders">
+                      <div class="col-xs-8 col-sm-4 placeholder">
+                          <h1><span class="label label-success">
+                              {{ total.ingresos | number:2 | currency }}
+                          </span></h1>
+                          <h4>Total ingresos</h4>
+                          <span class="text-muted">acumulado</span>
+                      </div>
+                      <div class="col-xs-8 col-sm-4 placeholder">
+                          <h1><span class="label label-danger">
+                              {{ total.gastos | number:2 | currency}}
+                          </span></h1>
+                          <h4>Total gastos</h4>
+                          <span class="text-muted">acumulado</span>
+                     </div>
+                     <div class="col-xs-8 col-sm-4 placeholder">
+                          <h1><span class="label label-success">
+                              {{ total.ingresos - total.gastos | number:2 | currency}}
+                          </span></h1>
+                          <h4>Balance</h4>
+                          <span class="text-muted">ingresos - gastos</span>
+                     </div>
+                  </div>
+              </div>
+              
+            </div>
     	</div>
     </div>
-
-	    <!-- carga jQuery desde el CDN de google -->
+    
+    <!-- carga jQuery desde el CDN de google 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    -->
     <!-- si el CDN falla, se carga desde el servidor cliente -->
     <script>window.jQuery || document.write('<script src="vendor/js/jquery-1.10.2.min.js"><\/script>')</script>
     <script src="js/main.js"></script>
