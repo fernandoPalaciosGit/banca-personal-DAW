@@ -21,8 +21,9 @@
     </div>
 
     <!-- inicializamos propiedades de acceso global con valores por defecto -->
-    <div ng-app="" class="row"
-         ng-init="  nuevoMovimiento = { esIngreso: 1, esGasto: 0 };
+    <div ng-app="accountsApp" class="row"
+         ng-controller="paramAccounts as param"
+         ng-init="  nuevoMovimiento = { esIngreso: 1, esGasto: 0, fecha: param.today };
                     total = { ingresos: 0, gastos: 0 };
                     movimientos = [];
                     maestros = {
@@ -32,11 +33,13 @@
 
     	<div class="col-md-12 text-center">
 
-            <!-- APLICATION : mostrar ingresos, gastos y balance -->
             <div class="container">
-    		  <header>
+              <header>
                   <h1>{{'Controlar el Cash Flow con'+' - '+'AngularJS'}}</h1>
               </header>
+                
+              <!-- APLICATION : acumulados totales: mostrar ingresos, gastos y balance
+                    IMPLEMENTACION: expresiones que muestran las propiedades del scope global con filtros -->
               <div class="row-fluid">
                   <div class="row placeholders">
                       <div class="col-xs-8 col-sm-4 placeholder">
@@ -62,7 +65,102 @@
                      </div>
                   </div>
               </div>
-              
+              <hr/>
+
+              <!-- APLICATION: formulario para la adicion de un nuevo movimiento, gasto o ingreso
+                    IMPLEMENTACION: doble binding, a traves de controles de formulario, en nueva propiedad de movimientos[] -->
+              <div class="row-fluid">
+                  <form action="" class="form-horizontal text-left">
+                      <fieldset>
+                          <div id="legend">
+                              <legend class="">Introduce movimientos</legend>
+                          </div>
+                          <div class="row-fluid">
+
+                              <!-- seleccionar tipode movimiento y tipo de categoria -->
+                              <div class="col-xs-12 col-sm-6">
+                                  <div class="control-group">
+                                      <label for="tipo" class="control-label">Tipo</label>
+                                      <div class="controls">
+                                          <div class="btn-group">
+                                              <button class="btn btn-success"
+                                                    ng-click="nuevoMovimiento.esIngreso = 1; nuevoMovimiento.esGasto = 0;"
+                                                    ng-class="{'active': nuevoMovimiento.esIngreso === 1}">
+                                                    <span ng-class="{'small': nuevoMovimiento.esIngreso === 0}">+ Ingreso</span>
+                                              </button>
+                                              <button class="btn btn-danger"
+                                                    ng-click="nuevoMovimiento.esIngreso = 0; nuevoMovimiento.esGasto = 1;"
+                                                    ng-class="{'active': nuevoMovimiento.esGasto === 1}">
+                                                    <span ng-class="{'small': nuevoMovimiento.esGasto === 0}">- Gasto</span>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="control-group">
+                                      <label for="categ" class="control-label">Categoria</label>
+                                      <div class="controls">
+                                        <!-- doble binding, se creara una nueva propiedad en nuevoMovimiento, con el valor del control, y sera reflejada en los lugares donde la vista los exija -->
+                                        <select name="categoria"
+                                                ng-show="nuevoMovimiento.esIngreso"
+                                                ng-model="nuevoMovimiento.categoria"
+                                                ng-options="categ for categ in {{maestros.categoriasIngresos}}">
+                                            <option value="">tipo de ingreso</option>
+                                        </select>
+                                        <select name="categoria" id=""
+                                                ng-show="nuevoMovimiento.esGasto !== 0"
+                                                ng-model="nuevoMovimiento.categoria"
+                                                ng-options="categ for categ in {{maestros.categoriasGastos}}">
+                                            <option value="">tipo de gasto</option>
+                                        </select>
+                                    </div>
+                                  </div><br/>
+                                  <div class="control-group"><strong>
+                                    Categoria seleccionada: {{nuevoMovimiento.categoria || 'ninguna'}}
+                                    </strong></div>
+                              </div>
+
+                              <!-- seleccionar la fecha y la cantidad del tipo de importe -->
+                              <div class="col-xs-12 col-sm-6">
+                                <div class="control-group">
+                                      <label for="fecha" class="control-label">Fecha</label>
+                                      <div class="controls">
+                                          <input type="date" name="fecha" class="input"
+                                                ng-model="nuevoMovimiento.fecha" value="">
+                                      </div>
+                                </div>
+                                <div class="control-group">
+                                      <label for="importe" class="control-label">Importe</label>
+                                      <div class="controls">
+                                          <input type="number" name="importe" class="input"
+                                                ng-model="nuevoMovimiento.importe" value="">
+                                      </div>
+                                </div><br/>
+                                <!-- cargar nuevo objeto movimiento en movimientos[]:
+                                recuperar la cantidad del nuevo movimiento, la fecha y el tipo -->
+                                  <div class="control-group col-xs-4 col-sm-6">
+                                    <button type="button" class="btn btn-primary btn-lg" ng-click="
+                                        total.ingresos = total.ingresos + nuevoMovimiento.esIngreso * nuevoMovimiento.importe;
+                                        total.gastos = total.gastos + nuevoMovimiento.esGasto * nuevoMovimiento.importe;
+                                        movimientos.push({
+                                            fecha: nuevoMovimiento.fecha,
+                                            tipo: nuevoMovimiento.esIngreso !==0 && 'ingreso' || 'gasto',
+                                            categoria: nuevoMovimiento.categoria,
+                                            importe: nuevoMovimiento.importe
+                                        });
+                                        nuevoMovimiento.importe = 0;
+                                    ">
+                                        <span>Añadir {{ nuevoMovimiento.esIngreso !== 0 && 'Ingreso' || 'Gastos' }}</span>
+                                    </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </fieldset>
+                  </form>
+              </div>
+              {{movimientos}}
+
+              <ht/>
+
             </div>
     	</div>
     </div>
