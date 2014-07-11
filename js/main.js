@@ -1,8 +1,12 @@
-(function(w, ng){
-	var app = ng.module('accountsApp', []);
+var init = function(){
+	//JAVASCRIPT CODE
+};
 
-	//CONTROLADOR DE PROPIEDADES DE APLICACION (datos)
-	app.controller('bankAccountsController', function($scope, $filter){
+(function(w, ng){
+	/*	CONTROLADOR DE UNA APLICACION EN ANGULAR:
+		- Es un contructor de propiedades para la vista*
+		- Desde destro de este modulo NO SE ACCEDE AL DOM*/
+	var accountsCtrl = function($scope, $filter){
 		this.titulo = 'Controlar el Cash Flow con - AngularJS';
 		
 		this.nuevoMovimiento = {
@@ -45,6 +49,10 @@
 		this.balance = function(){
 			return this.total.ingresos - this.total.gastos;
 		};
-	});
+	}
 
+	var app = ng.module('accountsApp', []); //APLICACION
+	app.controller('bankAccountsController', accountsCtrl); //CONTROLADOR
 })(window, window.angular);
+
+window.addEventListener("load", init, false);
