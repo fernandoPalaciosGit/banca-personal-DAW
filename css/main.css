@@ -1,0 +1,11 @@
+div[ng-controller$="accountsCtrl"] {
+	top: 75px;
+}
+@media screen and (max-width: 768px){
+	div[ng-controller$="accountsCtrl"] {
+		top: 170px;	
+	}
+	h1{
+		font-size: 25px;
+	}
+}

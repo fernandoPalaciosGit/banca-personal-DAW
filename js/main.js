@@ -3,9 +3,8 @@ var init = function(){
 };
 
 (function(w, ng){
-	/*	CONTROLADOR DE UNA APLICACION EN ANGULAR:
-		- Es un contructor de propiedades para la vista*
-		- Desde destro de este modulo NO SE ACCEDE AL DOM*/
+	/*	CONTRUCTOR para el controlador bankAccountsController
+		- inicializar propiedades del modelo de aplicacion */
 	var accountsCtrl = function($scope, $filter){
 		this.titulo = 'Controlar el Cash Flow con - AngularJS';
 		
@@ -20,8 +19,8 @@ var init = function(){
 		this.movimientos = [];
 		
 		this.maestros = {
-		  categoriasIngresos : ['Nomina', 'Ventas', 'Intereses depositos'],
-		  categoriasGastos : ['Hipoteca', 'Compras', 'Impuestos']
+			categoriasIngresos	: ['Nomina', 'Ventas', 'Intereses depositos'],
+			categoriasGastos		: ['Hipoteca', 'Compras', 'Impuestos']
 		};
 
 		this.saveMovimiento = function(){
@@ -29,7 +28,7 @@ var init = function(){
 
 			// this.total.ingresos += newMov.esIngreso * newMov.importe;
 			// this.total.gastos += newMov.esGasto * newMov.importe;
-			( !newMov.esIngreso ) 	? this.total.gastos += newMov.importe 
+			( !newMov.esIngreso )	? this.total.gastos += newMov.importe
 											: this.total.ingresos += newMov.importe;
 
 			this.movimientos.push({
@@ -43,16 +42,30 @@ var init = function(){
 
 		this.tipoMovimiento = function(){
 			var tipoMov = (!this.nuevoMovimiento.esIngreso) ? 'gasto' : 'ingreso';
-			return tipoMov;		
+			return tipoMov;
 		};
 
 		this.balance = function(){
 			return this.total.ingresos - this.total.gastos;
 		};
-	}
+	};
 
-	var app = ng.module('accountsApp', []); //APLICACION
-	app.controller('bankAccountsController', accountsCtrl); //CONTROLADOR
+	/*	CONTRUCTOR para el controlador navigationMenuController
+		- navegacion a traves del menu principal*/
+	var menuCtrl = function($location){
+		this.isActive = function(hash){
+			//recuperomaos el hash que esta mapeado en la url y lo comparamos con el de este metodo
+			return hash === $location.path();
+		};
+	};
+
+	//CONTROLADORES DE APLICACION
+	var app = ng.module('accountsApp', []);
+	app.controller('bankAccountsController', accountsCtrl);
+
+	// INJECCION DE DEPENDECCIAS: $location: informacion sobre la ruta
+	app.controller('navigationMenuController', ['$location', menuCtrl]);
+
 })(window, window.angular);
 
 window.addEventListener("load", init, false);

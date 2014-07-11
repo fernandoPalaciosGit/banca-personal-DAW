@@ -20,5 +20,17 @@
         *   Misma aplicacion: Calcular ingresos y gastos por tipo, cnatidad y fecha.
     *   _Implementacion_
 
-        *   Separar la vista del modelo de negocio.
+        *   Separar la vista del modelo de negocio en archivos diferentes y con una estructura en modulos adecuada para controladores de AngularJS.
         *   Mantener la persistencia de datos en local.
+2.  **VERSION 0.3.0**
+
+    *   _Aplicacion_
+
+        *   Misma aplicacion: Calcular ingresos y gastos por tipo, cnatidad y fecha.
+    *   _Implementacion_
+
+        *   Maquetar una _Single page Apliction_ con 3 vistas
+
+            *TOTALES: mostrar los totales de ingresos, gastos y balnce.
+            *NUEVO: realizar una nueva operacion de contabilidad.
+            *LISTA: listar en una tabla todos nuestros movimientos contables.

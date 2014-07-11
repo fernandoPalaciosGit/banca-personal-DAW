@@ -21,11 +21,27 @@
         </div>
     </div>
 
-    <div ng-app="accountsApp" class="row"
-         ng-controller="bankAccountsController as accountsCtrl">
+    <div ng-app="accountsApp" class="row">
+      <div class="col-md-12 text-center"
+           ng-controller="navigationMenuController as menuCtrl">
+           <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+             <div class="navbar-inner">
+               <div class="container">
+                 <ul class="nav navbar-nav">
+                   <li ng-class="{ 'active': menuCtrl.isActive('/') }">
+                      <a href="#/">Totales</a></li>
+                   <li ng-class="{ 'active': menuCtrl.isActive('/nuevo') }">
+                      <a href="#/nuevo">Nuevo</a></li>
+                   <li ng-class="{ 'active': menuCtrl.isActive('/lista') }">
+                      <a href="#/lista">Lista</a></li>
+                 </ul>
+               </div>
+             </div>
+           </nav>
+      </div>
 
-    	<div class="col-md-12 text-center">
-
+    	<div  class="col-md-12 text-center"
+            ng-controller="bankAccountsController as accountsCtrl">
             <div class="container">
               <header>
                   <h1>{{accountsCtrl.titulo}}</h1>
