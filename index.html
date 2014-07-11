@@ -141,8 +141,8 @@
                                 recuperar la cantidad del nuevo movimiento, la fecha y el tipo -->
                                   <div class="control-group col-xs-4 col-sm-6">
                                     <button type="button" class="btn btn-primary btn-lg" ng-click="
-                                        total.ingresos = total.ingresos + nuevoMovimiento.esIngreso * nuevoMovimiento.importe;
-                                        total.gastos = total.gastos + nuevoMovimiento.esGasto * nuevoMovimiento.importe;
+                                        total.ingresos = (total.ingresos + nuevoMovimiento.esIngreso * nuevoMovimiento.importe) || 0;
+                                        total.gastos = (total.gastos + nuevoMovimiento.esGasto * nuevoMovimiento.importe) || 0;
                                         movimientos.push({
                                             fecha: nuevoMovimiento.fecha,
                                             tipo: nuevoMovimiento.esIngreso !==0 && 'ingreso' || 'gasto',
@@ -168,7 +168,7 @@
                 <div class="row-fluid">
                     <p class="lead">Estos son tus movimientos recientes</p><br/>
                     <label for="importe" class="control-label">Filtrar: </label>
-                    <input type="text" name="filtro" placeholder="qué buscas?" class="input"
+                    <input type="text" name="filtro" placeholder="qué buscas?" class="input text-center"
                             ng-model="valorBuscado"/>
 
                     <table class="table">
@@ -182,7 +182,7 @@
                             <th><a href="" ng-click="
                                     campo = 'importe';
                                     sentido = (campo === 'importe') &amp;&amp; !sentido;
-                                ">Importe</a> XXX{{sentido}}</th>
+                                ">Importe</a></th>
                         </tr></thead>
                         <tbody>
                             <!-- 
