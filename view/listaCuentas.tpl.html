@@ -1,0 +1,37 @@
+<!-- APLICACION: tabla de movimientos acumulados y sistema de ordenamiento por fecha e importe
+IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la propiedad movimientos[]
+ que hemos bindeado anteriormente-->
+<div class="row-fluid">
+    <p class="lead">Estos son tus movimientos recientes</p><br/>
+    <label for="importe" class="control-label">Filtrar: </label>
+    <input type="text" name="filtro" placeholder="qué buscas?" class="input text-center"
+            ng-model="valorBuscado"/>
+
+    <table class="table">
+        <thead><tr>
+            <th><a href="" ng-click="
+                    campo = 'fecha';
+                    sentido = (campo === 'fecha') &amp;&amp; !sentido;
+                ">Fecha</a></th>
+            <th>Tipo</th>
+            <th>Categoria</th>
+            <th><a href="" ng-click="
+                    campo = 'importe';
+                    sentido = (campo === 'importe') &amp;&amp; !sentido;
+                ">Importe</a></th>
+        </tr></thead>
+        <tbody>
+            <tr ng-repeat="movimiento in accountsCtrl.movimientos | filter: valorBuscado | orderBy:campo:sentido ">
+                <td class="text-left">{{movimiento.fecha| date}}</td>
+                <td class="text-left">{{movimiento.tipo}}</td>
+                <td class="text-left">{{movimiento.categoria}}</td>
+                <td class="text-left" ng-class="
+                    {'text-success': movimiento.tipo === 'ingreso',
+                     'text-danger' : movimiento.tipo === 'gasto'}
+                "><strong>${{movimiento.importe | number: 2}}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

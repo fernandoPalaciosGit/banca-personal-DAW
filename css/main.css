@@ -1,9 +1,13 @@
 div[ng-controller$="accountsCtrl"] {
-	top: 75px;
+	top: 50px;
 }
+div[ng-controller$="accountsCtrl"]>header{
+	margin-bottom: 50px;
+}
+
 @media screen and (max-width: 768px){
 	div[ng-controller$="accountsCtrl"] {
-		top: 170px;	
+		top: 140px;	
 	}
 	h1{
 		font-size: 25px;

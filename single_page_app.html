@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="vendor/css/gh-fork-ribbon.css">
-    <script src="vendor/js/angular.js"></script>
 </head>
 <body>
     <!-- TOP RIGHT RIBBON: START COPYING HERE -->
@@ -42,173 +41,27 @@
 
     	<div  class="col-md-12 text-center"
             ng-controller="bankAccountsController as accountsCtrl">
-            <div class="container">
-              <header>
-                  <h1>{{accountsCtrl.titulo}}</h1>
-              </header>
-                
-              <!-- APLICATION : acumulados totales: mostrar ingresos, gastos y balance
-                    IMPLEMENTACION: expresiones que muestran las propiedades del scope global con filtros -->
-              <div class="row-fluid">
-                  <div class="row placeholders">
-                      <div class="col-xs-8 col-sm-4 placeholder">
-                          <h1><span class="label label-success">
-                              ${{ accountsCtrl.total.ingresos | number:2 }}
-                          </span></h1>
-                          <h4>Total ingresos</h4>
-                          <span class="text-muted">acumulado</span>
-                      </div>
-                      <div class="col-xs-8 col-sm-4 placeholder">
-                          <h1><span class="label label-danger">
-                              ${{ accountsCtrl.total.gastos | number:2 }}
-                          </span></h1>
-                          <h4>Total gastos</h4>
-                          <span class="text-muted">acumulado</span>
-                     </div>
-                     <div class="col-xs-8 col-sm-4 placeholder">
-                          <h1><span class="label" ng-class="
-                            {   'label-success': accountsCtrl.balance() >= 0,
-                                'label-danger' : accountsCtrl.balance() <0      }">
-                              ${{ accountsCtrl.balance() | number:2 }}
-                          </span></h1>
-                          <h4>Balance</h4>
-                          <span class="text-muted">ingresos - gastos</span>
-                     </div>
-                  </div>
-              </div>
-              <hr/>
+            <header>
+                <h1>{{accountsCtrl.titulo}}</h1>
+            </header>
 
-              <!-- APLICATION: formulario para la adicion de un nuevo movimiento, gasto o ingreso
-                    IMPLEMENTACION: doble binding, a traves de controles de formulario, en nueva propiedad de movimientos[] -->
-              <div class="row-fluid">
-                  <form action="" class="form-horizontal text-left">
-                      <fieldset>
-                          <div id="legend">
-                              <legend class="">Introduce movimientos</legend>
-                          </div>
-                          <div class="row-fluid">
-
-                              <!-- seleccionar tipode movimiento y tipo de categoria -->
-                              <div class="col-xs-12 col-sm-6">
-                                  <div class="control-group">
-                                      <label for="tipo" class="control-label">Tipo</label>
-                                      <div class="controls">
-                                          <div class="btn-group">
-                                              <button class="btn btn-success"
-                                                    ng-click="accountsCtrl.nuevoMovimiento.esIngreso = 1;
-                                                              accountsCtrl.nuevoMovimiento.esGasto = 0;"
-                                                    ng-class="{'active': accountsCtrl.nuevoMovimiento.esIngreso === 1}">
-                                                    <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esIngreso === 0}">+ Ingreso</span>
-                                              </button>
-                                              <button class="btn btn-danger"
-                                                    ng-click="accountsCtrl.nuevoMovimiento.esIngreso = 0;
-                                                              accountsCtrl.nuevoMovimiento.esGasto = 1;"
-                                                    ng-class="{'active': accountsCtrl.nuevoMovimiento.esGasto === 1}">
-                                                    <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esGasto === 0}">- Gasto</span>
-                                              </button>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="control-group">
-                                      <label for="categ" class="control-label">Categoria</label>
-                                      <div class="controls">
-                                        <!-- doble binding, se creara una nueva propiedad en accountsCtrl.nuevoMovimiento, con el valor del control, y sera reflejada en los lugares donde la vista los exija -->
-                                        <select name="categoria"
-                                                ng-show="accountsCtrl.nuevoMovimiento.esIngreso"
-                                                ng-model="accountsCtrl.nuevoMovimiento.categoria"
-                                                ng-options="categ for categ in {{accountsCtrl.maestros.categoriasIngresos}}">
-                                            <option value="">tipo de ingreso</option>
-                                        </select>
-                                        <select name="categoria" id=""
-                                                ng-show="accountsCtrl.nuevoMovimiento.esGasto !== 0"
-                                                ng-model="accountsCtrl.nuevoMovimiento.categoria"
-                                                ng-options="categ for categ in {{accountsCtrl.maestros.categoriasGastos}}">
-                                            <option value="">tipo de gasto</option>
-                                        </select>
-                                    </div>
-                                  </div><br/>
-                                  <div class="control-group"><strong>
-                                    Categoria seleccionada: {{accountsCtrl.nuevoMovimiento.categoria || 'ninguna'}}
-                                    </strong></div>
-                              </div>
-
-                              <!-- seleccionar la fecha y la cantidad del tipo de importe -->
-                              <div class="col-xs-12 col-sm-6">
-                                <div class="control-group">
-                                      <label for="fecha" class="control-label">Fecha</label>
-                                      <div class="controls">
-                                          <input type="date" name="fecha" class="input"
-                                                ng-model="accountsCtrl.nuevoMovimiento.fecha" value="">
-                                      </div>
-                                </div>
-                                <div class="control-group">
-                                      <label for="importe" class="control-label">Importe</label>
-                                      <div class="controls">
-                                          <input type="number" name="importe" class="input"
-                                                ng-model="accountsCtrl.nuevoMovimiento.importe" value="">
-                                      </div>
-                                </div><br/>
-                                <!-- cargar nuevo objeto movimiento en movimientos[]:
-                                recuperar la cantidad del nuevo movimiento, la fecha y el tipo -->
-                                  <div class="control-group col-xs-4 col-sm-6">
-                                    <button type="button" class="btn btn-primary btn-lg" ng-click="accountsCtrl.saveMovimiento()">
-                                        <span>Añadir {{ accountsCtrl.nuevoMovimiento.esIngreso !== 0 && 'Ingreso' || 'Gastos' }}</span>
-                                    </button>
-                                  </div>
-                              </div>
-                          </div>
-                      </fieldset>
-                  </form>
-              </div>
-              <!-- {{accountsCtrl.movimientos}} -->
-              <hr/>
-
-            <!-- APLICACION: tabla de movimientos acumulados y sistema de ordenamiento por fecha e importe
-                IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la propiedad movimientos[]
-                 que hemos bindeado anteriormente-->
-                <div class="row-fluid">
-                    <p class="lead">Estos son tus movimientos recientes</p><br/>
-                    <label for="importe" class="control-label">Filtrar: </label>
-                    <input type="text" name="filtro" placeholder="qué buscas?" class="input text-center"
-                            ng-model="valorBuscado"/>
-
-                    <table class="table">
-                        <thead><tr>
-                            <th><a href="" ng-click="
-                                    campo = 'fecha';
-                                    sentido = (campo === 'fecha') &amp;&amp; !sentido;
-                                ">Fecha</a></th>
-                            <th>Tipo</th>
-                            <th>Categoria</th>
-                            <th><a href="" ng-click="
-                                    campo = 'importe';
-                                    sentido = (campo === 'importe') &amp;&amp; !sentido;
-                                ">Importe</a></th>
-                        </tr></thead>
-                        <tbody>
-                            <tr ng-repeat="movimiento in accountsCtrl.movimientos | filter: valorBuscado | orderBy:campo:sentido ">
-                                <td class="text-left">{{movimiento.fecha| date}}</td>
-                                <td class="text-left">{{movimiento.tipo}}</td>
-                                <td class="text-left">{{movimiento.categoria}}</td>
-                                <td class="text-left" ng-class="
-                                    {'text-success': movimiento.tipo === 'ingreso',
-                                     'text-danger' : movimiento.tipo === 'gasto'}
-                                "><strong>${{movimiento.importe | number: 2}}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
+            <div class="container" ng-view></div> 
     	</div>
     </div>
     
-    <!-- carga jQuery desde el CDN de google 
+    <!--jQuery 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    -->
-    <!-- si el CDN falla, se carga desde el servidor cliente -->
     <script>window.jQuery || document.write('<script src="vendor/js/jquery-1.10.2.min.js"><\/script>')</script>
+    -->
+    
+    <!-- Angular -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script>window.angular || document.write('<script src="vendor/js/angular-1.2.19.min.js"><\/script>')</script>
+    
+    <!-- Angular root depaendency -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.min.js"></script>
+    <script>window.angular || document.write('<script src="vendor/js/angular-1.2.19-route.min.js"><\/script>')</script>
+
     <script src="js/accountsCtrl.js"></script>
     <script src="js/menuCtrl.js"></script>
     <script src="js/main.js"></script>
