@@ -34,3 +34,11 @@
             *TOTALES: mostrar los totales de ingresos, gastos y balnce.
             *NUEVO: realizar una nueva operacion de contabilidad.
             *LISTA: listar en una tabla todos nuestros movimientos contables.
+4.  **VERSION 0.3.1**
+
+    *   _Implementacion_
+
+        *   _factoria de movimientos_
+
+            *la dependencia de aplicacion _$factory_ nos ofrece una API de propiedades de controlador (utiliza el patron de diseño de software de Modulo Revelado), a las que cualquier vista puede acceder y que mantiene la persistencia en cache a medida que nos movemos por las diferentes vistas.
+            *Esto ya estaba implementado a través del controlador explicito en una sola vista, pero al asignar diferentes vistas (cada una en un fchero) a una dependencia (_$rootProvider_), quedaron incapacitadas de mantener una persistencia de datos local, ya que ahora estan separadas.
