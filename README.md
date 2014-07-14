@@ -22,7 +22,7 @@
 
         *   Separar la vista del modelo de negocio en archivos diferentes y con una estructura en modulos adecuada para controladores de AngularJS.
         *   Mantener la persistencia de datos en local.
-2.  **VERSION 0.3.0**
+3.  **VERSION 0.3.0**
 
     *   _Aplicacion_
 
