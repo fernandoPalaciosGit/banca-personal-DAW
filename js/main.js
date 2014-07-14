@@ -1,10 +1,32 @@
 (function(w, ng){
 
-	//CONTROLADORES DE APLICACION
-	var app = ng.module('accountsApp', []);
+	//APLICACION
+	//'ngRoute': proporciona la dependencia $routeProvider
+	var app = ng.module('accountsApp', ['ngRoute']);
+	
+	//DEPENDENCIAS DE APLICACION
+	//$routeProvider: enrutador de vistas, mapeamos la vista con siu enrutador
+	app.config(['$routeProvider', function($routeProvider){
+		$routeProvider
+			.when('/', {
+				controller: 'bankAccountsController',
+				templateUrl: 'view/totalCuentas.tpl.html'
+			})
+			.when('/nuevo', {
+				controller: 'bankAccountsController',
+				templateUrl: 'view/nuevaCuenta.tpl.html'
+			})
+			.when('/lista', {
+				controller: 'bankAccountsController',
+				templateUrl: 'view/listaCuentas.tpl.html'
+			})
+			.otherwise({
+				redirectTo: '/'
+			})
+	}]);
+	
+	//CONTROLADORES DE APLICACION y dependencia de controlador $location
 	app.controller('bankAccountsController', accountsCtrl);
-
-	// INJECCION DE DEPENDECCIAS: $location: informacion sobre la ruta
 	app.controller('navigationMenuController', ['$location', menuCtrl]);
 
 })(window, window.angular);
