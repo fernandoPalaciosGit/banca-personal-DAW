@@ -1,12 +1,12 @@
-div[ng-controller$="accountsCtrl"] {
-	top: 50px;
+#accountSectionViews {
+	top: 100px;
 }
-div[ng-controller$="accountsCtrl"]>header{
+#totalCountsSection header{
 	margin-bottom: 50px;
 }
 
 @media screen and (max-width: 768px){
-	div[ng-controller$="accountsCtrl"] {
+	#accountSectionViews {
 		top: 140px;	
 	}
 	h1{
