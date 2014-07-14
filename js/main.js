@@ -10,14 +10,17 @@
 		$routeProvider
 			.when('/', {
 				controller: 'bankAccountsController',
+				controllerAs: 'accountsCtrl', //alias utilizado en las vistas
 				templateUrl: 'view/totalCuentas.tpl.html'
 			})
 			.when('/nuevo', {
 				controller: 'bankAccountsController',
+				controllerAs: 'accountsCtrl',
 				templateUrl: 'view/nuevaCuenta.tpl.html'
 			})
 			.when('/lista', {
 				controller: 'bankAccountsController',
+				controllerAs: 'accountsCtrl',
 				templateUrl: 'view/listaCuentas.tpl.html'
 			})
 			.otherwise({
