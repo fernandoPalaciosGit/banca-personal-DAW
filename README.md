@@ -54,4 +54,6 @@
             *[NodeJS](http://nodejs.org/) es un servidor web construido con el core V8 de Chrome y que implementa Javascript como lenguaje interprete de backend.
             *Se ha elegido NodeJS por mantener todo el codigo en Javascript.
             *La particularidad de NodeJS en la forma de ejecutar procesos de manera asincrona a traves de un hilo de ejecucion, y la posibilidad de implementar Sockets para la comunicacion Bidireccional entre cliente-servidor: [IRT](http://en.wikipedia.org/wiki/Real-time).
+
             *Utilizaremos la API de [Express](http://expressjs.com/) para mostar el servidor por dos motivs: solicitar recursos de aplicacion (html, js, css). Mantener persistencia de datos local en el servidor (parecido a las SESSION de php).
+            *tambien tener instalado [npm](https://www.npmjs.org/) de NodeJS para instalar las dependencias Express en Node y tenerlo configurado en el archivo _package.json_.
