@@ -1,0 +1,10 @@
+{
+  "name": "rest-accounts-app",
+  "version": "0.1.0",
+  "description": "express banc account aplication",
+  "dependencies": {
+    "body-parser": "~1.0.2",
+    "express": "~4.1.2"
+  },
+  "author": "@nandopalandi"
+}

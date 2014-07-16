@@ -3,6 +3,8 @@ img/
 media/
 lib/
 vendor/
+node_modules/
+librarie/
 
 # Java Files
 *.class

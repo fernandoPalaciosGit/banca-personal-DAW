@@ -42,3 +42,16 @@
 
             *la dependencia de aplicacion _$factory_ nos ofrece una API de propiedades de controlador (utiliza el patron de diseño de software de Modulo Revelado), a las que cualquier vista puede acceder y que mantiene la persistencia en cache a medida que nos movemos por las diferentes vistas.
             *Esto ya estaba implementado a través del controlador explicito en una sola vista, pero al asignar diferentes vistas (cada una en un fchero) a una dependencia (_$rootProvider_), quedaron incapacitadas de mantener una persistencia de datos local, ya que ahora estan separadas.
+5.  **VERSION 0.4.0**
+
+    *   _Aplicacion_
+
+        *   Peticiones asincronas al servdor de datos almacenados.
+    *   _Implementacion_
+
+        *   _servidor de peticiones REST: NodeJS_
+
+            *[NodeJS](http://nodejs.org/) es un servidor web construido con el core V8 de Chrome y que implementa Javascript como lenguaje interprete de backend.
+            *Se ha elegido NodeJS por mantener todo el codigo en Javascript.
+            *La particularidad de NodeJS en la forma de ejecutar procesos de manera asincrona a traves de un hilo de ejecucion, y la posibilidad de implementar Sockets para la comunicacion Bidireccional entre cliente-servidor: [IRT](http://en.wikipedia.org/wiki/Real-time).
+            *Utilizaremos la API de [Express](http://expressjs.com/) para mostar el servidor por dos motivs: solicitar recursos de aplicacion (html, js, css). Mantener persistencia de datos local en el servidor (parecido a las SESSION de php).
