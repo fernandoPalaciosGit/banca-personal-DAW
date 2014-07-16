@@ -1,6 +1,6 @@
 (function(w, ng){
 	// constructor angular.factory(), que permite tener un grupo de propiedades de controlador con persistencia estatica en todos quellos que la reciban como parametro
-	//propiedades apersistir: total, balance, nuevoMovimiento, maestros
+	//propiedades apersistir: total, movimientos
 	var AccountingFactory = function(){
 		var	movimientos = [],
 				total = { ingresos: 0, gastos: 0 },
