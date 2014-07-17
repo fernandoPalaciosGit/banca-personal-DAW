@@ -7,11 +7,11 @@ app.use( bodyParser() );
 
 //persistencia (la necesitabamos en la factoria)
 var	movimientos = [],
-		total = { ingresos: 0, gastos: 0 },
-		maestros = {
-			categoriasIngresos	: ['Nomina', 'Ventas', 'Intereses depositos'],
-			categoriasGastos		: ['Hipoteca', 'Compras', 'Impuestos']
-		};
+	total = { ingresos: 0, gastos: 0 },
+	maestros = {
+		categoriasIngresos	: ['Nomina', 'Ventas', 'Intereses depositos'],
+		categoriasGastos	: ['Hipoteca', 'Compras', 'Impuestos']
+	};
 
 //middleware, acceso a recursos estaticos desde este servidor
 app.use( express.static('../client') );
@@ -31,22 +31,21 @@ app.route('/api/priv/movimientos')
         res.json(movimientos);
     })
 	.post(function (req, res, next) {
+        
         var reqBody = req.body;
-        var reqImporte = reqBody.importe;
-        var reqFecha = reqBody.fecha;
-        var reqTipo = reqBody.tipo;
-        var reqCategoria = reqBody.categoria;
         var movimiento = {
-            importe: reqImporte,
-            fecha: reqFecha,
-            tipo: reqTipo,
-            categoria: reqCategoria
+            esIngreso: reqBody.esIngreso,
+            esGasto: reqBody.esGasto,
+            importe: reqBody.importe,
+            fecha: reqBody.fecha,
+            tipo: reqBody.tipo,
+            categoria: reqBody.categoria
         };
+
+        ( !movimiento.esIngreso )   ? total.gastos += movimiento.importe
+                                    : total.ingresos += movimiento.importe;
         movimientos.push(movimiento);
-        if (movimiento.tipo == 'Ingreso')
-            total.ingresos += movimiento.importe;
-        else
-            total.gastos += movimiento.importe;
+
         res.status(200);
     });
 

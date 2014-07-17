@@ -1,6 +1,6 @@
 (function(w, ng){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
-	var AccountingCtrl = function(bankAccountingFactory, maestrosFactory){
+	var AccountingCtrl = function(maestrosFactory, movimientosFactory){
 		var scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
 		this.titulo = 'Controlar el Cash Flow con - AngularJS';
 
@@ -11,18 +11,22 @@
 			tipo: 'ingreso',
 			categoria: 'Ventas'
 		};
+		this.total = { ingresos: 0, gastos: 0 };
 		
 		maestrosFactory.getMaestros() //peticion ajax: angular.get(REST)
 							.success(function (data){
 								scope.maestros = data;
-							})
-							.error(function(err){
-								console.log(err+"\nFallo de conexion a: "+urlREST);
 							});
 
-		//inicializamos los movimientos y totales
-		this.total = bankAccountingFactory.getTotal();
-		this.movimientos = bankAccountingFactory.getMovimientos();
+		movimientosFactory.getMovimientos() //peticion ajax: angular.get(REST)
+								.success(function (data){
+								scope.movimientos = data;
+							});
+
+		movimientosFactory.getTotal() //peticion ajax: angular.get(REST)
+								.success(function (data){
+									scope.total = data;
+								});
 
 		this.saveMovimiento = function(){
 			// var newMov = this.nuevoMovimiento;
@@ -31,10 +35,10 @@
          auxCopyMov.tipo = this.tipoMovimiento();
 
 			if( auxCopyMov.importe !== 0)
-				bankAccountingFactory.setMovimientos(auxCopyMov);
+				movimientosFactory.setMovimientos(auxCopyMov);
 
-			this.total = bankAccountingFactory.getTotal();
-			this.movimientos = bankAccountingFactory.getMovimientos();
+			this.total = movimientosFactory.getTotal();
+			this.movimientos = movimientosFactory.getMovimientos();
 			this.nuevoMovimiento.importe = 0;
 		};
 
@@ -49,5 +53,5 @@
 	};
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
-	app.controller( 'bankAccountsController', ['bankAccountingFactory', 'maestrosFactory', AccountingCtrl] );
+	app.controller( 'bankAccountsController', ['maestrosFactory', 'movimientosFactory', AccountingCtrl] );
 })(window, window.angular);
