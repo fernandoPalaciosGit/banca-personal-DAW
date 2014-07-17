@@ -33,17 +33,18 @@
                         <label for="categ" class="control-label">Categoria</label>
                         <div class="controls">
                           <!-- doble binding, se creara una nueva propiedad en accountsCtrl.nuevoMovimiento, con el valor del control, y sera reflejada en los lugares donde la vista los exija -->
-                          <select name="categoria"
+                          <select name="categ"
                                   ng-show="accountsCtrl.nuevoMovimiento.esIngreso"
                                   ng-model="accountsCtrl.nuevoMovimiento.categoria"
-                                  ng-options="categ for categ in {{accountsCtrl.maestros.categoriasIngresos}}">
-                              <option value="">tipo de ingreso</option>
+                                  ng-options="categ for categ in accountsCtrl.maestros.categoriasIngresos"
+                                  >
+                              <option value=""></option>
                           </select>
-                          <select name="categoria" id=""
+                          <select name="categ"
                                   ng-show="accountsCtrl.nuevoMovimiento.esGasto !== 0"
                                   ng-model="accountsCtrl.nuevoMovimiento.categoria"
-                                  ng-options="categ for categ in {{accountsCtrl.maestros.categoriasGastos}}">
-                              <option value="">tipo de gasto</option>
+                                  ng-options="categ for categ in accountsCtrl.maestros.categoriasGastos">
+                              <option value=""></option>
                           </select>
                       </div>
                     </div><br/>

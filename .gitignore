@@ -5,6 +5,7 @@ lib/
 vendor/
 node_modules/
 librarie/
+local_data_noREST/
 
 # Java Files
 *.class

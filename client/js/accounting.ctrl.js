@@ -1,6 +1,7 @@
 (function(w, ng){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
-	var AccountingCtrl = function(bankAccountingFactory){
+	var AccountingCtrl = function(bankAccountingFactory, maestrosFactory){
+		var scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
 		this.titulo = 'Controlar el Cash Flow con - AngularJS';
 
 		//valores por defecto del nuevo movimiento
@@ -11,10 +12,13 @@
 			categoria: 'Ventas'
 		};
 		
-		this.maestros = {
-			categoriasIngresos	: ['Nomina', 'Ventas', 'Intereses depositos'],
-			categoriasGastos		: ['Hipoteca', 'Compras', 'Impuestos']
-		};
+		maestrosFactory.getMaestros() //peticion ajax: angular.get(REST)
+							.success(function (data){
+								scope.maestros = data;
+							})
+							.error(function(err){
+								console.log(err+"\nFallo de conexion a: "+urlREST);
+							});
 
 		//inicializamos los movimientos y totales
 		this.total = bankAccountingFactory.getTotal();
@@ -45,5 +49,5 @@
 	};
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
-	app.controller( 'bankAccountsController', ['bankAccountingFactory', AccountingCtrl] );
+	app.controller( 'bankAccountsController', ['bankAccountingFactory', 'maestrosFactory', AccountingCtrl] );
 })(window, window.angular);
