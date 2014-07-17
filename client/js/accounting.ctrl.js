@@ -1,4 +1,4 @@
-(function(w, ng){
+(function(w, ng, appAng){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
 	var AccountingCtrl = function(maestrosFactory, movimientosFactory){
 		var scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
@@ -31,15 +31,20 @@
 		this.saveMovimiento = function(){
 			// var newMov = this.nuevoMovimiento;
 			// newMov.tipo = this.tipoMovimiento();
-			var auxCopyMov = angular.copy(this.nuevoMovimiento);
+			var auxCopyMov = ng.copy(this.nuevoMovimiento);
          auxCopyMov.tipo = this.tipoMovimiento();
 
-			if( auxCopyMov.importe !== 0)
+			if( auxCopyMov.importe !== 0){
+				//PROGRAMACION ASINCRONA -> promises: las sentencias se ejecutan asincronamente
 				movimientosFactory.setMovimientos(auxCopyMov);
-
-			this.total = movimientosFactory.getTotal();
-			this.movimientos = movimientosFactory.getMovimientos();
-			this.nuevoMovimiento.importe = 0;
+				movimientosFactory.getTotal().success(function(data){
+					scope.total = data;
+				});
+				movimientosFactory.getMovimientos().success(function(data){
+					scope.movimientos = data;
+				});
+				scope.nuevoMovimiento.importe = 0;
+			}
 		};
 
 		this.tipoMovimiento = function(){
@@ -53,5 +58,5 @@
 	};
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
-	app.controller( 'bankAccountsController', ['maestrosFactory', 'movimientosFactory', AccountingCtrl] );
-})(window, window.angular);
+	appAng.controller( 'bankAccountsController', ['maestrosFactory', 'movimientosFactory', AccountingCtrl] );
+})(window, window.angular, app);
