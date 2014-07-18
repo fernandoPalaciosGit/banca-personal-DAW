@@ -11,7 +11,7 @@
 			      <label class="control-label"  for="email">Email</label>
 			      <div class="controls">
 			        <input type="email" name="email" placeholder="" class="input-xlarge"
-			        			ng-model="usuario.email">
+			        			ng-model="loginRegisterCtrl.usuario.email">
 			      </div>
 			    </div>
 			    <div class="control-group">
@@ -19,19 +19,19 @@
 			      <label class="control-label" for="password">Password</label>
 			      <div class="controls">
 			        <input type="password" name="password" placeholder="" class="input-xlarge"
-			        			ng-model="usuario.password">
+			        			ng-model="loginRegisterCtrl.usuario.password">
 			      </div>
 			    </div>
 			    <div class="control-group">
 			      <!-- Button: login, acceder al servicion, usuario registrado -->
 			      <div class="controls">
 			        <button	class="btn btn-primary"
-			        				ng-click="login()">Login</button>
+			        				ng-click="loginRegisterCtrl.login()">Login</button>
 			      </div>
                 <!-- Button: darse de alta en el servicio, nuevo usuario -->
 			      <div class="controls">
 			        <button	class="btn btn-success"
-			        				ng-click="registro()">Registro</button>
+			        				ng-click="loginRegisterCtrl.registro()">Registro</button>
 			      </div>
 			    </div>
 			  </fieldset>

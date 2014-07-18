@@ -21,6 +21,11 @@ app.config(['$routeProvider', function($routeProvider){
 			controllerAs: 'accountsCtrl',
 			templateUrl: 'view/listaCuentas.tpl.html'
 		})
+		.when('/registro', {
+			controller: 'loginRegisterController',
+			controllerAs: 'loginRegisterCtrl',
+			templateUrl: 'view/registro.html'
+		})
 		.otherwise({
 			redirectTo: '/'
 		})
