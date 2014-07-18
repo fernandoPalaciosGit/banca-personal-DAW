@@ -23,3 +23,6 @@ hs_err_pid*
 /bootstrap/compiled.php
 .env.*.php
 .env.php
+
+# Personal Files
+NOTAS.md

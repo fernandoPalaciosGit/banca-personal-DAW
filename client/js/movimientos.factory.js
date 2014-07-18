@@ -10,6 +10,7 @@
 
 		factoryAPI.setMovimientos = function (movimiento) {
 			//los objetos que acumulamos es en el backend
+			//una peticion POST es una peticion http, que suele llevar una carga de datos en el body
 			return $http.post(urlBaseMov, movimiento);
 		};
 

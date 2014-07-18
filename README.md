@@ -57,3 +57,13 @@
 
             *Utilizaremos la API de [Express](http://expressjs.com/) para mostar el servidor por dos motivs: solicitar recursos de aplicacion (html, js, css). Mantener persistencia de datos local en el servidor (parecido a las SESSION de php).
             *tambien tener instalado [npm](https://www.npmjs.org/) de NodeJS para instalar las dependencias Express en Node y tenerlo configurado en el archivo _package.json_.
+6.  **VERSION 0.4.1**
+
+    *   _Aplicacion_
+
+        *   Seguridad del lado del Servidor.
+        *   Implementar sesion con credenciales de cliente
+    *   _Implementacion_
+
+        *   identificacion de cliente.
+        *   inicializar y mantener sesion durante tiempo suficiente para la actividad (20 minutos).

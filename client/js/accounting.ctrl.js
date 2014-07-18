@@ -29,20 +29,22 @@
 								});
 
 		this.saveMovimiento = function(){
-			// var newMov = this.nuevoMovimiento;
-			// newMov.tipo = this.tipoMovimiento();
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
          auxCopyMov.tipo = this.tipoMovimiento();
 
-			if( auxCopyMov.importe !== 0){
-				//PROGRAMACION ASINCRONA -> promises: las sentencias se ejecutan asincronamente
+			if( auxCopyMov.importe !== 0 ){				
+				/*almacenar datos en el server*/
 				movimientosFactory.setMovimientos(auxCopyMov);
+
+				/*recuperar datos del server*/
 				movimientosFactory.getTotal().success(function(data){
 					scope.total = data;
 				});
 				movimientosFactory.getMovimientos().success(function(data){
 					scope.movimientos = data;
 				});
+
+				/*actualizar vista*/
 				scope.nuevoMovimiento.importe = 0;
 			}
 		};
