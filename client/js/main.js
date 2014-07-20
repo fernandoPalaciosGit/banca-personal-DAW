@@ -30,9 +30,6 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 		//CADA VEZ QUE HAY UNA PETICION DEL CLIENTE (get || put)
 		request: function (request) {
 			console.info('request:' + request.url);
-			$rootScope.mensaje = "";
-			//almacenamos la ultima pagina de acceso, por si ha caducado la pagina y hay que redireccionar
-			$rootScope.lastPage = request.url;
 			request.headers["sessionId"] = $cookieStore.get("sessionId");
 			return request || $q.when(request); //encabezado que devolvra el cliente al servidor
 		},

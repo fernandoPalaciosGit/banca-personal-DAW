@@ -12,8 +12,9 @@
 			var urlLogin = urlBase+"sesiones/";
 			$http.post(urlLogin, this.usuario)
 					.success(function(data){
-						console.info('Acceso Correcto, sesion actualizada');
 						$rootScope.nombre = scope.usuario.email;
+						$rootScope.mensaje = 'Acceso Correcto, sesion actualizada';
+						console.info('Sesion actualizada, resetear el TimeStamp');
 						$cookieStore.put('sessionId', data);
 						$cookieStore.put('sessionName', scope.usuario.email.split('@')[0] );
 						$location.path('/');
@@ -23,8 +24,9 @@
 			var urlLogin = urlBase+"usuarios/";
 			$http.post(urlLogin, this.usuario)
 					.success(function(data){
-						console.info('Es tu primera conexion al Servidor');
 						$rootScope.nombre = scope.usuario.email; 
+						$rootScope.mensaje = 'Es tu primera conexion al Servidor';
+						console.info('Nuevo usuario registrado');
 						$cookieStore.put('sessionId', data);
 						$cookieStore.put('sessionName', scope.usuario.email.split('@')[0] );
 						$location.path("/");
