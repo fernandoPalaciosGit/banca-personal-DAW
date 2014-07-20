@@ -1,6 +1,6 @@
 (function(w, ng, appAng){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
-	var AccountingCtrl = function(maestrosFactory, movimientosFactory){
+	var AccountingCtrl = function($rootScope, $cookieStore, maestrosFactory, movimientosFactory){
 		var scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
 		this.titulo = 'Controlar el Cash Flow con - AngularJS';
 
@@ -27,6 +27,10 @@
 								.success(function (data){
 									scope.total = data;
 								});
+		//RECONOCIMIENTO DEL USUARIO
+		$rootScope.nombre = ( $cookieStore.get('sessionId') ) ?
+			'Hola '+$cookieStore.get('sessionName') :
+			'primero debes Acceder a sistema';
 
 		this.saveMovimiento = function(){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
@@ -60,5 +64,6 @@
 	};
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
-	appAng.controller( 'bankAccountsController', ['maestrosFactory', 'movimientosFactory', AccountingCtrl] );
+	appAng.controller(	'bankAccountsController',
+								['$rootScope', '$cookieStore', 'maestrosFactory', 'movimientosFactory', AccountingCtrl] );
 })(window, window.angular, app);

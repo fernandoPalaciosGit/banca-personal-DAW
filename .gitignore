@@ -6,6 +6,8 @@ vendor/
 node_modules/
 librarie/
 local_data_noREST/
+httpServerExample.js
+httpServerSockets.js
 
 # Java Files
 *.class

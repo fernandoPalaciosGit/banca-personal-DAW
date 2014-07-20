@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="vendor/css/gh-fork-ribbon.css">
     <script src="vendor/js/angular-1.2.19.min.js"></script>
     <script src="vendor/js/angular-1.2.19-route.min.js"></script>
+    <script src="vendor/js/angular-1.2.17-cookies.min.js"></script>
 </head>
 <body>
     <!-- TOP RIGHT RIBBON: START COPYING HERE -->
@@ -28,14 +29,24 @@
            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
              <div class="navbar-inner">
                <div class="container">
-                 <ul class="nav navbar-nav">
-                   <li ng-class="{ 'active': menuCtrl.isActive('/') }">
-                      <a href="#/">Totales</a></li>
-                   <li ng-class="{ 'active': menuCtrl.isActive('/nuevo') }">
-                      <a href="#/nuevo">Nuevo</a></li>
-                   <li ng-class="{ 'active': menuCtrl.isActive('/lista') }">
-                      <a href="#/lista">Lista</a></li>
-                 </ul>
+
+                     <ul class="nav navbar-nav">
+                       <li ng-class="{ 'active': menuCtrl.isActive('/') }">
+                          <a href="#/">Totales</a></li>
+                       <li ng-class="{ 'active': menuCtrl.isActive('/nuevo') }">
+                          <a href="#/nuevo">Nuevo</a></li>
+                       <li ng-class="{ 'active': menuCtrl.isActive('/lista') }">
+                          <a href="#/lista">Lista</a></li>
+                       <li ng-class="{ 'active': menuCtrl.isActive('/registro') }">
+                            <a href="#/registro">Acceso</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">{{nombre}}</a>
+                        </li>
+                        <li><a href="#">{{mensaje}}</a>
+                        </li>
+                    </ul>
+                    
                </div>
              </div>
            </nav>
@@ -50,6 +61,7 @@
     <script src="js/main.js"></script>
     <script src="js/mainMenu.ctrl.js"></script>
     <script src="js/accounting.ctrl.js"></script>
+    <script src="js/register.ctrl.js"></script>
     <script src="js/maestros.factory.js"></script>
     <script src="js/movimientos.factory.js"></script>
 </body>
