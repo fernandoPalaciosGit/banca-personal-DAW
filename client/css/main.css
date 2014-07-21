@@ -7,6 +7,19 @@
 .row{
 	margin: 0 auto 0;
 }
+#tableCountList>thead>tr>th,
+#tableCountList>tbody>tr>td:nth-of-type(3):first-Letter, /*tipo movimiento*/
+#tableCountList>tbody>tr>td:nth-of-type(4):first-Letter{ /*categoria movimiento*/
+	text-transform: uppercase;
+}
+#tableCountList th,
+#tableCountList td{
+	text-align: center;
+}
+.controls textarea{
+	width: 80%;
+	height: 100px;
+}
 
 @media screen and (max-width: 768px){
 	#accountSectionViews {

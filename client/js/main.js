@@ -97,7 +97,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 };
 
 //'ngRoute': proporciona la dependencia $routeProvider
-var app = window.angular.module( 'accountsApp', ['ngRoute', 'ngCookies'] );
+var app = window.angular.module( 'accountsApp', ['ngRoute', 'ngCookies', 'input-filters'] );
 
 //DEPENDENCIAS DE APLICACION
 //$routeProvider: enrutador de vistas, mapeamos la vista con siu enrutador

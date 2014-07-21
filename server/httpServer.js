@@ -10,8 +10,10 @@ var maxId = 0,
     movimientos = [],
     total = { ingresos: 0, gastos: 0 },
     maestros = {
-        categoriasIngresos  : ['Nomina', 'Ventas', 'Intereses depositos'],
-        categoriasGastos    : ['Hipoteca', 'Compras', 'Impuestos']
+        categoriasIngresos  :
+            ['otros ingresos', 'alquiler inmueble', 'nómina', 'propiedades', 'servicios profesoinales'],
+        categoriasGastos    :
+            ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'colegio', 'escolar profesional', 'alquiler', 'luz', 'agua', 'telefono', 'seguros', 'compras']
     },
     //AUTENTIFICACION
     usuarios = [],
@@ -105,7 +107,8 @@ app.route('/api/priv/movimientos')
             importe: reqBody.importe,
             fecha: reqBody.fecha,
             tipo: reqBody.tipo,
-            categoria: reqBody.categoria
+            categoria: reqBody.categoria,
+            concepto: reqBody.concepto
         };
 
         ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe

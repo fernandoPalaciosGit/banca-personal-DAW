@@ -1,4 +1,4 @@
-<!--  APLICATION: formulario para la adicion de un nuevo movimiento, gasto o ingreso
+<!-- APLICATION: formulario para la adicion de un nuevo movimiento, gasto o ingreso
       IMPLEMENTACION: doble binding, a traves de controles de formulario, en nueva propiedad de movimientos[] -->
 <div class="row-fluid">
     <form action="" class="form-horizontal text-left">
@@ -6,9 +6,9 @@
             <div id="legend">
                 <legend class="">Introduce un nuevo movimiento</legend>
             </div>
-            <div class="row-fluid">
 
-                <!-- seleccionar tipode movimiento y tipo de categoria -->
+            <div class="row-fluid">
+                <!-- TIPO MOVIMIENTO -->
                 <div class="col-xs-12 col-sm-6">
                     <div class="control-group">
                         <label for="tipo" class="control-label">Tipo</label>
@@ -16,23 +16,25 @@
                             <div class="btn-group">
                                 <button class="btn btn-success"
                                       ng-click="accountsCtrl.nuevoMovimiento.esIngreso = 1;
-                                                accountsCtrl.nuevoMovimiento.esGasto = 0;"
+                                                accountsCtrl.nuevoMovimiento.esGasto = 0;
+                                                accountsCtrl.resetMovimiento(); "
                                       ng-class="{'active': accountsCtrl.nuevoMovimiento.esIngreso === 1}">
                                       <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esIngreso === 0}">+ Ingreso</span>
                                 </button>
                                 <button class="btn btn-danger"
                                       ng-click="accountsCtrl.nuevoMovimiento.esIngreso = 0;
-                                                accountsCtrl.nuevoMovimiento.esGasto = 1;"
+                                                accountsCtrl.nuevoMovimiento.esGasto = 1;
+                                                accountsCtrl.resetMovimiento(); "
                                       ng-class="{'active': accountsCtrl.nuevoMovimiento.esGasto === 1}">
                                       <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esGasto === 0}">- Gasto</span>
                                 </button>
                             </div>
                         </div>
                     </div>
+                    <!-- CATEGORIA MOVIMIENTO-->
                     <div class="control-group">
                         <label for="categ" class="control-label">Categoria</label>
                         <div class="controls">
-                          <!-- doble binding, se creara una nueva propiedad en accountsCtrl.nuevoMovimiento, con el valor del control, y sera reflejada en los lugares donde la vista los exija -->
                           <select name="categ"
                                   ng-show="accountsCtrl.nuevoMovimiento.esIngreso"
                                   ng-model="accountsCtrl.nuevoMovimiento.categoria"
@@ -47,10 +49,15 @@
                               <option value=""></option>
                           </select>
                       </div>
-                    </div><br/>
-                    <div class="control-group"><strong>
-                      Categoria seleccionada: {{accountsCtrl.nuevoMovimiento.categoria || 'ninguna'}}
-                      </strong></div>
+                    </div>
+                    <!-- CONCEPTO MOVIMIENTO -->
+                    <div class="control-group">
+                        <label for="concepto" class="control-label">Concepto</label>
+                        <div class="controls">
+                            <textarea name="concepto" class="input"
+                                      ng-model="accountsCtrl.nuevoMovimiento.concepto"></textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- seleccionar la fecha y la cantidad del tipo de importe -->
@@ -69,11 +76,18 @@
                                   ng-model="accountsCtrl.nuevoMovimiento.importe" value="">
                         </div>
                   </div><br/>
+                  <div class="control-group">
+                      <strong>Categoria seleccionada</strong>: 
+                      {{ accountsCtrl.checkTipoMovimiento(); accountsCtrl.nuevoMovimiento.tipo }} -> 
+                      {{ accountsCtrl.nuevoMovimiento.categoria || '[sin categoria]'}}
+                  </div><br/>
+
                   <!-- cargar nuevo objeto movimiento en movimientos[]:
                   recuperar la cantidad del nuevo movimiento, la fecha y el tipo -->
                     <div class="control-group col-xs-4 col-sm-6">
-                      <button type="button" class="btn btn-primary btn-lg" ng-click="accountsCtrl.saveMovimiento()">
-                          <span>Añadir {{ accountsCtrl.nuevoMovimiento.esIngreso !== 0 && 'Ingreso' || 'Gastos' }}</span>
+                      <button type="button" class="btn btn-primary btn-lg"
+                              ng-click="accountsCtrl.saveMovimiento()">
+                          <span>Añadir {{ accountsCtrl.checkTipoMovimiento(); accountsCtrl.nuevoMovimiento.tipo }}</span>
                       </button>
                     </div>
                 </div>
@@ -81,4 +95,4 @@
         </fieldset>
     </form>
 </div>
-<!-- {{accountsCtrl.movimientos}} -->
+<!-- {{accountsCtrl.nuevoMovimiento}} -->
