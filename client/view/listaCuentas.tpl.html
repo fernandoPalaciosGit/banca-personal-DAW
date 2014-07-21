@@ -9,6 +9,7 @@ IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la p
 
     <table class="table">
         <thead><tr>
+            <th></th>
             <th><a href="" ng-click="
                     campo = 'fecha';
                     sentido = (campo === 'fecha') &amp;&amp; !sentido;
@@ -22,12 +23,15 @@ IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la p
         </tr></thead>
         <tbody>
             <tr ng-repeat="movimiento in accountsCtrl.movimientos | filter: valorBuscado | orderBy:campo:sentido ">
+                <td class="text-left">
+                    <a ng-href="#/movimiento/{{movimiento.id}}">{{movimiento.id}}</a>
+                </td>
                 <td class="text-left">{{movimiento.fecha| date}}</td>
                 <td class="text-left">{{movimiento.tipo}}</td>
                 <td class="text-left">{{movimiento.categoria}}</td>
                 <td class="text-left" ng-class="
-                    {'text-success': movimiento.tipo === 'ingreso',
-                     'text-danger' : movimiento.tipo === 'gasto'}
+                    { 'text-success': movimiento.tipo === 'ingreso',
+                      'text-danger' : movimiento.tipo === 'gasto'    }
                 "><strong>${{movimiento.importe | number: 2}}</strong></td>
             </tr>
         </tbody>

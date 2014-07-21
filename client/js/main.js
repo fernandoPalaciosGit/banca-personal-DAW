@@ -20,6 +20,11 @@ var httpRoutes = function($routeProvider){
 			controllerAs: 'loginRegisterCtrl',
 			templateUrl: 'view/registro.html'
 		})
+		.when('/movimiento/:movId', { //parametro dependencia $routeParams
+			controller: 'filtroMovimientoController',
+			controllerAs: 'filtroMovCtrl',
+			templateUrl: 'view/filtroMovimiento.html'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -29,26 +34,41 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 	return {
 		//CADA VEZ QUE HAY UNA PETICION DEL CLIENTE (get || put)
 		request: function (request) {
-			console.info('request:' + request.url);
+			console.info('REQUEST:' + request.url);
 			request.headers["sessionId"] = $cookieStore.get("sessionId");
 			return request || $q.when(request); //encabezado que devolvra el cliente al servidor
 		},
 		//CADA VEZ QUE HAY UNA RESPUESTA DEL SERVIDOR
 		response: function(response){
 			console.log(response.status);
-			/**si la respuesta es que se ha desconectado, eliminar la cookie de sesion**/
+			/**si la respuesta es que se ha desconectado el servidor,
+			enviar un aviso de web socket y eliminar la cookie de sesion**/
 			return response;
 		},
 		//CADA VEZ QUE EL SERVIDOR RESPONDE CON UN ERROR
 		responseError: function (response) {
-			console.error("excepción: " + response.status + " de :" + response.config.url);
+			var error = "ERROR STATUS: " + response.status + " FROM: " + response.config.url+ "\n";
+			//DEBUGGER
 			switch(response.status){
 				case 0:
-					console.info('servidor desconectado');
+					console.error(error + 'Servidor desconectado');
+					break;
 				case 500:
-					$rootScope.mensaje = "El servidor ha fallado :-)";
+					console.error(error + 'El servidor ha fallado');
+					break;
 				case 419:
-					$rootScope.mensaje = "La Sesion Caducada @ 20 minutos";
+					console.error(error + 'Sesión caducada @ 20 minutos');
+					break;
+			}
+
+			//MENSAJES CLIENTES
+			switch(response.status){
+				case 0:
+				case 500:
+				case 419:
+					$rootScope.mensaje = (response.status == 0 || response.status == 500) ?
+						'Algo ha fallado, intentelo mas tarde' :
+						'Sesión caducada, vuelve a loguearte';
 					$cookieStore.remove('sessionId');
 					$cookieStore.remove('sessionName');
 					$location.path('registro');
@@ -77,7 +97,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 };
 
 //'ngRoute': proporciona la dependencia $routeProvider
-var app = angular.module( 'accountsApp', ['ngRoute', 'ngCookies'] );
+var app = window.angular.module( 'accountsApp', ['ngRoute', 'ngCookies'] );
 
 //DEPENDENCIAS DE APLICACION
 //$routeProvider: enrutador de vistas, mapeamos la vista con siu enrutador

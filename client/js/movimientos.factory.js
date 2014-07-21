@@ -1,4 +1,4 @@
-(function(){
+(function(w, ng, ngApp){
 	var movimientosFactory = function($http){
 		var	factoryAPI = {},
 				urlBaseMov = "/api/priv/movimientos",
@@ -6,6 +6,12 @@
 
 		factoryAPI.getMovimientos = function () {
 			return $http.get(urlBaseMov);
+		};
+
+		factoryAPI.getMovFilter = function(movId){
+			//{id:movId} -> cofig rest, parametro de peticoin GET
+			//console.log(movId);
+			return $http.get(	'/api/priv/filter_movimiento', { params: { id: movId } });
 		};
 
 		factoryAPI.setMovimientos = function (movimiento) {
@@ -20,5 +26,5 @@
 
 		return factoryAPI;
 	};
-	app.factory("movimientosFactory", ['$http', movimientosFactory]);
-}());
+	ngApp.factory("movimientosFactory", ['$http', movimientosFactory]);
+}(window, window.angular, app));

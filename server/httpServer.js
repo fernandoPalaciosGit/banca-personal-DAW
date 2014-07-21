@@ -6,7 +6,8 @@ var app = express(),            //aplicacion MVC basada en express
     server = app.listen(3000);  //puerto de escucha del servidor (localhost)
 
     //PERSISTENCIA DE MOVIMIENTOS
-var movimientos = [],
+var maxId = 0,
+    movimientos = [],
     total = { ingresos: 0, gastos: 0 },
     maestros = {
         categoriasIngresos  : ['Nomina', 'Ventas', 'Intereses depositos'],
@@ -38,7 +39,7 @@ var shutDown = function (){
 
     //a los 5 segundos forzaremos el apagado
     setTimeout(function(){
-       process.exit(); 
+        process.exit();
     }, 1000*5);
 };
 
@@ -78,6 +79,17 @@ app.get('/api/priv/total', function (req, res, next) {
     res.json(total);
 });
 
+//API REST: recuperar movimientos por parametros
+app.get("/api/priv/filter_movimiento", function (req, res, next){
+    //recuperamos los prametros de peticion, NO los del encabezado
+    var movId = req.query.id;
+    console.dir(movId);
+    var matchMov = movimientos.filter(function (movimiento){
+        return movimiento.id == movId;
+    })[0];
+    res.json(matchMov);
+});
+
 //API REST: recuperar y configurar movimientos
 app.route('/api/priv/movimientos')
 	.get(function (req, res, next) {
@@ -87,6 +99,7 @@ app.route('/api/priv/movimientos')
         
         var reqBody = req.body;//header HTTP: metadatos nuevoMovimiento
         var movimiento = {
+            id: maxId++,
             esIngreso: reqBody.esIngreso,
             esGasto: reqBody.esGasto,
             importe: reqBody.importe,
