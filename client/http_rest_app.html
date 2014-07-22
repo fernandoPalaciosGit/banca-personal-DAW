@@ -41,10 +41,7 @@
                             <a href="#/registro">Acceso</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">{{nombre}}</a>
-                        </li>
-                        <li><a href="#">{{mensaje}}</a>
-                        </li>
+                        <li><a class="text-danger" href="#">{{mensaje}}</a></li>
                     </ul>
                     
                </div>
@@ -52,7 +49,6 @@
            </nav>
       </div>
       <div id="accountSectionViews" class="col-md-12 text-center">
-            <!-- ng-controller="bankAccountsController as accountsCtrl" -->
             <div class="container" ng-view></div> 
       </div>
     </div>
@@ -65,5 +61,6 @@
     <script src="js/maestros.factory.js"></script>
     <script src="js/movimientos.factory.js"></script>
     <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
 </body>
 </html>

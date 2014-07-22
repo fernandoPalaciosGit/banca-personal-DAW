@@ -36,14 +36,14 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 		request: function (request) {
 			console.info('REQUEST:' + request.url);
 			request.headers["sessionId"] = $cookieStore.get("sessionId");
-			return request || $q.when(request); //encabezado que devolvra el cliente al servidor
+			return request || $q.when(request);
 		},
 		//CADA VEZ QUE HAY UNA RESPUESTA DEL SERVIDOR
 		response: function(response){
 			console.log(response.status);
 			/**si la respuesta es que se ha desconectado el servidor,
-			enviar un aviso de web socket y eliminar la cookie de sesion**/
-			return response;
+			enviar un aviso de web socket para  la cookie de sesion**/
+			return response || $q.when(response);
 		},
 		//CADA VEZ QUE EL SERVIDOR RESPONDE CON UN ERROR
 		responseError: function (response) {
@@ -100,7 +100,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 };
 
 //'ngRoute': proporciona la dependencia $routeProvider
-var app = window.angular.module( 'accountsApp', ['ngRoute', 'ngCookies', 'input-filters'] );
+var app = window.angular.module( 'accountsApp', ['ngRoute', 'ngCookies', 'input-filters', 'util-directives'] );
 
 //DEPENDENCIAS DE APLICACION
 //$routeProvider: enrutador de vistas, mapeamos la vista con siu enrutador

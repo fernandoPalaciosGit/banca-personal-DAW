@@ -1,4 +1,8 @@
-// filtro recortar la propiedad 'concepto' de cada movimiento
+/////////////
+// FILTROS //
+/////////////
+
+// recortar la propiedad 'concepto' de cada movimiento
 var cutInput = function(){
 	return function(inputValue, paramFilter){
 		if(!paramFilter)
@@ -19,7 +23,7 @@ var byDefault = function(){
 		return field || strDef;
 	};
 };
-// filtro importe de movimiento: por cantidades pequeñas y grandes
+// importe de movimiento: por cantidades pequeñas y grandes
 var impInput = function(){
 	 return function (inputValue, paramFilter) {
 	 	//[Object]inputValue: todos los moviumientos de la lista
@@ -45,7 +49,7 @@ var impInput = function(){
 	};
 };
 
-// filtro formato del importe: €, decimales con una clse que los empequeñezca
+// formato del importe: €, decimales con una clse que los empequeñezca
 var parseAmount = function(){
 	return function (inputValue, paramFilter){
 		var	quantity = inputValue.split('.')[0].replace(',', '.'),
@@ -54,7 +58,7 @@ var parseAmount = function(){
 	};
 };
 
-//filtro rango de fecha del movimiento
+// rango de fecha del movimiento
 var dateRange = function(){
   return function (conversations, start_date, end_date, checkData) {
 		var result = [];

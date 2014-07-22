@@ -2,10 +2,11 @@
 IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la propiedad movimientos[]
  que hemos bindeado anteriormente-->
 <div class="row-fluid">
-    <p class="lead">Estos son tus movimientos recientes</p>
+    <mensaje>Lista de movimientos actuales</mensaje>
     <p>
         <label for="importe" class="control-label">Filtrar: </label>
-        <input type="search" name="filtro" placeholder="qué buscas?" class="input text-center"
+        <input type="search" name="filtro" autofocus="autofocus"
+                placeholder="qué buscas?" class="input text-center"
                 ng-model="valorBuscado"/>
         <a href="" ng-click="valorBuscado=''">X</a>
     </p>

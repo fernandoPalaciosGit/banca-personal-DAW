@@ -85,7 +85,6 @@ app.get('/api/priv/total', function (req, res, next) {
 app.get("/api/priv/filter_movimiento", function (req, res, next){
     //recuperamos los prametros de peticion, NO los del encabezado
     var movId = req.query.id;
-    console.dir(movId);
     var matchMov = movimientos.filter(function (movimiento){
         return movimiento.id == movId;
     })[0];
@@ -100,20 +99,22 @@ app.route('/api/priv/movimientos')
 	.post(function (req, res, next) {
         
         var reqBody = req.body;//header HTTP: metadatos nuevoMovimiento
-        var movimiento = {
-            id: maxId++,
-            esIngreso: reqBody.esIngreso,
-            esGasto: reqBody.esGasto,
-            importe: reqBody.importe,
-            fecha: reqBody.fecha,
-            tipo: reqBody.tipo,
-            categoria: reqBody.categoria,
-            concepto: reqBody.concepto
-        };
-
-        ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe
-                                    : total.ingresos += movimiento.importe;
-        movimientos.push(movimiento);
+        //proteger el movimiento de sobreescritura
+        if( !reqBody.id ){
+            var movimiento = {
+                id: maxId++,
+                esIngreso: reqBody.esIngreso,
+                esGasto: reqBody.esGasto,
+                importe: reqBody.importe,
+                fecha: reqBody.fecha,
+                tipo: reqBody.tipo,
+                categoria: reqBody.categoria,
+                concepto: reqBody.concepto
+            };
+            ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe
+                                        : total.ingresos += movimiento.importe;
+            movimientos.push(movimiento);
+        }
 
         res.status(200);
     });

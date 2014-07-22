@@ -21,6 +21,31 @@
 	height: 100px;
 }
 
+input[type='text']:valid:focus,
+input[type='url']:valid:focus,
+input[type='search']:valid:focus,
+input[type='password']:valid:focus,
+input[type='email']:valid:focus{
+    animation: anim_focus 2s linear 0s infinite normal;
+    -webkit-animation: anim_focus 2s linear 0s infinite normal;
+    -moz-animation: anim_focus 2s linear 0s infinite normal;
+}
+@keyframes anim_focus{
+    from{ background-color: rgb(193, 250, 149); }
+    50%{ background-color: rgb(88, 189, 10); }
+    to{ background-color: rgb(193, 250, 149); }
+}
+@-webkit-keyframes anim_focus{
+    from{ background-color: rgb(193, 250, 149); }
+    50%{ background-color: rgb(88, 189, 10); }
+    to{ background-color: rgb(193, 250, 149); }
+}
+@-moz-keyframes anim_focus{
+    from{ background-color: rgb(193, 250, 149); }
+    50%{ background-color: rgb(88, 189, 10); }
+    to{ background-color: rgb(193, 250, 149); }
+}
+
 @media screen and (max-width: 768px){
 	#accountSectionViews {
 		top: 140px;	

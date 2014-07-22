@@ -2,7 +2,7 @@
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
 	var AccountingCtrl = function($rootScope, $cookieStore, maestrosFactory, movimientosFactory){
 		var scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
-		this.titulo = 'Controlar el Cash Flow con - AngularJS';
+		this.titulo = 'Controlar el Balance de tus movimientos';
 		this.fechaActual = new Date().toJSON().split('T')[0];
 
 		//valores por defecto del nuevo movimiento
@@ -30,7 +30,7 @@
 								});
 		//RECONOCIMIENTO DEL USUARIO
 		$rootScope.nombre = ( $cookieStore.get('sessionId') ) ?
-			'Hola '+$cookieStore.get('sessionName') :
+			$cookieStore.get('sessionName') :
 			'primero debes Acceder a sistema';
 
 		//FILTROS POR FECHA : DE LISTA DE MOVIMIENTOS 
