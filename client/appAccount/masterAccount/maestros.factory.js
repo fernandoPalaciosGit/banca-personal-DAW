@@ -1,6 +1,6 @@
 (function(){
 	var maestrosFactory = function($http){
-		var	urlREST = "http://localhost:3000/api/pub/maestros",
+		var	urlREST = "/api/pub/maestros",
 				maestros = {};
 				factoryAPI = {};
 		

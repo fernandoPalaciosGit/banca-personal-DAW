@@ -3,6 +3,7 @@ img/
 media/
 lib/
 vendor/
+index/
 node_modules/
 librarie/
 local_data_noREST/

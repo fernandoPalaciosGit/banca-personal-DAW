@@ -3,27 +3,27 @@ var httpRoutes = function($routeProvider){
 		.when('/', {
 			controller: 'bankAccountsController',
 			controllerAs: 'accountsCtrl', //alias utilizado en las vistas
-			templateUrl: 'view/totalCuentas.tpl.html'
+			templateUrl: 'controlAccount/totalCuentas.tpl.html'
 		})
 		.when('/nuevo', {
 			controller: 'bankAccountsController',
 			controllerAs: 'accountsCtrl',
-			templateUrl: 'view/nuevaCuenta.tpl.html'
+			templateUrl: 'controlAccount/nuevaCuenta.tpl.html'
 		})
 		.when('/lista', {
 			controller: 'bankAccountsController',
 			controllerAs: 'accountsCtrl',
-			templateUrl: 'view/listaCuentas.tpl.html'
+			templateUrl: 'controlAccount/listaCuentas.tpl.html'
 		})
 		.when('/registro', {
 			controller: 'loginRegisterController',
 			controllerAs: 'loginRegisterCtrl',
-			templateUrl: 'view/registro.html'
+			templateUrl: 'register/registro.html'
 		})
 		.when('/movimiento/:movId', { //parametro dependencia $routeParams
 			controller: 'filtroMovimientoController',
 			controllerAs: 'filtroMovCtrl',
-			templateUrl: 'view/filtroMovimiento.html'
+			templateUrl: 'singleAccount/unicoMovimiento.html'
 		})
 		.otherwise({
 			redirectTo: '/'

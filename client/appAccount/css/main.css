@@ -46,6 +46,24 @@ input[type='email']:valid:focus{
     to{ background-color: rgb(193, 250, 149); }
 }
 
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+.chromeframe
+{
+    background: #E7E7E7;
+    color: #000;
+    width: 50%;
+    padding: 10px;
+    margin: 10% auto;
+    font-size: 16px;
+}
+.chromeframe a
+{
+    color: #239407;
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 768px){
 	#accountSectionViews {
 		top: 140px;	

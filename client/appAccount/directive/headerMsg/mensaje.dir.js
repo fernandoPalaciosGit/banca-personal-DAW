@@ -6,7 +6,7 @@
 var mensaje = function(){
 	return {
 		restrict: 'E',
-		templateUrl: 'directive/headerMessage.html',
+		templateUrl: 'directive/headerMsg/headerMessage.html',
 		replace: true,
 		transclude: true
 	};
