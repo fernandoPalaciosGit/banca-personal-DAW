@@ -3,12 +3,14 @@
 	var AccountingCtrl = function($rootScope, $cookieStore, maestrosFactory, movimientosFactory){
 		var scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
 		this.titulo = 'Controlar el Cash Flow con - AngularJS';
+		this.fechaActual = new Date().toJSON().split('T')[0];
 
 		//valores por defecto del nuevo movimiento
 		this.nuevoMovimiento = {
 			esIngreso: 1, esGasto: 0, importe: 0,
-			fecha: new Date().toJSON().split('T')[0]
+			fecha: this.fechaActual
 		};
+
 
 		this.total = { ingresos: 0, gastos: 0 };
 
@@ -31,15 +33,9 @@
 			'Hola '+$cookieStore.get('sessionName') :
 			'primero debes Acceder a sistema';
 
-		this.resetDate = function(checkData){
-			if(!checkData){
-				$rootScope.start_date = '';
-				$rootScope.end_date = new Date().toJSON().split('T')[0];
-			}else{
-				$rootScope.start_date = '';
-				$rootScope.end_date = '';
-			}
-		};
+		//FILTROS POR FECHA : DE LISTA DE MOVIMIENTOS 
+		$rootScope.start_date = '';
+		$rootScope.end_date = this.fechaActual;
 
 		this.saveMovimiento = function(){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
@@ -56,15 +52,17 @@
 				});
 
 				/*actualizar vista*/
-				scope.resetMovimiento(auxCopyMov.tipo);
+				scope.resetMovimiento();
 			}
 		};
 
-		this.resetMovimiento = function(accountType){
+		this.resetMovimiento = function(){
+			//mantengo el tipo de movimiento anterior
 			this.checkTipoMovimiento();	      
 	      this.nuevoMovimiento.categoria = '';
 	      this.nuevoMovimiento.importe = 0;
-	      this.nuevoMovimiento.concepto = ''; 
+	      this.nuevoMovimiento.concepto = '';
+	      this.nuevoMovimiento.fecha = this.fechaActual;
 		};
 
 		this.checkTipoMovimiento = function(){

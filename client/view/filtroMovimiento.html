@@ -11,20 +11,20 @@
                         <label class="control-label" for="tipo">Tipo</label>
                         <div class="controls">
                             <div class="btn-group">
-                                {{filtroMovCtrl.filtroMov.tipo}}
+                                {{filtroMovCtrl.filtroMov.tipo | byDefault}}
                             </div>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="categ">Categoría</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.categoria }}
+                            {{ filtroMovCtrl.filtroMov.categoria | byDefault }}
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="categ">Concepto</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.concepto || '---' }}
+                            {{ filtroMovCtrl.filtroMov.concepto | byDefault }}
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="control-group">
                         <label class="control-label" for="fecha">Fecha</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.fecha || date }}
+                            {{ filtroMovCtrl.filtroMov.fecha | byDefault | date }}
                         </div>
                     </div>
                     <div class="control-group">

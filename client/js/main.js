@@ -51,13 +51,16 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 			//DEBUGGER
 			switch(response.status){
 				case 0:
-					console.error(error + 'Servidor desconectado');
+					console.error(error + '\nServidor desconectado');
 					break;
 				case 500:
-					console.error(error + 'El servidor ha fallado');
+					console.error(error + '\nEl servidor ha fallado');
 					break;
 				case 419:
-					console.error(error + 'Sesión caducada @ 20 minutos');
+					console.error(error + '\nSesión caducada @ 20 minutos');
+					break;
+				case 401:
+					console.error(error + '\nEl usuario NO esta registrado en el servidor');
 					break;
 			}
 
@@ -79,7 +82,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 				case 401:
 					$rootScope.mensaje = "Credencial Invalida";
 					$rootScope.mensaje += ( !$cookieStore.get('sessionId') ) ?
-						', Registrate!!!' : ', login incorrecto';
+						', Registrate' : ', vuelve a loguearte';
 					$location.path('registro');
 					break;
 				case 409:

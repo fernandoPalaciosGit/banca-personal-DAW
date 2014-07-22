@@ -38,8 +38,7 @@ IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la p
 
         <li><input type="checkbox" id="dateFilter" name="dateFilter"
                 ng-model="checkData"
-                ng-click="accountsCtrl.resetDate(checkData);"
-                >
+                ng-click="start_date = ''; end_date = end_date;" >
             <label for="dateFilter">filtro fecha</label>
         </li>
     </ul><br/><br/>
@@ -81,9 +80,9 @@ IMPLEMMENTACION: guardar en cache e imprimir en tabla, el nuevo registro de la p
                 <td>
                     <a ng-href="#/movimiento/{{movimiento.id}}">{{movimiento.id}}</a>
                 </td>
-                <td>{{movimiento.fecha| date}}</td>
-                <td>{{movimiento.tipo}}</td>
-                <td>{{movimiento.categoria}}</td>
+                <td>{{movimiento.fecha | byDefault | date}}</td>
+                <td>{{movimiento.tipo | byDefault}}</td>
+                <td>{{movimiento.categoria | byDefault}}</td>
                 <td>{{movimiento.concepto | cutInput:15}}</td>
                 <td ng-class="
                     { 'text-success': movimiento.tipo === 'ingreso',

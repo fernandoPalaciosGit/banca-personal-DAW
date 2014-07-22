@@ -4,7 +4,7 @@ var cutInput = function(){
 		if(!paramFilter)
 			paramFilter = 10;
 		if(!inputValue)
-			return '---';
+			return '----';
 
 		if(inputValue.length <= paramFilter)
 			return inputValue;
@@ -13,6 +13,12 @@ var cutInput = function(){
 	};
 };
 
+var byDefault = function(){
+	return function(field, strDef){
+		strDef = strDef || '----';
+		return field || strDef;
+	};
+};
 // filtro importe de movimiento: por cantidades pequeñas y grandes
 var impInput = function(){
 	 return function (inputValue, paramFilter) {
@@ -75,3 +81,4 @@ appFilters.filter('impInput', impInput);
 appFilters.filter('cutInput', cutInput);
 appFilters.filter('parseAmount', parseAmount);
 appFilters.filter('dateRange', dateRange);
+appFilters.filter('byDefault', byDefault);
