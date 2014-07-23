@@ -65,13 +65,14 @@ app.use( '/api/priv/', function (req, res, next){
     //ACTUALIZAR LA SESION si no han pasado 20 minutos o CADUCARLA
     if(sesionEncontrada){
         if( (new Date() - sesionEncontrada.timeStamp) > (1000*20*60) ){
-            console.log('Sesion caducada: '+JSON.stringify(sesionEncontrada));
-            res.send(419, 'Sesion Caducada, pasaron 20 minutos, vuelva a loguearse');
+            console.log('Sesion caducada @ 20 min: '+JSON.stringify(sesionEncontrada));
+            res.send(419);
         }else{
             sesionEncontrada.timeStamp = new Date();
         }
     }else{
-        res.send(401, 'Credencial inválida');
+        console.log('Credencial invalida');
+        res.send(401);
     }
     /*NODE: si hemos llegado aqui, continuar la ejecucion,
     debemos mantener la ejecucion de este bloque, porque hay que revisar si la sesion ha exurado despues de 20 minutos*/
@@ -142,7 +143,7 @@ app.route('/api/usuarios/')
         for (var i = 0, len = usuarios.length; i < len; i++) {
             if( usuarios[i].email === checkUsuario.email){
                 console.log('Usuario con email ya registrado: '+checkUsuario.email);
-                res.send(409, "Email '"+checkUsuario.email+"' ya registrado");
+                res.send(409);
                 return true; //NODE!!!
             }
         }
@@ -175,7 +176,7 @@ app.route('/api/sesiones')
             }
         }
         console.log("Credencial Invalida: "+checkUsuario.email);
-        res.send(401, 'Credencial Invalida');
+        res.send(401);
     });
 
 //API REST: prueba de servidor

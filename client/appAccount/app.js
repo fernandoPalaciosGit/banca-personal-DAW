@@ -51,16 +51,19 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 			//DEBUGGER
 			switch(response.status){
 				case 0:
-					console.error(error + '\nServidor desconectado');
+					console.error(error + '\nServidor desconectado.');
 					break;
 				case 500:
-					console.error(error + '\nEl servidor ha fallado');
+					console.error(error + '\nEl servidor ha fallado.');
 					break;
 				case 419:
-					console.error(error + '\nSesión caducada @ 20 minutos');
+					console.error(error + '\nSesión caducada @ 20 minutos.');
+					break;
+				case 400:
+					console.error(error + '\nNo se ha podido acceder al recurso, revisar el codigo.');
 					break;
 				case 401:
-					console.error(error + '\nEl usuario NO esta registrado en el servidor');
+					console.error(error + '\nEl usuario NO esta registrado en el servidor.');
 					break;
 			}
 
@@ -77,7 +80,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 					$location.path('registro');
 					break;
 				case 400:
-					$rootScope.mensaje = "Culpa mía :-(";
+					$rootScope.mensaje = "Fallo de servicio, intentelo mas tarde";
 					break;
 				case 401:
 					$rootScope.mensaje = "Credencial Invalida";
@@ -86,7 +89,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 					$location.path('registro');
 					break;
 				case 409:
-					$rootScope.mensaje = "Usuario Ya registrado en el sistema, logueate!!!";
+					$rootScope.mensaje = "Usuario Ya registrado, utiliza otro email!!!";
 					break;
 				case 404:
 					$rootScope.mensaje = "Pagina no encontrada!!!";
