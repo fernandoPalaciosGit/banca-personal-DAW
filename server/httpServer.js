@@ -1,9 +1,10 @@
 var express = require('express'), //MVC
-    bodyParser = require('body-parser'),//HTTP req, resp
+    bodyParser = require('body-parser'),//nos permitira recuperar datos de formulario por POST
     http = require('http'); //controlar eventos de express
 
 var app = express(),            //aplicacion MVC basada en express
-    server = app.listen(3000);  //puerto de escucha del servidor (localhost)
+    port = process.env.PORT || 3000,
+    server = app.listen(port);  //puerto de escucha del servidor (localhost)
 
     //PERSISTENCIA DE MOVIMIENTOS
 var maxId = 0,
@@ -15,7 +16,7 @@ var maxId = 0,
         categoriasGastos    :
             ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'colegio', 'escolar profesional', 'alquiler', 'luz', 'agua', 'telefono', 'seguros', 'compras']
     },
-    //AUTENTIFICACION
+    //AUTENTICACION
     usuarios = [],
     sesiones = [];
 
@@ -45,6 +46,7 @@ var shutDown = function (){
     }, 1000*5);
 };
 
+//MIDDLEWARE: parsear encabezados http y parametros de peticion GET
 app.use( bodyParser() );
 
 //MIDDLEWARE, acceso a recursos estaticos desde este servidor
@@ -180,6 +182,7 @@ app.route('/api/sesiones')
 app.get("/test", function(req, res, next){
     res.send("<h1>Flujo de Cajas</h1><p>NodeJs y Expres funcionan!!!</p>");
 });
+console.log('Servidor NodeJS corriendo en http://localhost:'+port);
 
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);

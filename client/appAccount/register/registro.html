@@ -1,41 +1,75 @@
 <div class="container">
     <div class="row">
-		<div class="span12">
-			<form class="form-horizontal" action='' method="POST">
-			  <fieldset>
-			    <div id="legend">
-			      <legend class="">Login</legend>
-			    </div>
-			    <div class="control-group">
-			      <!-- email -->
-			      <label class="control-label"  for="email">Email</label>
-			      <div class="controls">
-			        <input type="email" name="email" placeholder="" class="input-xlarge"
-			        			ng-model="loginRegisterCtrl.usuario.email">
-			      </div>
-			    </div>
-			    <div class="control-group">
-			      <!-- Password -->
-			      <label class="control-label" for="password">Password</label>
-			      <div class="controls">
-			        <input type="password" name="password" placeholder="" class="input-xlarge"
-			        			ng-model="loginRegisterCtrl.usuario.password">
-			      </div>
-			    </div>
+		<div class="col-md-12 col-sm-12">
+
+			<ng-form class="form-horizontal" action=''
+					method="POST" novalidate name="accessUserForm.userField">
+				    <div class="control-group">
+				      <!-- EMAIL -->
+				      <label class="control-label" for="email">Email address</label>
+				      <div class="controls">
+				        <input type="email" name="email" placeholder="username@domainMail"
+				        			autofocus="autofocus" class="input-xlarge text-center"
+				        			ng-model="userField.email">
+				      </div>
+				    </div>
+
+
+				     <!-- PASSWORD -->
+				    <div class="control-group">
+				      <label class="control-label" for="password">Password access</label>
+				      <div class="controls">
+				        <input type="password" name="password" placeholder="xxxxxx"
+				        			class="input-xlarge text-center"
+				        			ng-model="userField.password">
+				      </div>
+				    </div>
+
+					<!-- ALERTAS A USUARIO -->
+					<div class="panel panel-danger col-md-4 col-sm-4 pull-left"
+							ng-show='accessUserForm.userField.$dirty && loginRegisterCtrl.validAccessUserForm'>
+					  <div class="panel-body text-danger"
+					  		ng-show='accessUserForm.userField.email.$error.email ||
+					  					( !accessUserForm.userField.email.$viewValue ||
+					  					!accessUserForm.userField.password.$viewValue )'>
+					  					Formulario Incorrecto
+					  </div>
+					  <div class="panel-body text-success"
+					  		ng-show='accessUserForm.userField.$valid &&
+					  					accessUserForm.userField.email.$viewValue &&
+					  					accessUserForm.userField.password.$viewValue &&
+					  					!accessUserForm.userField.email.$error.email'>
+					  					Formulario Correcto
+					  </div>
+					  <div class="alert alert-warning"
+				  			 ng-show='accessUserForm.userField.$invalid || ( !accessUserForm.userField.email.$viewValue ||
+					  					!accessUserForm.userField.password.$viewValue )' >
+						 	 <span class="has-error"
+						 	 		 ng-show="!accessUserForm.userField.email.$viewValue">Email requerido</span><br/>
+						 	 <span class="has-error"
+						 	 		 ng-show="!accessUserForm.userField.password.$viewValue">Password requerido</span><br/>
+		                <span	class="has-error"
+		    						ng-show="accessUserForm.userField.email.$error.email">Dirección de email inválida</span>
+					  </div>
+					</div>
+
+					
+				  
+				  <br><br>
+				  <!-- BOTONES DE ACCESO -->  		
 			    <div class="control-group">
 			      <!-- Button: login, acceder al servicion, usuario registrado -->
 			      <div class="controls">
 			        <button	class="btn btn-primary"
-			        				ng-click="loginRegisterCtrl.login()">Usuario del sistema</button>
+			        				ng-click="loginRegisterCtrl.checkAcces('login')">Usuario del sistema</button>
 			      </div>
                 <!-- Button: darse de alta en el servicio, nuevo usuario -->
 			      <div class="controls">
 			        <button	class="btn btn-success"
-			        				ng-click="loginRegisterCtrl.registro()">Nuevo registro</button>
+			        				ng-click="loginRegisterCtrl.checkAcces('registro')">Nuevo registro</button>
 			      </div>
 			    </div>
-			  </fieldset>
-			</form>
+			</ng-form>
 		</div>
 	</div>
 </div>

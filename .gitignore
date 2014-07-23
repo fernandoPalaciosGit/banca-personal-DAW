@@ -9,6 +9,7 @@ librarie/
 local_data_noREST/
 httpServerExample.js
 httpServerSockets.js
+client/data
 
 # Java Files
 *.class
