@@ -110,3 +110,9 @@ app.config( ['$routeProvider', httpRoutes] );
 app.config( ['$httpProvider', function($httpProvider){
 	$httpProvider.interceptors.push( ['$q', '$location', '$cookieStore', '$rootScope', httpStatusControl] );
 }]);
+
+//FILTROS
+var appFilters = window.angular.module('input-filters', []);
+
+//DIRECTIVAS
+var appDirectives = window.angular.module('util-directives', []);

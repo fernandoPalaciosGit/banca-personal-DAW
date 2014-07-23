@@ -21,6 +21,11 @@
 	height: 100px;
 }
 
+.selectedButon,
+.selectedInput{
+        border: 2px solid rgb(88, 189, 10) !important;
+}
+
 input[type='text']:valid:focus,
 input[type='url']:valid:focus,
 input[type='search']:valid:focus,

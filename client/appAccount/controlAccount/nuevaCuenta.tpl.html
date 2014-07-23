@@ -9,7 +9,7 @@
                 <!-- TIPO MOVIMIENTO -->
                 <div class="col-xs-12 col-sm-6">
                     <div class="control-group">
-                        <label for="tipo" class="control-label">Tipo</label>
+                        <label for="tipo" class="control-label">TIPO</label>
                         <div class="controls">
                             <div class="btn-group">
                                 <button class="btn btn-success"
@@ -31,12 +31,12 @@
                     </div>
                     <!-- CATEGORIA MOVIMIENTO-->
                     <div class="control-group">
-                        <label for="categ" class="control-label">Categoria</label>
+                        <label for="categ" class="control-label">CATEGORIA</label>
                         <div class="controls">
                           <select name="categ"
                                   ng-show="accountsCtrl.nuevoMovimiento.esIngreso"
                                   ng-model="accountsCtrl.nuevoMovimiento.categoria"
-                                  ng-options="categ for categ in accountsCtrl.maestros.categoriasIngresos"
+                                  ng-options="categ | capitalyzeAll for categ in accountsCtrl.maestros.categoriasIngresos"
                                   >
                               <option value=""></option>
                           </select>
@@ -50,7 +50,7 @@
                     </div>
                     <!-- CONCEPTO MOVIMIENTO -->
                     <div class="control-group">
-                        <label for="concepto" class="control-label">Concepto</label>
+                        <label for="concepto" class="control-label">CONCEPTO</label>
                         <div class="controls">
                             <textarea name="concepto" class="input"
                                       ng-model="accountsCtrl.nuevoMovimiento.concepto"></textarea>
@@ -61,7 +61,7 @@
                 <!-- seleccionar la fecha y la cantidad del tipo de importe -->
                 <div class="col-xs-12 col-sm-6">
                   <div class="control-group">
-                        <label for="fecha" class="control-label">Fecha</label>
+                        <label for="fecha" class="control-label">FECHA</label>
                         <span class="text-info"
                               ng-show='accountsCtrl.nuevoMovimiento.fecha == accountsCtrl.fechaActual'> : hoy</span>
                         <div class="controls">
@@ -70,14 +70,14 @@
                         </div>
                   </div>
                   <div class="control-group">
-                        <label for="importe" class="control-label">Importe</label>
+                        <label for="importe" class="control-label">IMPORTE</label>
                         <div class="controls">
                             <input type="number" name="importe" class="input"
                                   ng-model="accountsCtrl.nuevoMovimiento.importe" value="">
                         </div>
                   </div><br/>
                   <div class="control-group">
-                      <strong>Categoria seleccionada</strong>
+                      <strong>Categoria Seleccionada</strong>
                       <span class="text-info">
                        : {{ accountsCtrl.checkTipoMovimiento(); accountsCtrl.nuevoMovimiento.tipo }}
                       -> {{ accountsCtrl.nuevoMovimiento.categoria || '[sin categoria]'}}</span>

@@ -4,15 +4,15 @@
 <div id="totalCountsSection" class="row-fluid">
     <div class="row placeholders">
         <div class="col-xs-8 col-sm-4 placeholder">
-            <h4>Total ingresos</h4>
-              <h1><span class="label label-success">
+            <h4>Total Ingresos</h4>
+              <h1><span class="label label-info">
                   {{ accountsCtrl.total.ingresos | number:2 | parseAmount:'Eur' }}
               </span></h1>
             <span class="text-muted">acumulado</span>
         </div>
         <div class="col-xs-8 col-sm-4 placeholder">
-            <h4>Total gastos</h4>
-              <h1><span class="label label-danger">
+            <h4>Total Gastos</h4>
+              <h1><span class="label label-info">
                   {{ accountsCtrl.total.gastos | number:2 | parseAmount:'Eur' }}
               </span></h1>
             <span class="text-muted">acumulado</span>

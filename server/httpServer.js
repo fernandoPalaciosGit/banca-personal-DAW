@@ -14,7 +14,7 @@ var maxId = 0,
         categoriasIngresos  :
             ['otros ingresos', 'alquiler inmueble', 'nómina', 'propiedades', 'servicios profesoinales'],
         categoriasGastos    :
-            ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'colegio', 'escolar profesional', 'alquiler', 'luz', 'agua', 'telefono', 'seguros', 'compras']
+            ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'educación', 'colegio profesional', 'alquiler', 'luz', 'agua', 'telefono', 'compras']
     },
     //AUTENTICACION
     usuarios = [],

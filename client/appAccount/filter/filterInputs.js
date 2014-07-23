@@ -1,7 +1,3 @@
-/////////////
-// FILTROS //
-/////////////
-
 // recortar la propiedad 'concepto' de cada movimiento
 var cutInput = function(){
 	return function(inputValue, paramFilter){
@@ -17,12 +13,25 @@ var cutInput = function(){
 	};
 };
 
+//texto por defecto (ausencia de contenido)
 var byDefault = function(){
 	return function(field, strDef){
 		strDef = strDef || '----';
 		return field || strDef;
 	};
 };
+
+//capitalizar palabras del input
+var capitalyzeAll = function(){
+	return function (inputValue, separator){
+		var	flag = separator || ' ',
+				parseValue = inputValue.split(flag).map(function(arr, item){
+					return arr.charAt(0).toUpperCase() + arr.substring(1);
+				}).join(flag);
+		return parseValue;
+	};
+};
+
 // importe de movimiento: por cantidades pequeñas y grandes
 var impInput = function(){
 	 return function (inputValue, paramFilter) {
@@ -80,9 +89,9 @@ var dateRange = function(){
 	};
 };
 
-var appFilters = window.angular.module('input-filters', []);
 appFilters.filter('impInput', impInput);
 appFilters.filter('cutInput', cutInput);
 appFilters.filter('parseAmount', parseAmount);
 appFilters.filter('dateRange', dateRange);
 appFilters.filter('byDefault', byDefault);
+appFilters.filter('capitalyzeAll', capitalyzeAll);

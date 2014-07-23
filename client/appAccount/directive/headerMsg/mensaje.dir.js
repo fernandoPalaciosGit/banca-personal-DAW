@@ -12,5 +12,4 @@ var mensaje = function(){
 	};
 };
 
-var appDirectives = window.angular.module('util-directives', []);
 appDirectives.directive('mensaje', mensaje);
