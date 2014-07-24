@@ -23,7 +23,7 @@
 
 .selectedButon,
 .selectedInput{
-        border: 2px solid rgb(88, 189, 10) !important;
+        border: 3px solid rgb(88, 189, 10) !important;
 }
 
 input[type='text']:valid:focus,

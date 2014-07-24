@@ -9,9 +9,9 @@
         <th>tipo: 
             <div class="btn-group">
                 <button type="button" class="btn btn-default btn-xs"
-                        ng-click="valorBuscado='ingreso'">ingresos</button>
+                        ng-click="filtroMovCtr.valorBuscado='ingreso'">ingresos</button>
                 <button type="button" class="btn btn-default btn-xs"
-                        ng-click="valorBuscado='gasto'">gastos</button>
+                        ng-click="filtroMovCtr.valorBuscado='gasto'">gastos</button>
             </div>
         </th>
         <th>categoria</th>
@@ -23,16 +23,17 @@
     </tr></thead>
     <tbody>
         <!-- <tr ng-repeat=" movimiento in accountsCtrl.movimientos |
-                        impInput:valorCorte |
-                        filter:valorBuscado |
-                        orderBy:campo:sentido"> 
+                        impInput:filtroMovCtr.valorCorte |
+                        filter:filtroMovCtr.valorBuscado |
+                        orderBy:campo:sentido |
+                        dateRange:start_date:end_date:filtroMovCtr.checkData"> 
         //ahora tenemos 'filteredMov', que captura el array de movimientos filtrados
         -->
         <tr ng-repeat=" movimiento in filteredMov = (  accountsCtrl.movimientos |
-                                                        impInput:valorCorte |
-                                                        filter:valorBuscado |
+                                                        impInput:filtroMovCtr.valorCorte |
+                                                        filter:filtroMovCtr.valorBuscado |
                                                         orderBy:campo:sentido |
-                                                        dateRange:start_date:end_date:checkData )">
+                                                        dateRange:filtroMovCtr.start_date:filtroMovCtr.end_date:filtroMovCtr.checkData )">
             <td>
                 <a ng-href="#/movimiento/{{movimiento.id}}">{{movimiento.id}}</a>
             </td>

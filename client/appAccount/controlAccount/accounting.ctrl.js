@@ -40,11 +40,6 @@
 			$cookieStore.get('sessionName') :
 			'primero debes Acceder a sistema';
 
-		//FILTROS POR FECHA Y VALOR : DE LISTA DE MOVIMIENTOS 
-		$scope.start_date = '';
-		$scope.end_date = fechaActual;
-		$scope.valorCorte = 0;
-
 		$scope.getTotal = function(){
 			if( !!$scope.filteredMov ){ //???ANGULAR
 				var total = 0, product, importe;
@@ -57,83 +52,7 @@
 				return total;
 			}
 		};
-
-		$scope.resetDate = function (){
-			$scope.checkActualMonth = false;
-			$scope.checkActualYear = false;
-			$scope.checkActualWeek = false;
-			$scope.checkToday = false;
-			$scope.start_date = '';
-			$scope.end_date = fechaActual;
-		};
-
-		$scope.setActualMonth = function(){
-			if( plugin.isEmpty($scope.checkActualMonth) ){
-				$scope.checkActualYear = false;
-				$scope.checkActualWeek = false;
-				$scope.checkToday = false;
-
-				var	now = new Date(),
-						thisYear = now.getFullYear(),
-						thisMonth = now.getMonth(),
-						firstDayMonth = new Date(thisYear, thisMonth, 1),
-						lastDayMonth = new Date(thisYear, thisMonth, plugin.getLastDayInMonth(now));
-
-				$scope.start_date = firstDayMonth.toJSON().split('T')[0];
-				$scope.end_date = lastDayMonth.toJSON().split('T')[0];
-			}else{
-				$scope.resetDate();
-			}
-		};
-
-		$scope.setActualYear = function (){
-			if( plugin.isEmpty($scope.checkActualYear) ){
-				$scope.checkActualMonth = false;
-				$scope.checkActualWeek = false;
-				$scope.checkToday = false;
-				var	now = new Date(),
-						thisYear = now.getFullYear(),
-						firstDayYear = new Date(thisYear, 0, 1),
-						lastDayYear = new Date(thisYear, 11, 31);
-
-				$scope.start_date = firstDayYear.toJSON().split('T')[0];
-				$scope.end_date = lastDayYear.toJSON().split('T')[0];
-
-			}else{
-				$scope.resetDate();
-			}
-		};
-
-		$scope.setActualWeek = function (){
-			if( plugin.isEmpty($scope.checkActualWeek) ){
-				$scope.checkActualMonth = false;
-				$scope.checkActualYear = false;
-				$scope.checkToday = false;
-				var	now = new Date(),
-						firstDayWeek = plugin.getFirstDayWeek(now),
-						lastDayWeek = plugin.getLastDayWeek(now);
-
-				$scope.start_date = firstDayWeek.toJSON().split('T')[0];
-				$scope.end_date = lastDayWeek.toJSON().split('T')[0];
-
-			}else{
-				$scope.resetDate();
-			}
-		};
-
-		$scope.setToday = function (){
-			if( plugin.isEmpty($scope.checkToday) ){
-				$scope.checkActualMonth = false;
-				$scope.checkActualYear = false;
-				$scope.checkActualWeek = false;
-				var	now = new Date();
-				$scope.start_date = now.toJSON().split('T')[0];
-				$scope.end_date = now.toJSON().split('T')[0];
-			}else{
-				$scope.resetDate();
-			}
-		};
-
+		
 		this.saveMovimiento = function(){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
 			if( auxCopyMov.importe !== 0 ){
