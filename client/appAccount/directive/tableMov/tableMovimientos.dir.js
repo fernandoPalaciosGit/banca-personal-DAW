@@ -1,10 +1,26 @@
+var tablaMovController = function (){
+	this.filteredMov = [];
+
+	this.getTotal = function(){
+		if( !!this.filteredMov ){ //???ANGULAR
+			var total = 0, product, importe;
+			for(var i = 0, len = this.filteredMov.length; i < len; i++){
+				product = this.filteredMov[i];
+				importe = product.importe;
+				importe = (!product.esGasto) ? importe : importe*=-1 ;
+				total += importe;
+			}
+			return total;
+		}
+	};
+
+};
+
 var tablaMov = function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'directive/tableMov/tableMovimientos.html',
-		controller: function (){
-
-		},
+		controller: tablaMovController,
 		controllerAs: 'tablaMovCtr'
 	};
 };

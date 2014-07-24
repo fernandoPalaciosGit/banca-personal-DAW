@@ -1,7 +1,7 @@
 <!-- LISTA DE MOVIMIENTOS -->
 <table class="table" id="tableCountList">
     <thead><tr>
-        <th>{{filteredMov.length}} movimientos</th>
+        <th>{{tablaMovCtr.filteredMov.length}} movimientos</th>
         <th><a href="" ng-click="
                 campo = 'fecha';
                 sentido = (campo === 'fecha') &amp;&amp; !sentido;
@@ -27,9 +27,9 @@
                         filter:filtroMovCtr.valorBuscado |
                         orderBy:campo:sentido |
                         dateRange:start_date:end_date:filtroMovCtr.checkData"> 
-        //ahora tenemos 'filteredMov', que captura el array de movimientos filtrados
+        //ahora tenemos 'tablaMovCtr.filteredMov', que captura el array de movimientos filtrados
         -->
-        <tr ng-repeat=" movimiento in filteredMov = (  accountsCtrl.movimientos |
+        <tr ng-repeat=" movimiento in tablaMovCtr.filteredMov = (  accountsCtrl.movimientos |
                                                         impInput:filtroMovCtr.valorCorte |
                                                         filter:filtroMovCtr.valorBuscado |
                                                         orderBy:campo:sentido |
@@ -49,11 +49,11 @@
     </tbody>
     <tfoot>
        <tr>
-           <td><strong>{{filteredMov.length}} movimientos</strong></td>
+           <td><strong>{{tablaMovCtr.filteredMov.length}} movimientos</strong></td>
            <td></td><td></td><td></td><td></td>
-           <td><strong ng-class=" { 'text-danger' : getTotal() < 0,
-                                     'text-success' : getTotal() >= 0}">
-            {{ getTotal() | number:2 | parseAmount:'Euros' }}</strong></td>
+           <td><strong ng-class=" { 'text-danger' : tablaMovCtr.getTotal() < 0,
+                                     'text-success' : tablaMovCtr.getTotal() >= 0}">
+            {{ tablaMovCtr.getTotal() | number:2 | parseAmount:'Euros' }}</strong></td>
        </tr>
    </tfoot>   
 </table>

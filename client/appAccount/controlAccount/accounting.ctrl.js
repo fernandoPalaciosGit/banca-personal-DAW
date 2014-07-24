@@ -40,19 +40,6 @@
 			$cookieStore.get('sessionName') :
 			'primero debes Acceder a sistema';
 
-		$scope.getTotal = function(){
-			if( !!$scope.filteredMov ){ //???ANGULAR
-				var total = 0, product, importe;
-				for(var i = 0, len = $scope.filteredMov.length; i < len; i++){
-					product = $scope.filteredMov[i];
-					importe = product.importe;
-					importe = (!product.esGasto) ? importe : importe*=-1 ;
-					total += importe;
-				}
-				return total;
-			}
-		};
-		
 		this.saveMovimiento = function(){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
 			if( auxCopyMov.importe !== 0 ){
