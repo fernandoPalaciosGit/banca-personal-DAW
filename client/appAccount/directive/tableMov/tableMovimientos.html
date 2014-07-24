@@ -1,0 +1,58 @@
+<!-- LISTA DE MOVIMIENTOS -->
+<table class="table" id="tableCountList">
+    <thead><tr>
+        <th>{{filteredMov.length}} movimientos</th>
+        <th><a href="" ng-click="
+                campo = 'fecha';
+                sentido = (campo === 'fecha') &amp;&amp; !sentido;
+            ">fecha</a></th>
+        <th>tipo: 
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="valorBuscado='ingreso'">ingresos</button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="valorBuscado='gasto'">gastos</button>
+            </div>
+        </th>
+        <th>categoria</th>
+        <th>concepto</th>
+        <th><a href="" ng-click="
+                campo = 'importe';
+                sentido = (campo === 'importe') &amp;&amp; !sentido;
+            ">importe</a></th>
+    </tr></thead>
+    <tbody>
+        <!-- <tr ng-repeat=" movimiento in accountsCtrl.movimientos |
+                        impInput:valorCorte |
+                        filter:valorBuscado |
+                        orderBy:campo:sentido"> 
+        //ahora tenemos 'filteredMov', que captura el array de movimientos filtrados
+        -->
+        <tr ng-repeat=" movimiento in filteredMov = (  accountsCtrl.movimientos |
+                                                        impInput:valorCorte |
+                                                        filter:valorBuscado |
+                                                        orderBy:campo:sentido |
+                                                        dateRange:start_date:end_date:checkData )">
+            <td>
+                <a ng-href="#/movimiento/{{movimiento.id}}">{{movimiento.id}}</a>
+            </td>
+            <td>{{movimiento.fecha | byDefault | date}}</td>
+            <td>{{movimiento.tipo | byDefault}}</td>
+            <td>{{movimiento.categoria | byDefault | capitalyzeAll}}</td>
+            <td>{{movimiento.concepto | cutInput:15}}</td>
+            <td ng-class="
+                { 'text-success': movimiento.tipo === 'ingreso',
+                  'text-danger' : movimiento.tipo === 'gasto'    }
+            "><strong>{{movimiento.importe | number:2 | parseAmount:'Euros' }}</strong></td>
+        </tr>
+    </tbody>
+    <tfoot>
+       <tr>
+           <td><strong>{{filteredMov.length}} movimientos</strong></td>
+           <td></td><td></td><td></td><td></td>
+           <td><strong ng-class=" { 'text-danger' : getTotal() < 0,
+                                     'text-success' : getTotal() >= 0}">
+            {{ getTotal() | number:2 | parseAmount:'Euros' }}</strong></td>
+       </tr>
+   </tfoot>   
+</table>

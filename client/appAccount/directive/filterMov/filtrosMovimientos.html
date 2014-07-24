@@ -1,0 +1,90 @@
+<!-- FILTROO BUSQUEDA PERSONAL -->
+<p>
+    <label for="importe" class="control-label">Filtrar</label> : 
+    <input type="search" name="filtro" class="input text-center"
+            placeholder="qué buscas?" autofocus='autofocus'
+            ng-class="{ 'selectedInput' : !!valorBuscado }"
+            ng-model="valorBuscado"/>
+    <a href="" ng-click="valorBuscado=''">X</a>
+</p>
+
+<!-- FILTRO POR IMPORTE -->
+<ul class="pagination pagination-sm">
+    <li ><a href="" ng-click="valorCorte=0"
+                    ng-class=" { 'selectedButon' : valorCorte==0 } ">Todos</a></li>
+</ul>
+
+<ul class="pagination pagination-sm">
+    <li><a href=""  ng-click="valorCorte=500"
+                    ng-class=" { 'selectedButon' : valorCorte==500 } ">&gt; 500</a></li>
+    <li><a href=""  ng-click="valorCorte=1000"
+                    ng-class=" { 'selectedButon' : valorCorte==1000 } ">&gt;  1000</a></li>
+    <li><a href=""  ng-click="valorCorte=5000"
+                    ng-class=" { 'selectedButon' : valorCorte==5000 } ">&gt; 5000</a></li>
+</ul>
+
+<ul class="pagination pagination-sm btn-info">
+    <li><a href=""  ng-click="valorCorte=-500"
+                    ng-class=" { 'selectedButon' : valorCorte==-500 } ">&lt; 500</a></li>
+    <li><a href=""  ng-click="valorCorte=-1000"
+                    ng-class=" { 'selectedButon' : valorCorte==-1000 } ">&lt; 1000</a></li>
+    <li><a href=""  ng-click="valorCorte=-5000"
+                    ng-class=" { 'selectedButon' : valorCorte==-5000 } ">&lt; 5000</a></li>
+</ul>
+
+
+<!-- FILTRO POR RANGO DE FECHA -->
+<ul class="nav nav-justified" role="tablist">
+    <!-- SWITCH DATA FILTER -->
+    <li><input type="checkbox" id="dateFilter" name="dateFilter"
+            ng-model="checkData"
+            ng-click="resetDate()" >
+        <label for="dateFilter">filtro fecha</label>
+    </li><BR/>
+
+    <!-- CALENDARIO -->
+    <li>desde: <input type="date" class="filterDate"
+            ng-disabled="!checkData"
+            ng-class=" { 'selectedButon' : checkData } "
+            ng-model="start_date"></li>
+    <li>hasta: <input type="date" class="filterDate"
+            ng-disabled="!checkData"
+            ng-class=" { 'selectedButon' : checkData } "
+            ng-model="end_date"></li>
+
+    <!-- FILTRO MES ACTUAL -->
+    <li><input type="checkbox" id="dateActualMonth" name="dateActualMonth"
+            ng-checked='!checkData && !checkActualYear && !checkActualWeek && !checkToday'
+            ng-disabled="!checkData && !checkActualYear && !checkActualWeek && !checkToday"
+            ng-model="checkActualMonth"
+            ng-click="setActualMonth()"/>
+        <label for="dateActualMonth">Este Mes</label>
+    </li>
+    
+    <!-- FILTRO AÑO ACTUAL -->
+    <li><input type="checkbox" id="dateActualYear" name="dateActualYear"
+            ng-checked='!checkData && !checkActualMonth && !checkActualWeek && !checkToday'
+            ng-disabled="!checkData && !checkActualMonth && !checkActualWeek && !checkToday"
+            ng-model="checkActualYear"
+            ng-click="setActualYear()"/>
+        <label for="dateActualYear">Este Año</label>
+    </li>
+
+    <!-- FILTRO SEMANA ACTUAL -->
+    <li><input type="checkbox" id="dateActualWeek" name="dateActualWeek"
+            ng-checked='!checkData && !checkActualMonth && !checkActualYear && !checkToday'
+            ng-disabled="!checkData && !checkActualMonth && !checkActualYear && !checkToday"
+            ng-model="checkActualWeek"
+            ng-click="setActualWeek()"/>
+        <label for="dateActualWeek">Esta semana</label>
+    </li>
+
+    <!-- FILTRO HOY ACTUAL -->
+    <li><input type="checkbox" id="dateActualDay" name="dateActualDay"
+            ng-checked='!checkData && !checkActualMonth && !checkActualYear && !checkActualWeek'
+            ng-disabled="!checkData && !checkActualMonth && !checkActualYear && !checkActualWeek"
+            ng-model="checkToday"
+            ng-click="setToday()"/>
+        <label for="dateActualDay">Hoy</label>
+    </li>
+</ul>
