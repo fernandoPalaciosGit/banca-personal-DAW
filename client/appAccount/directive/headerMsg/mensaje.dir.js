@@ -1,7 +1,3 @@
-////////////////
-// DIRECTIVAS //
-////////////////
-
 //encabezado de vistas, adicion de mensaje personalizado
 var mensaje = function(){
 	return {
