@@ -1,6 +1,11 @@
-var express = require('express'), //MVC
-    bodyParser = require('body-parser'),//nos permitira recuperar datos de formulario por POST
-    http = require('http'); //controlar eventos de express
+var express = require('express'),         //MVC
+    bodyParser = require('body-parser'),  //recuperar datos de formulario por POST
+    http = require('http'),               //controlar eventos de express
+    ErrApp = {
+        e401: 'Credencial Invalida: ',
+        e409: 'Usuario con email ya registrado: ',
+        e419: 'Sesion caducada @ 20 min: '
+    };
 
 var app = express(),            //aplicacion MVC basada en express
     port = process.env.PORT || 3000,
@@ -52,30 +57,30 @@ app.use( bodyParser() );
 //MIDDLEWARE, acceso a recursos estaticos desde este servidor
 app.use( express.static('../client') );
 
-//MIDDLEWARE, validacion de sesiones
+//MIDDLEWARE, validacion de sesiones: cualquier ruta de consulta REST, que comienze por /api/priv
 app.use( '/api/priv/', function (req, res, next){
-    //APLICAMOS UNA REGLA PARA TODAS LAS URL QUE COMIENZEN POR /api/priv
+
     var sessionId = req.get('sessionId');
-    //console.log("SESION: "+sessionId);
     var sesionEncontrada = sesiones.filter(function (sesion){
-            //comparacion solo de valor: Number&&String
             return sesion.sessionId == sessionId;
         })[0];
 
     //ACTUALIZAR LA SESION si no han pasado 20 minutos o CADUCARLA
     if(sesionEncontrada){
         if( (new Date() - sesionEncontrada.timeStamp) > (1000*20*60) ){
-            console.log('Sesion caducada @ 20 min: '+JSON.stringify(sesionEncontrada));
-            res.send(419);
+            console.log(ErrApp.e419 + JSON.stringify(sesionEncontrada));
+            res.send(419, ErrApp.e419);
         }else{
+            console.log('TimeStamp sesion actualizada de :'+sesionEncontrada.email);
             sesionEncontrada.timeStamp = new Date();
         }
     }else{
-        console.log('Credencial invalida');
-        res.send(401);
+        console.log(ErrApp.e401+' Sesion NO encontrada o caducada');
+        res.send(401, ErrApp.e401);
     }
+
     /*NODE: si hemos llegado aqui, continuar la ejecucion,
-    debemos mantener la ejecucion de este bloque, porque hay que revisar si la sesion ha exurado despues de 20 minutos*/
+    El middelware debe permitir acceder a la ruta con la extension api/priv/... */
     next();
 });
 
@@ -101,10 +106,8 @@ app.route('/api/priv/movimientos')
     })
 	.post(function (req, res, next) {
         
-        var reqBody = req.body;//header HTTP: metadatos nuevoMovimiento
-        //proteger el movimiento de sobreescritura
-        if( !reqBody.id ){
-            var movimiento = {
+        var reqBody = req.body, //header HTTP: metadatos nuevoMovimiento
+            movimiento = {
                 id: maxId++,
                 esIngreso: reqBody.esIngreso,
                 esGasto: reqBody.esGasto,
@@ -114,12 +117,13 @@ app.route('/api/priv/movimientos')
                 categoria: reqBody.categoria,
                 concepto: reqBody.concepto
             };
-            ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe
-                                        : total.ingresos += movimiento.importe;
-            movimientos.push(movimiento);
-        }
+
+        ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe
+                                    : total.ingresos += movimiento.importe;
+        movimientos.push(movimiento);
 
         res.status(200);
+        res.json(movimiento);   //callback promises cliente
     });
 
 //API REST: recuperar maestros
@@ -140,18 +144,18 @@ app.route('/api/usuarios/')
         };
 
         //comprobar registro o dar de alta nuevo usuario
-        for (var i = 0, len = usuarios.length; i < len; i++) {
-            if( usuarios[i].email === checkUsuario.email){
-                console.log('Usuario con email ya registrado: '+checkUsuario.email);
-                res.send(409);
-                return true; //NODE!!!
-            }
+        if (!usuarios.some(function (usuario) {
+            return usuario.email == checkUsuario.email;
+        })) {
+            //si no esta registrado, crear token de sesion y devolverlo al cliente
+            usuarios.push(checkUsuario);
+            console.log('Nuevo usuario sesion creada en '+checkUsuario.email);
+            var sessionID = newSession(checkUsuario.email);
+            res.json(sessionID);
+        } else {
+            console.log(ErrApp.e409+checkUsuario.email);
+            res.send(409, ErrApp.e409);
         }
-
-        //si no esta registrado, crear token de sesion y devolverlo al cliente
-        usuarios.push(checkUsuario);
-        var sessionID = newSession(checkUsuario.email);
-        res.json(sessionID);
     });
 
 // API REST: gestion de sesiones
@@ -166,17 +170,21 @@ app.route('/api/sesiones')
             email: reqBody.email,
             password: reqBody.password
         };
+        
+        var usuarioValidado = usuarios.filter(function (usuario) {
+            return  usuario.email == checkUsuario.email &&
+                    usuario.password == checkUsuario.password;
+        })[0];
+
         //confirmar usuario o negar conexion
-        for (var i = 0, len = usuarios.length; i < len; i++) {
-            if( usuarios[i].email === checkUsuario.email &&
-                usuarios[i].password === checkUsuario.password    ){
-                var sessionID = newSession(checkUsuario.email);
-                res.json(sessionID);
-                return true; //NODE!!!
-            }
+        if (usuarioValidado) {
+            console.log('Id sesion actualizada de '+checkUsuario.email);
+            var sessionID = newSession(checkUsuario.email);
+            res.json(sessionID);
+        } else {
+            console.log(ErrApp.e401+checkUsuario.email);
+            res.send(401, ErrApp.e401);
         }
-        console.log("Credencial Invalida: "+checkUsuario.email);
-        res.send(401);
     });
 
 //API REST: prueba de servidor

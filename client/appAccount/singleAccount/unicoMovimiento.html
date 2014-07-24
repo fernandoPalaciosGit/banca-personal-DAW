@@ -32,13 +32,13 @@
                     <div class="control-group">
                         <label class="control-label" for="fecha">Fecha</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.fecha | byDefault | date }}
+                            {{ filtroMovCtrl.filtroMov.fecha | byDefault | date:"dd MMMM yyyy @ HH:mma" }}
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="importe">Importe</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.importe }}
+                            {{ filtroMovCtrl.filtroMov.importe | number:2 | parseAmount:'Euros'}}
                         </div>
                     </div>
                 </div>

@@ -28,17 +28,19 @@
 								.success(function (data){
 									scope.total = data;
 								});
+
 		//RECONOCIMIENTO DEL USUARIO
 		$rootScope.nombre = ( $cookieStore.get('sessionId') ) ?
 			$cookieStore.get('sessionName') :
 			'primero debes Acceder a sistema';
 
-		//FILTROS POR FECHA : DE LISTA DE MOVIMIENTOS 
-		$rootScope.start_date = '';
-		$rootScope.end_date = this.fechaActual;
+		//FILTROS POR FECHA Y VALOR : DE LISTA DE MOVIMIENTOS 
+		$scope.start_date = '';
+		$scope.end_date = this.fechaActual;
+		$scope.valorCorte = 0
 
 		$scope.getTotal = function(){
-			if( !!$scope.filteredMov ){
+			if( !!$scope.filteredMov ){ //???ANGULAR
 				var total = 0, product, importe;
 				for(var i = 0, len = $scope.filteredMov.length; i < len; i++){
 					product = $scope.filteredMov[i];
@@ -53,15 +55,19 @@
 		this.saveMovimiento = function(){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
 			if( auxCopyMov.importe !== 0 ){
-				/*almacenar datos en el server*/
-				movimientosFactory.setMovimientos(auxCopyMov);
 
-				/*recuperar datos del server*/
-				movimientosFactory.getTotal().success(function(data){
-					scope.total = data;
-				});
-				movimientosFactory.getMovimientos().success(function(data){
-					scope.movimientos = data;
+				/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
+				movimientosFactory.setMovimientos(auxCopyMov)
+										.success(function(data, status, headers, config) {
+						//asegurar el update de nuevo movimiento
+						if(status == 200){
+							movimientosFactory.getTotal().success(function(data){
+								scope.total = data;
+							});
+							movimientosFactory.getMovimientos().success(function(data){
+								scope.movimientos = data;
+							});
+						}
 				});
 
 				/*actualizar vista*/
