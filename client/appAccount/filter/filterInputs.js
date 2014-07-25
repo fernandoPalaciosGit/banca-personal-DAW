@@ -34,27 +34,39 @@ var capitalyzeAll = function(){
 
 // importe de movimiento: por cantidades pequeñas y grandes
 var impInput = function(){
-	 return function (movimientos, paramFilter) {
-	 	//[Object]movimientos: todos los moviumientos de la lista
-	 	//[Number]paramFilter: numero de movimientos a filtrar 
-		 if (paramFilter && !!movimientos) { //ANGULAR
-		     var filtrados = [],
-		     		paramFilter = parseFloat(paramFilter);
+	// [Object]movimientos: todos los moviumientos de la lista
+	// [Number || Boolean]parseFilter: numero de movimientos a filtrar
+	return function (movimientos, parseFilter) {
+		var filtrados = [];
+		if( parseFilter && !!movimientos ){ //ANGULAR
+			if ( Object.prototype.toString.call(parseFilter) === '[object Number]' ) { // movimientos CON VALOR
+				var paramFilter = parseFloat(parseFilter);
+				for (var i = 0, leni = movimientos.length; i < leni; i++) {
+					var importeMov = parseFloat(movimientos[i].importe);
+					if (	(paramFilter >= 0) &&
+							(importeMov >= paramFilter) ) {
+						filtrados.push(movimientos[i]);
+					} else if(	(paramFilter <= 0) &&
+									(-paramFilter > importeMov) ){
+						filtrados.push(movimientos[i]);
+					}
+				}
+				return filtrados;
 
-		     for (var i = 0, len = movimientos.length; i < len; i++) {
-		         var importeMov = parseFloat(movimientos[i].importe);
-		         if (	(paramFilter >= 0) &&
-		         		(importeMov >= paramFilter) ) {
-		             filtrados.push(movimientos[i]);
-		         }else if(	(paramFilter <= 0) &&
-		         				(-paramFilter > importeMov) ){
-		         	filtrados.push(movimientos[i]);
-		         }
-		     }
-		     return filtrados;
-		 } else {
-		 		return movimientos;
-		 }
+			} else if(	Object.prototype.toString.call(parseFilter) === '[object Boolean]' &&
+							parseFilter === true) { // TODOS los movimientos
+				return movimientos;
+			}
+
+		} else {
+			if( !!movimientos && parseFilter === false ){ // movimientos NULO
+				for (var j = 0, lenj = movimientos.length; j < lenj; j++) {
+					var importeMovNulo = parseFloat(movimientos[j].importe);
+					if (	importeMovNulo === 0 ) filtrados.push(movimientos[j]);
+				}
+				return filtrados;
+			}
+		}
 	};
 };
 
@@ -69,23 +81,23 @@ var parseAmount = function(){
 
 // rango de fecha del movimiento
 var dateRange = function(){
-  return function (conversations, start_date, end_date, checkData) {
-		var result = [];
- 
+  return function (movimientos, start_date, end_date, checkData) {
 		// date filters
-		var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
-		var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
+		var	result = [],
+				parse_start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0,
+				parse_end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
+		
 		// if the conversations are loaded
-		if (checkData && conversations && conversations.length > 0){
-			for (var i = 0, len = conversations.length; i < len; i++) {
-			    var	conversation = conversations[i],
-			    		conversationDate = new Date(conversation.fecha);
-				if (conversationDate >= start_date && conversationDate <= end_date){
-					result.push(conversation);
+		if (checkData && movimientos && movimientos.length > 0){
+			for (var i = 0, len = movimientos.length; i < len; i++) {
+				var	movimiento = movimientos[i],
+						movimientoDate = new Date(movimiento.fecha);
+				if ( movimientoDate >= parse_start_date && movimientoDate <= parse_end_date ){
+					result.push(movimiento);
 				}
-			};
+			}
 			return result;
-		}else return conversations;
+		}else return movimientos;
 	};
 };
 

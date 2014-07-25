@@ -10,8 +10,13 @@
 
 <!-- FILTRO POR IMPORTE -->
 <ul class="pagination pagination-sm">
-    <li ><a href="" ng-click="filtroMovCtr.valorCorte=0"
-                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==0 } ">Todos</a></li>
+    <li ><a href="" ng-click="filtroMovCtr.valorCorte=true"
+                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==true } ">Todos</a></li>
+</ul>
+
+<ul class="pagination pagination-sm">
+    <li ><a href="" ng-click="filtroMovCtr.valorCorte=false"
+                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==false } ">Nulo</a></li>
 </ul>
 
 <ul class="pagination pagination-sm">

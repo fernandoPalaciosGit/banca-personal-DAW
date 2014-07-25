@@ -8,7 +8,7 @@ var filtroMovController = function ($rootScope, $window){
 		this.valorBuscado = '';
 
 		//filtro por valor (search)
-		this.valorCorte = 0;
+		this.valorCorte = true; //todos los movimientos
 	};
 
 	this.resetDate = function (){
