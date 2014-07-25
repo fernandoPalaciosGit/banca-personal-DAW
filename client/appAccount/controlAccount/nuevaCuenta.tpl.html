@@ -72,6 +72,8 @@
                         <label for="importe" class="control-label">IMPORTE</label>
                         <div class="controls">
                             <input type="number" name="importe" class="input"
+                                  ng-focus="accountsCtrl.checkValidImporte($event)"
+                                  ng-blur="accountsCtrl.checkValidImporte($event)"
                                   ng-model="accountsCtrl.nuevoMovimiento.importe" value="">
                         </div>
                   </div><br/>

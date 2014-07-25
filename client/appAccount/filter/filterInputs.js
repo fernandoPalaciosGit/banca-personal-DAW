@@ -34,26 +34,26 @@ var capitalyzeAll = function(){
 
 // importe de movimiento: por cantidades pequeñas y grandes
 var impInput = function(){
-	 return function (inputValue, paramFilter) {
-	 	//[Object]inputValue: todos los moviumientos de la lista
+	 return function (movimientos, paramFilter) {
+	 	//[Object]movimientos: todos los moviumientos de la lista
 	 	//[Number]paramFilter: numero de movimientos a filtrar 
-		 if (paramFilter) {
+		 if (paramFilter && !!movimientos) { //ANGULAR
 		     var filtrados = [],
 		     		paramFilter = parseFloat(paramFilter);
 
-		     for (var i = 0; i < inputValue.length; i++) {
-		         var importeMov = parseFloat(inputValue[i].importe);
+		     for (var i = 0, len = movimientos.length; i < len; i++) {
+		         var importeMov = parseFloat(movimientos[i].importe);
 		         if (	(paramFilter >= 0) &&
 		         		(importeMov >= paramFilter) ) {
-		             filtrados.push(inputValue[i]);
+		             filtrados.push(movimientos[i]);
 		         }else if(	(paramFilter <= 0) &&
 		         				(-paramFilter > importeMov) ){
-		         	filtrados.push(inputValue[i]);
+		         	filtrados.push(movimientos[i]);
 		         }
 		     }
 		     return filtrados;
 		 } else {
-		 		return inputValue;
+		 		return movimientos;
 		 }
 	};
 };

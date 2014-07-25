@@ -10,6 +10,8 @@ local_data_noREST/
 httpServerExample.js
 httpServerSockets.js
 client/data
+client/alternative-client
+server/alternative-server
 
 # Java Files
 *.class

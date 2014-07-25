@@ -1,31 +1,38 @@
 // CONTROLADOR DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMovController = function (){
-	var fechaActual = new Date().toJSON().split('T')[0];
+var filtroMovController = function ($rootScope, $window){
+	var	fechaActual = new Date().toJSON().split('T')[0];
 
-	//FILTRO PERSONALIZADO
-	this.valorBuscado = '';
+	//RESETEAR VALORES DE FILTROS 
+	this.resetValues = function (){
+		//filtro personalizado
+		this.valorBuscado = '';
 
-	//FILTRO POR VALOR
-	this.valorCorte = 0;
+		//filtro por valor (search)
+		this.valorCorte = 0;
+	};
 
 	this.resetDate = function (){
-		// SWITCH DE FILTRO-FECHAS
+		// Switch de todos los filtro-fechas
 		this.checkData = false;
 		
-		//FECHA DE INICIO Y FIN 
+		//fecha de inicio-fin
 		this.start_date = '';
 		this.end_date = fechaActual;
 		
-		//FILTROS POR FECHA
+		// Switch de filtro-fechas especificos
 		this.checkActualMonth = false;
 		this.checkActualYear = false;
 		this.checkActualWeek = false;
 		this.checkToday = false;
 	};
 
-	//reseteamos las propiedades al cargar la vista con la directiva de filtros
+
+	// researlos valores predeterminados por la factoria
+	//---> cambiar  valores reciuperados por la factoria, no por defecto
+	this.resetValues();
 	this.resetDate();
 
+	
 	this.setActualMonth = function(){
 		if( plugin.isEmpty(this.checkActualMonth) ){
 			this.checkActualYear = false;
@@ -74,7 +81,7 @@ var filtroMovController = function (){
 		return	!this.checkData &&
 					!this.checkActualMonth &&
 					!this.checkActualWeek &&
-					!this.checkToday
+					!this.checkToday;
 	};
 
 	this.setActualWeek = function (){
@@ -123,7 +130,7 @@ var filtroMovController = function (){
 };
 
 // CONFIGURACION DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMov = function(){
+var filtroMov = function($rootScope){
 	return {
 		restrict: 'E',
 		templateUrl: 'directive/filterMov/filtrosMovimientos.html',
@@ -133,4 +140,4 @@ var filtroMov = function(){
 };
 
 // DIRECTIVA DE FILTRO-MOVIMIENTOS
-appDirectives.directive('filtrosMovimientos', filtroMov);
+appDirectives.directive('filtrosMovimientos', ['$rootScope', '$window', filtroMov]);
