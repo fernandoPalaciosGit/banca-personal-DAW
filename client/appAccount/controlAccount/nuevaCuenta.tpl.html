@@ -68,15 +68,24 @@
                                   ng-model="accountsCtrl.nuevoMovimiento.fecha" value="">
                         </div>
                   </div>
+                  
                   <div class="control-group">
                         <label for="importe" class="control-label">IMPORTE</label>
                         <div class="controls">
                             <input type="number" name="importe" class="input"
                                   ng-focus="accountsCtrl.checkValidImporte($event)"
                                   ng-blur="accountsCtrl.checkValidImporte($event)"
+                                  ng-disabled="accountsCtrl.nuevoMovimiento.esNulo"
                                   ng-model="accountsCtrl.nuevoMovimiento.importe" value="">
+
+
+                            <input  type="checkbox" name="importeNull" id="importeNull" class="input"
+                                    ng-model="accountsCtrl.nuevoMovimiento.esNulo"
+                                    ng-click="accountsCtrl.isImporteNull($event)"/>
+                            <label for="importeNull">Nulo</label>
                         </div>
                   </div><br/>
+
                   <div class="control-group">
                       <strong>Categoria Seleccionada</strong>
                       <span class="text-info">

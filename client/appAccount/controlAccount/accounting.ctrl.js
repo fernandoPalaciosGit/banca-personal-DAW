@@ -13,8 +13,7 @@
 		
 		//valores por defecto del nuevo movimiento
 		this.nuevoMovimiento = {
-			esIngreso: 1, esGasto: 0, importe: 0,
-			tipo : 'ingreso', fecha: fechaActual
+			esIngreso: 1, esGasto: 0, esNulo: false
 		};
 
 
@@ -41,10 +40,16 @@
 			$location.path('registro');	
 		}
 
+		this.isImporteNull = function (event){
+			if(event.target.checked){
+				this.nuevoMovimiento.importe = 0;
+			}
+		};
+
 		this.saveMovimiento = function (){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
 
-			if( !this.checkValidImporte() ){
+			if( !this.checkValidImporte() || this.nuevoMovimiento.esNulo === true ){
 				/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
 				movimientosFactory.setMovimientos(auxCopyMov)
 										.success(function(data, status, headers, config) {
@@ -59,7 +64,7 @@
 						}
 				});
 				/*actualizar vista*/
-				scope.resetMovimiento();
+				this.resetMovimiento();
 			}else{
 				w.alert('Falta la cantidad del movimiento');
 			}
@@ -81,11 +86,13 @@
 
 		this.resetMovimiento = function (){
 			this.checkTipoMovimiento();
+			this.nuevoMovimiento.esNulo = false;
 			this.nuevoMovimiento.categoria = '';
 			this.nuevoMovimiento.importe = 0;
 			this.nuevoMovimiento.concepto = '';
 			this.nuevoMovimiento.fecha = fechaActual;
 		};
+
 
 		this.checkTipoMovimiento = function (){
 			this.nuevoMovimiento.tipo = (!this.nuevoMovimiento.esIngreso) ? 'gasto' : 'ingreso';
@@ -94,6 +101,9 @@
 		this.balance = function (){
 			return this.total.ingresos - this.total.gastos;
 		};
+
+		//reseteo las propiedades del modelo al cargar la vista
+		this.resetMovimiento();
 	};
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
