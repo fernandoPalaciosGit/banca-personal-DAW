@@ -5,7 +5,10 @@
             placeholder="qué buscas?" autofocus='autofocus'
             ng-class="{ 'selectedInput' : !!filtroMovCtr.valorBuscado }"
             ng-model="filtroMovCtr.valorBuscado" />
-    <a href="" ng-click="filtroMovCtr.valorBuscado=''">X</a>
+    <a href=""  ng-click="filtroMovCtr.valorBuscado=''"
+                ng-show="filtroMovCtr.valorBuscado!=''">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+    </a>
 </p>
 
 <!-- FILTRO POR IMPORTE -->

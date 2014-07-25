@@ -1,11 +1,24 @@
 <!-- LISTA DE MOVIMIENTOS -->
+        CAMPO {{tablaMovCtr.campo}} : SENTIDO {{tablaMovCtr.sentido}}
 <table class="table" id="tableCountList">
     <thead><tr>
-        <th>{{tablaMovCtr.filteredMov.length}} movimientos</th>
-        <th><a href="" ng-click="
-                campo = 'fecha';
-                sentido = (campo === 'fecha') &amp;&amp; !sentido;
-            ">fecha</a></th>
+        <th><a href="" ng-click="tablaMovCtr.checkCampoSentido('id')">
+            {{tablaMovCtr.filteredMov.length}} movimientos</a>
+            <span ng-show="tablaMovCtr.campo === 'id'">
+                <span   class="glyphicon glyphicon-chevron-up"
+                        ng-show="tablaMovCtr.sentido"></span>
+                <span   class="glyphicon glyphicon-chevron-down"
+                        ng-show="!tablaMovCtr.sentido"></span>
+            </span>
+        </th>
+        <th><a href="" ng-click="tablaMovCtr.checkCampoSentido('fecha')">fecha</a>
+            <span ng-show="tablaMovCtr.campo === 'fecha'">
+                <span   class="glyphicon glyphicon-chevron-up"
+                        ng-show="tablaMovCtr.sentido"></span>
+                <span   class="glyphicon glyphicon-chevron-down"
+                        ng-show="!tablaMovCtr.sentido"></span>
+            </span>
+        </th>
         <th>tipo: 
             <div class="btn-group">
                 <button type="button" class="btn btn-default btn-xs"
@@ -16,10 +29,14 @@
         </th>
         <th>categoria</th>
         <th>concepto</th>
-        <th><a href="" ng-click="
-                campo = 'importe';
-                sentido = (campo === 'importe') &amp;&amp; !sentido;
-            ">importe</a></th>
+        <th><a href="" ng-click="tablaMovCtr.checkCampoSentido('importe')">importe</a>
+            <span ng-show="tablaMovCtr.campo === 'importe'">
+                <span   class="glyphicon glyphicon-chevron-up"
+                        ng-show="tablaMovCtr.sentido"></span>
+                <span   class="glyphicon glyphicon-chevron-down"
+                        ng-show="!tablaMovCtr.sentido"></span>
+            </span>
+        </th>
     </tr></thead>
     <tbody>
         <!-- <tr ng-repeat=" movimiento in accountsCtrl.movimientos |
@@ -32,7 +49,7 @@
         <tr ng-repeat=" movimiento in tablaMovCtr.filteredMov = (  accountsCtrl.movimientos |
                                                         impInput:filtroMovCtr.valorCorte |
                                                         filter:filtroMovCtr.valorBuscado |
-                                                        orderBy:campo:sentido |
+                                                        orderBy:tablaMovCtr.campo:tablaMovCtr.sentido |
                                                         dateRange:filtroMovCtr.start_date:filtroMovCtr.end_date:filtroMovCtr.checkData )">
             <td>
                 <a ng-href="#/movimiento/{{movimiento.id}}">{{movimiento.id}}</a>

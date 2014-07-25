@@ -1,5 +1,12 @@
 var tablaMovController = function (){
 	this.filteredMov = [];
+	this.sentido = false;
+	this.campo = '';
+	
+	this.checkCampoSentido = function (isCampo){
+			this.sentido = (this.campo === isCampo) ? !this.sentido : this.sentido;
+			this.campo = isCampo;
+	};
 
 	this.getTotal = function(){
 		if( !!this.filteredMov ){ //???ANGULAR

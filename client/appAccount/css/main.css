@@ -16,6 +16,9 @@
 #tableCountList td{
 	text-align: center;
 }
+#tableCountList .glyphicon{
+    color: rgb(88, 189, 10) !important;
+}
 .controls textarea{
 	width: 80%;
 	height: 100px;
