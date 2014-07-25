@@ -12,18 +12,14 @@
                         <div class="controls">
                             <div class="btn-group">
                                 <button class="btn btn-success"
-                                      ng-click="accountsCtrl.nuevoMovimiento.esIngreso = 1;
-                                                accountsCtrl.nuevoMovimiento.esGasto = 0;
-                                                accountsCtrl.resetMovimiento(); "
-                                      ng-class="{'active': accountsCtrl.nuevoMovimiento.esIngreso === 1}">
-                                      <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esIngreso === 0}">+ Ingreso</span>
+                                        ng-click="accountsCtrl.resetTipo('ingreso')"
+                                        ng-class="{'active': accountsCtrl.nuevoMovimiento.esIngreso === 1}">
+                                  <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esIngreso === 0}">+ Ingreso</span>
                                 </button>
                                 <button class="btn btn-danger"
-                                      ng-click="accountsCtrl.nuevoMovimiento.esIngreso = 0;
-                                                accountsCtrl.nuevoMovimiento.esGasto = 1;
-                                                accountsCtrl.resetMovimiento(); "
-                                      ng-class="{'active': accountsCtrl.nuevoMovimiento.esGasto === 1}">
-                                      <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esGasto === 0}">- Gasto</span>
+                                        ng-click="accountsCtrl.resetTipo('gasto')"
+                                        ng-class="{'active': accountsCtrl.nuevoMovimiento.esGasto === 1}">
+                                  <span ng-class="{'small': accountsCtrl.nuevoMovimiento.esGasto === 0}">- Gasto</span>
                                 </button>
                             </div>
                         </div>
@@ -42,7 +38,7 @@
                           <select name="categ"
                                   ng-show="accountsCtrl.nuevoMovimiento.esGasto !== 0"
                                   ng-model="accountsCtrl.nuevoMovimiento.categoria"
-                                  ng-options="categ for categ in accountsCtrl.maestros.categoriasGastos">
+                                  ng-options="categ |capitalyzeAll for categ in accountsCtrl.maestros.categoriasGastos">
                               <option value=""></option>
                           </select>
                       </div>
@@ -76,6 +72,7 @@
                                   ng-focus="accountsCtrl.checkValidImporte($event)"
                                   ng-blur="accountsCtrl.checkValidImporte($event)"
                                   ng-disabled="accountsCtrl.nuevoMovimiento.esNulo"
+                                  ng-keypress="accountsCtrl.voidKeyPress($event)"
                                   ng-model="accountsCtrl.nuevoMovimiento.importe" value="">
 
 
@@ -89,7 +86,7 @@
                   <div class="control-group">
                       <strong>Categoria Seleccionada</strong>
                       <span class="text-info">
-                       : {{ accountsCtrl.checkTipoMovimiento(); accountsCtrl.nuevoMovimiento.tipo }}
+                       : {{ accountsCtrl.nuevoMovimiento.tipo }}
                       -> {{ accountsCtrl.nuevoMovimiento.categoria || '[sin categoria]'}}</span>
                   </div><br/>
 
@@ -98,7 +95,7 @@
                     <div class="control-group col-xs-4 col-sm-6">
                       <button type="button" class="btn btn-primary btn-lg"
                               ng-click="accountsCtrl.saveMovimiento()">
-                          <span>Añadir {{ accountsCtrl.checkTipoMovimiento(); accountsCtrl.nuevoMovimiento.tipo }}</span>
+                          <span>Añadir {{ accountsCtrl.nuevoMovimiento.tipo }}</span>
                       </button>
                     </div>
                 </div>
@@ -106,4 +103,3 @@
         </fieldset>
     </form>
 </div>
-<!-- {{accountsCtrl.nuevoMovimiento}}

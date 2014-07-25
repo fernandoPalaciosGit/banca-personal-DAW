@@ -1,6 +1,6 @@
 // CONTROLADOR DE DIRECTIVA FILTRO-MOVIMIENTOS
 var filtroMovController = function ($rootScope, $window){
-	var	fechaActual = new Date().toJSON().split('T')[0];
+	var fechaActual = new Date().toJSON().split('T')[0];
 
 	//RESETEAR VALORES DE FILTROS 
 	this.resetValues = function (){

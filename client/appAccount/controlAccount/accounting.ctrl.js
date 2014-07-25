@@ -1,8 +1,8 @@
 (function(w, ng, appAng, plugin){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
 	var AccountingCtrl = function($rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory){
-		var	scope = this, //referncia al scope del controlador, para los callback de las peticiones REST
-				fechaActual = new Date().toJSON().split('T')[0];
+		var	scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
+		this.fechaActual = new Date().toJSON().split('T')[0];
 
 		//encabezados de directivas <mensaje>
 		this.titulo = {
@@ -37,7 +37,7 @@
 			});
 		}else{
 			$rootScope.mensaje = 'primero debes Acceder a sistema';
-			$location.path('registro');	
+			$location.path('registro');
 		}
 
 		this.isImporteNull = function (event){
@@ -90,9 +90,14 @@
 			this.nuevoMovimiento.categoria = '';
 			this.nuevoMovimiento.importe = 0;
 			this.nuevoMovimiento.concepto = '';
-			this.nuevoMovimiento.fecha = fechaActual;
+			this.nuevoMovimiento.fecha = this.fechaActual;
 		};
 
+		this.resetTipo = function(typeMov){
+			this.nuevoMovimiento.esIngreso = (typeMov === 'ingreso') ? 1 : 0;
+			this.nuevoMovimiento.esGasto = (typeMov === 'gasto') ? 1 : 0;
+         this.resetMovimiento();
+		};
 
 		this.checkTipoMovimiento = function (){
 			this.nuevoMovimiento.tipo = (!this.nuevoMovimiento.esIngreso) ? 'gasto' : 'ingreso';
@@ -100,6 +105,14 @@
 
 		this.balance = function (){
 			return this.total.ingresos - this.total.gastos;
+		};
+
+		this.voidKeyPress = function (eventPress){
+			if (	eventPress.charCode === 13 ||
+					eventPress.charCode === 32){
+				eventPress.preventDefault();
+				return false;
+			}
 		};
 
 		//reseteo las propiedades del modelo al cargar la vista
