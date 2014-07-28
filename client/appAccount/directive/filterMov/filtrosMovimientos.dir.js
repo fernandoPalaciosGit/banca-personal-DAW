@@ -1,5 +1,5 @@
 // CONTROLADOR DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMovController = function ($rootScope, $window){
+var filtroMovController = function (){
 	var fechaActual = new Date().toJSON().split('T')[0];
 
 	//RESETEAR VALORES DE FILTROS 
@@ -32,6 +32,12 @@ var filtroMovController = function ($rootScope, $window){
 	this.resetValues();
 	this.resetDate();
 
+	this.setOwnData = function (){
+			this.checkActualMonth = false;
+			this.checkActualYear = false;
+			this.checkActualWeek = false;
+			this.checkToday = false;
+	};
 	
 	this.setActualMonth = function(){
 		if( plugin.isEmpty(this.checkActualMonth) ){
@@ -130,7 +136,7 @@ var filtroMovController = function ($rootScope, $window){
 };
 
 // CONFIGURACION DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMov = function($rootScope){
+var filtroMov = function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'directive/filterMov/filtrosMovimientos.html',
@@ -140,4 +146,4 @@ var filtroMov = function($rootScope){
 };
 
 // DIRECTIVA DE FILTRO-MOVIMIENTOS
-appDirectives.directive('filtrosMovimientos', ['$rootScope', '$window', filtroMov]);
+appDirectives.directive('filtrosMovimientos', filtroMov);

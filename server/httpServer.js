@@ -8,7 +8,7 @@ var express = require('express'),         //MVC
     };
 
 var app = express(),            //aplicacion MVC basada en express
-    port = process.env.PORT || 3000,
+    port = process.env.PORT || 3000, //puerto de escucha de Node
     server = app.listen(port);  //puerto de escucha del servidor (localhost)
 
     //PERSISTENCIA DE MOVIMIENTOS

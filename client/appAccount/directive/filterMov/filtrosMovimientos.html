@@ -14,12 +14,14 @@
 <!-- FILTRO POR IMPORTE -->
 <ul class="pagination pagination-sm">
     <li ><a href="" ng-click="filtroMovCtr.valorCorte=true"
-                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==true } ">Todos</a></li>
+                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==true } ">
+         cualquier importe</a></li>
 </ul>
 
 <ul class="pagination pagination-sm">
     <li ><a href="" ng-click="filtroMovCtr.valorCorte=false"
-                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==false } ">Nulo</a></li>
+                    ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==false } ">
+         importe nulo</a></li>
 </ul>
 
 <ul class="pagination pagination-sm">
@@ -51,13 +53,15 @@
     </li><BR/>
 
     <!-- CALENDARIO -->
-    <li>desde: <input type="date" class="filterDate"
+    <li>desde: <input type="date" class="filterDate text-center"
             ng-disabled="!filtroMovCtr.checkData"
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
+            ng-change="filtroMovCtr.setOwnData()"
             ng-model="filtroMovCtr.start_date"></li>
-    <li>hasta: <input type="date" class="filterDate"
+    <li>hasta: <input type="date" class="filterDate text-center"
             ng-disabled="!filtroMovCtr.checkData"
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
+            ng-change="filtroMovCtr.setOwnData()"
             ng-model="filtroMovCtr.end_date"></li>
 
     <!-- FILTRO MES ACTUAL -->

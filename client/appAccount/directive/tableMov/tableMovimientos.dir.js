@@ -1,7 +1,7 @@
 var tablaMovController = function (){
 	this.filteredMov = [];
-	this.sentido = false;
-	this.campo = '';
+	this.sentido = true;
+	this.campo = 'id';
 	
 	this.checkCampoSentido = function (isCampo){
 			this.sentido = (this.campo === isCampo) ? !this.sentido : this.sentido;
@@ -9,7 +9,7 @@ var tablaMovController = function (){
 	};
 
 	this.getTotal = function(){
-		if( !!this.filteredMov ){ //???ANGULAR
+		if( !!this.filteredMov ){
 			var total = 0, product, importe;
 			for(var i = 0, len = this.filteredMov.length; i < len; i++){
 				product = this.filteredMov[i];
@@ -20,7 +20,6 @@ var tablaMovController = function (){
 			return total;
 		}
 	};
-
 };
 
 var tablaMov = function(){
