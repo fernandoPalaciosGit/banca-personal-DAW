@@ -32,3 +32,18 @@ var tablaMov = function(){
 };
 
 appDirectives.directive('tablaMovimientos', tablaMov);
+appDirectives.directive('redirectSelectMov', function () {
+    return {
+        restrict: 'A',
+        priority: 1,
+        link: function($scope, elm, attr) {
+        	elm.bind('click', function(){
+        		// calling the $location.path outside of the angularjs digest.
+        		var hrefMovRedirect = 'http://localhost:3000/appAccount/#/movimiento/'+$scope.movimiento.id;
+        		$scope.$apply(function() {
+        			window.location.href = hrefMovRedirect; 
+        		});
+        	});
+        }
+    };
+});

@@ -54,22 +54,22 @@
                         dateRange:start_date:end_date:filtroMovCtr.checkData"> 
         //ahora tenemos 'tablaMovCtr.filteredMov', que captura el array de movimientos filtrados
         -->
-        <tr ng-repeat=" movimiento in tablaMovCtr.filteredMov = (  accountsCtrl.movimientos |
+        <tr redirect-select-mov ng-repeat=" movimiento in tablaMovCtr.filteredMov = (  accountsCtrl.movimientos |
                                                         impInput:filtroMovCtr.valorCorte |
                                                         filter:filtroMovCtr.valorBuscado |
                                                         orderBy:tablaMovCtr.campo:tablaMovCtr.sentido |
-                                                        dateRange:filtroMovCtr.start_date:filtroMovCtr.end_date:filtroMovCtr.checkData )">
-            <td>
-                <a ng-href="#/movimiento/{{movimiento.id}}">{{movimiento.id}}</a>
+                                                        dateRange:filtroMovCtr.start_date:filtroMovCtr.end_date:filtroMovCtr.checkData )" >
+            <td class="setWidth concat">
+                <span class="small">{{movimiento.id}}#</span> {{ 'numeroDeFactura' }}
             </td>
             <td>{{movimiento.fecha | byDefault | date}}</td>
             <td>{{movimiento.tipo | byDefault}}</td>
             <td>{{movimiento.categoria | byDefault | capitalyzeAll}}</td>
             <td class="setWidth concat">{{movimiento.concepto}}</td>
-            <td ng-class="
-                { 'text-success': movimiento.tipo === 'ingreso',
-                  'text-danger' : movimiento.tipo === 'gasto'    }
-            "><strong>{{movimiento.importe | number:2 | parseAmount:'Euros' }}</strong></td>
+            <td ng-class=" { 'text-success': movimiento.tipo === 'ingreso',
+                             'text-danger' : movimiento.tipo === 'gasto'    } ">
+                <strong>{{movimiento.importe | number:2 | parseAmount:'Euros' }}</strong>
+            </td>
         </tr>
     </tbody>
     <tfoot>

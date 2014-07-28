@@ -1,6 +1,6 @@
 // recortar la propiedad 'concepto' de cada movimiento
 var cutInput = function(){
-	return function(inputValue, paramFilter){
+	return function (inputValue, paramFilter){
 		if(!paramFilter)
 			paramFilter = 10;
 		if(!inputValue)
@@ -15,7 +15,7 @@ var cutInput = function(){
 
 //texto por defecto (ausencia de contenido)
 var byDefault = function(){
-	return function(field, strDef){
+	return function (field, strDef){
 		strDef = strDef || '----';
 		return field || strDef;
 	};
