@@ -32,12 +32,8 @@ var filtroMovController = function (){
 	this.resetValues();
 	this.resetDate();
 
-	this.setOwnData = function (){
-			this.checkActualMonth = false;
-			this.checkActualYear = false;
-			this.checkActualWeek = false;
-			this.checkToday = false;
-	};
+	// this.setOwnData = function (eventChange){
+	// };
 	
 	this.setActualMonth = function(){
 		if( plugin.isEmpty(this.checkActualMonth) ){
@@ -147,3 +143,33 @@ var filtroMov = function(){
 
 // DIRECTIVA DE FILTRO-MOVIMIENTOS
 appDirectives.directive('filtrosMovimientos', filtroMov);
+appDirectives.directive('preventDataChange', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        priority: 1, // needed for angular 1.2.x
+        link: function(scope, elm, attr, ngModelCtrl) {
+        	var lastDate; //variable compartida entre bindings de eventos en el mismo elemento 
+        	elm.bind('click', function(){
+        		lastDate = elm.val(); //lo podra utilizar 'change'
+        	});
+        	elm.bind('change', function(){
+        		var	filtroMovCtr = scope.filtroMovCtr,
+        				diffDate =  +new Date(filtroMovCtr.end_date) - +new Date(filtroMovCtr.start_date);
+				
+				//inhabilitar si la diferencia del rango de fechas es negativa
+				if( !!filtroMovCtr.end_date && !!filtroMovCtr.start_date && diffDate < 0 ){
+        			elm.val(lastDate); //'recuperamos el valor de click que es el anterior'
+        			alert('rango de fechas incorrecto');
+					return false;
+				} else {
+					//resetear los rangos de fecha especificos
+					filtroMovCtr.checkActualMonth = false;
+					filtroMovCtr.checkActualYear = false;
+					filtroMovCtr.checkActualWeek = false;
+					filtroMovCtr.checkToday = false;
+				}		
+        	});
+        }
+    };
+});

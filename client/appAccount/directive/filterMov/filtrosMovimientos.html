@@ -56,13 +56,15 @@
     <li>desde: <input type="date" class="filterDate text-center"
             ng-disabled="!filtroMovCtr.checkData"
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
-            ng-change="filtroMovCtr.setOwnData()"
+            prevent-data-change
             ng-model="filtroMovCtr.start_date"></li>
+            <!-- ng-change="filtroMovCtr.setOwnData($event)" -->
     <li>hasta: <input type="date" class="filterDate text-center"
             ng-disabled="!filtroMovCtr.checkData"
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
-            ng-change="filtroMovCtr.setOwnData()"
+            prevent-data-change
             ng-model="filtroMovCtr.end_date"></li>
+            <!-- ng-change="filtroMovCtr.setOwnData($event)" -->
 
     <!-- FILTRO MES ACTUAL -->
     <li><input

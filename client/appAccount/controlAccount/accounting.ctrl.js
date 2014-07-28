@@ -40,12 +40,6 @@
 			$location.path('registro');
 		}
 
-		this.isImporteNull = function (event){
-			if(event.target.checked){
-				this.nuevoMovimiento.importe = 0;
-			}
-		};
-
 		this.saveMovimiento = function (){
 			var auxCopyMov = ng.copy(this.nuevoMovimiento);
 
@@ -67,6 +61,12 @@
 				this.resetMovimiento();
 			}else{
 				w.alert('Falta la cantidad del movimiento');
+			}
+		};
+
+		this.isImporteNull = function (event){
+			if(event.target.checked){
+				this.nuevoMovimiento.importe = 0;
 			}
 		};
 
