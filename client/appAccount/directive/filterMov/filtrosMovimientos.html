@@ -58,50 +58,51 @@
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
             prevent-data-change
             ng-model="filtroMovCtr.start_date"></li>
-            <!-- ng-change="filtroMovCtr.setOwnData($event)" -->
+
     <li>hasta: <input type="date" class="filterDate text-center"
             ng-disabled="!filtroMovCtr.checkData"
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
             prevent-data-change
             ng-model="filtroMovCtr.end_date"></li>
-            <!-- ng-change="filtroMovCtr.setOwnData($event)" -->
 
-    <!-- FILTRO MES ACTUAL -->
+    <!-- FILTRO MES ACTUAL
+    ************************************************************************************************* -->
     <li><input
-            type="checkbox" id="dateActualMonth" name="dateActualMonth"
-            ng-checked="filtroMovCtr.isActualMonth()"
-            ng-disabled="filtroMovCtr.isActualMonth()"
+            type="radio" id="dateActualMonth" name="dateActual"
+            ng-checked="false"
+            ng-disabled="!filtroMovCtr.checkData"
             ng-model="filtroMovCtr.checkActualMonth"
-            ng-click="filtroMovCtr.setActualMonth()"/>
+            ng-click="filtroMovCtr.setActualMonth()"
+            />
         <label for="dateActualMonth">Este Mes</label>
     </li>
     
     <!-- FILTRO AÑO ACTUAL -->
     <li><input
-            type="checkbox" id="dateActualYear" name="dateActualYear"
-            ng-checked="filtroMovCtr.isActualYear()"
-            ng-disabled="filtroMovCtr.isActualYear()"
+            type="radio" id="dateActualYear" name="dateActual"
+            ng-checked="false"
+            ng-disabled="!filtroMovCtr.checkData"
             ng-model="filtroMovCtr.checkActualYear"
-            ng-click="filtroMovCtr.setActualYear()"/>
+            ng-click="filtroMovCtr.setActualYear()" />
         <label for="dateActualYear">Este Año</label>
     </li>
 
     <!-- FILTRO SEMANA ACTUAL -->
     <li><input
-            type="checkbox" id="dateActualWeek" name="dateActualWeek"
-            ng-checked="filtroMovCtr.isActualWeek()"
-            ng-disabled="filtroMovCtr.isActualWeek()"
+            type="radio" id="dateActualWeek" name="dateActual"
+            ng-checked="false"
+            ng-disabled="!filtroMovCtr.checkData"
             ng-model="filtroMovCtr.checkActualWeek"
-            ng-click="filtroMovCtr.setActualWeek()"/>
+            ng-click="filtroMovCtr.setActualWeek()" />
         <label for="dateActualWeek">Esta semana</label>
     </li>
 
     <!-- FILTRO HOY ACTUAL -->
-    <li><input type="checkbox" id="dateActualDay" name="dateActualDay"
-            ng-checked="filtroMovCtr.isToday()"
-            ng-disabled="filtroMovCtr.isToday()"
+    <li><input type="radio" id="dateActualDay" name="dateActual"
+            ng-checked="false"
+            ng-disabled="!filtroMovCtr.checkData"
             ng-model="filtroMovCtr.checkToday"
-            ng-click="filtroMovCtr.setToday()"/>
+            ng-click="filtroMovCtr.setToday()" />
         <label for="dateActualDay">Hoy</label>
     </li>
 </ul>

@@ -6,7 +6,6 @@ var filtroMovController = function (){
 	this.resetValues = function (){
 		//filtro personalizado
 		this.valorBuscado = '';
-
 		//filtro por valor (search)
 		this.valorCorte = true; //todos los movimientos
 	};
@@ -14,26 +13,19 @@ var filtroMovController = function (){
 	this.resetDate = function (){
 		// Switch de todos los filtro-fechas
 		this.checkData = false;
-		
 		//fecha de inicio-fin
 		this.start_date = '';
 		this.end_date = fechaActual;
-		
 		// Switch de filtro-fechas especificos
+		this.checkToday = false;
 		this.checkActualMonth = false;
 		this.checkActualYear = false;
 		this.checkActualWeek = false;
-		this.checkToday = false;
 	};
 
-
-	// researlos valores predeterminados por la factoria
-	//---> cambiar  valores reciuperados por la factoria, no por defecto
+	// researlos valores predeterminados
 	this.resetValues();
 	this.resetDate();
-
-	// this.setOwnData = function (eventChange){
-	// };
 	
 	this.setActualMonth = function(){
 		if( plugin.isEmpty(this.checkActualMonth) ){
@@ -54,13 +46,6 @@ var filtroMovController = function (){
 		}
 	};
 
-	this.isActualMonth = function(){
-		return	!this.checkData &&
-					!this.checkActualYear &&
-					!this.checkActualWeek &&
-					!this.checkToday;
-	};
-
 	this.setActualYear = function (){
 		if( plugin.isEmpty(this.checkActualYear) ){
 			this.checkActualMonth = false;
@@ -77,13 +62,6 @@ var filtroMovController = function (){
 		}else{
 			this.resetDate();
 		}
-	};
-
-	this.isActualYear = function(){
-		return	!this.checkData &&
-					!this.checkActualMonth &&
-					!this.checkActualWeek &&
-					!this.checkToday;
 	};
 
 	this.setActualWeek = function (){
@@ -103,13 +81,6 @@ var filtroMovController = function (){
 		}
 	};
 
-	this.isActualWeek = function (){
-		return	!this.checkData &&
-					!this.checkActualMonth &&
-					!this.checkActualYear &&
-					!this.checkToday;
-	};
-
 	this.setToday = function (){
 		if( plugin.isEmpty(this.checkToday) ){
 			this.checkActualMonth = false;
@@ -123,12 +94,6 @@ var filtroMovController = function (){
 		}
 	};
 
-	this.isToday = function (){
-		return	!this.checkData &&
-					!this.checkActualMonth &&
-					!this.checkActualYear &&
-					!this.checkActualWeek;
-	};
 };
 
 // CONFIGURACION DE DIRECTIVA FILTRO-MOVIMIENTOS
@@ -149,26 +114,24 @@ appDirectives.directive('preventDataChange', function() {
         require: 'ngModel',
         priority: 1, // needed for angular 1.2.x
         link: function(scope, elm, attr, ngModelCtrl) {
-        	var lastDate; //variable compartida entre bindings de eventos en el mismo elemento 
-        	elm.bind('click', function(){
+        	//variable compartida entre bindings de eventos en el mismo elemento 
+        	var lastDate, lastMov;
+        	elm.bind('click', function(event){
         		lastDate = elm.val(); //lo podra utilizar 'change'
+        		lastMov = scope.tablaMovCtr.filteredMov;
         	});
-        	elm.bind('change', function(){
+        	elm.bind('change', function(event){
         		var	filtroMovCtr = scope.filtroMovCtr,
         				diffDate =  +new Date(filtroMovCtr.end_date) - +new Date(filtroMovCtr.start_date);
 				
 				//inhabilitar si la diferencia del rango de fechas es negativa
 				if( !!filtroMovCtr.end_date && !!filtroMovCtr.start_date && diffDate < 0 ){
-        			elm.val(lastDate); //'recuperamos el valor de click que es el anterior'
-        			alert('rango de fechas incorrecto');
-					return false;
-				} else {
-					//resetear los rangos de fecha especificos
-					filtroMovCtr.checkActualMonth = false;
-					filtroMovCtr.checkActualYear = false;
-					filtroMovCtr.checkActualWeek = false;
-					filtroMovCtr.checkToday = false;
-				}		
+        			window.alert('rango de fechas incorrecto');
+        			// recuperar fecha anterior y lista de movimentos anterior
+					elm.val(lastDate);
+					scope.tablaMovCtr.filteredMov = lastMov;
+					elm.triggerHandler('change'); //reset //$watch
+				}
         	});
         }
     };

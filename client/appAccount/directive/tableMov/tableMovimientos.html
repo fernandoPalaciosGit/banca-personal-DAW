@@ -60,7 +60,7 @@
                                                         orderBy:tablaMovCtr.campo:tablaMovCtr.sentido |
                                                         dateRange:filtroMovCtr.start_date:filtroMovCtr.end_date:filtroMovCtr.checkData )" >
             <td class="setWidth concat">
-                <span class="small">{{movimiento.id}}#</span> {{ 'numeroDeFactura' }}
+                <span class="small">{{movimiento.id}}#</span> {{ 's/n' }}
             </td>
             <td>{{movimiento.fecha | byDefault | date}}</td>
             <td>{{movimiento.tipo | byDefault}}</td>
