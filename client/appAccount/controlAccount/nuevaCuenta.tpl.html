@@ -1,6 +1,6 @@
 <!-- APLICATION: formulario para la adicion de un nuevo movimiento, gasto o ingreso -->
 <div class="row-fluid">
-    <form action="" class="form-horizontal text-left">
+    <form action="" id='newMovForm' class="form-horizontal text-left">
         <fieldset>
             <mensaje>{{accountsCtrl.titulo.newMovTpl}}</mensaje>
 
@@ -48,6 +48,7 @@
                         <label for="concepto" class="control-label">CONCEPTO</label>
                         <div class="controls">
                             <textarea name="concepto" class="input"
+                                      placeholder="justificacion del movimiento, acreditacion del servicio"
                                       ng-model="accountsCtrl.nuevoMovimiento.concepto"></textarea>
                         </div>
                     </div>
@@ -60,11 +61,21 @@
                         <span class="text-info"
                               ng-show='accountsCtrl.nuevoMovimiento.fecha == accountsCtrl.fechaActual'> : hoy</span>
                         <div class="controls">
-                            <input type="date" name="fecha" class="input text-center" id='movDate1'
+                            <input type="date" name="fecha" class="input" id='movDate1'
                                   ng-model="accountsCtrl.nuevoMovimiento.fecha">
                         </div>
                   </div>
                   
+                  <div class="control-group">
+                        <label for="factura" class="control-label">FACTURA</label>
+                        <div class="controls">
+                            <input type="text" name="factura" class="input"
+                                  placeholder='factura/año'
+                                  title='codigo alfanumetrico, registro, factura'
+                                  ng-model="accountsCtrl.nuevoMovimiento.factura">
+                        </div>
+                  </div><br/>
+
                   <div class="control-group">
                         <label for="importe" class="control-label">IMPORTE</label>
                         <div class="controls">
@@ -96,6 +107,10 @@
                       <button type="button" class="btn btn-primary btn-lg"
                               ng-click="accountsCtrl.saveMovimiento()">
                           <span>Añadir {{ accountsCtrl.nuevoMovimiento.tipo }}</span>
+                      </button>
+                      <button type="button" class="btn btn-link"
+                              ng-click="accountsCtrl.resetMovimiento()">
+                          <span>reiniciar</span>
                       </button>
                     </div>
                 </div>

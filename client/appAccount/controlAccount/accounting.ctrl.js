@@ -13,7 +13,7 @@
 		
 		//valores por defecto del nuevo movimiento
 		this.nuevoMovimiento = {
-			esIngreso: 1, esGasto: 0, esNulo: false
+			esIngreso: 1, esGasto: 0
 		};
 
 
@@ -43,6 +43,9 @@
 		this.saveMovimiento = function (){
 
 			if( !this.checkValidImporte() || this.nuevoMovimiento.esNulo === true ){
+				//valor por defecto de la factura
+				this.nuevoMovimiento.factura = this.nuevoMovimiento.factura || 's/n';
+				
 				//bug, fijar franja horaria
 				var dateMov = this.nuevoMovimiento.fecha;
 				this.nuevoMovimiento.fecha = (dateMov === fechaActual) ? new Date() : dateMov;
@@ -96,17 +99,19 @@
 			this.nuevoMovimiento.categoria = '';
 			this.nuevoMovimiento.importe = 0;
 			this.nuevoMovimiento.concepto = '';
+			this.nuevoMovimiento.factura = '';
 			this.nuevoMovimiento.fecha = fechaActual;
-		};
-
-		this.resetTipo = function(typeMov){
-			this.nuevoMovimiento.esIngreso = (typeMov === 'ingreso') ? 1 : 0;
-			this.nuevoMovimiento.esGasto = (typeMov === 'gasto') ? 1 : 0;
-         this.resetMovimiento();
 		};
 
 		this.checkTipoMovimiento = function (){
 			this.nuevoMovimiento.tipo = (!this.nuevoMovimiento.esIngreso) ? 'gasto' : 'ingreso';
+		};
+
+		this.resetTipo = function(typeMov){
+			this.nuevoMovimiento.tipo = typeMov;
+			this.nuevoMovimiento.esIngreso = (typeMov === 'ingreso') ? 1 : 0;
+			this.nuevoMovimiento.esGasto = (typeMov === 'gasto') ? 1 : 0;
+			this.nuevoMovimiento.categoria = '';
 		};
 
 		this.balance = function (){

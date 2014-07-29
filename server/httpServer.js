@@ -115,13 +115,14 @@ app.route('/api/priv/movimientos')
                 fecha: reqBody.fecha,
                 tipo: reqBody.tipo,
                 categoria: reqBody.categoria,
+                factura: reqBody.factura,
                 concepto: reqBody.concepto
             };
-
+        
         ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe
                                     : total.ingresos += movimiento.importe;
-        movimientos.push(movimiento);
 
+        movimientos.push(movimiento);
         res.status(200);
         res.json(movimiento);   //callback promises cliente
     });

@@ -54,13 +54,15 @@
                         dateRange:start_date:end_date:filtroMovCtr.checkData"> 
         //ahora tenemos 'tablaMovCtr.filteredMov', que captura el array de movimientos filtrados
         -->
+        XXX{{accountsCtrl.movimientos.length}}
         <tr redirect-select-mov ng-repeat=" movimiento in tablaMovCtr.filteredMov = (  accountsCtrl.movimientos |
                                                         impInput:filtroMovCtr.valorCorte |
                                                         filter:filtroMovCtr.valorBuscado |
                                                         orderBy:tablaMovCtr.campo:tablaMovCtr.sentido |
                                                         dateRange:filtroMovCtr.start_date:filtroMovCtr.end_date:filtroMovCtr.checkData )" >
-            <td class="setWidth concat">
-                <span class="small">{{movimiento.id}}#</span> {{ 's/n' }}
+            <td class="movReferenceDoc">
+                <span class="small">{{movimiento.id}}#</span>
+                <span class="setWidth concat">{{ movimiento.factura }}</span>
             </td>
             <td>{{movimiento.fecha | byDefault | date}}</td>
             <td>{{movimiento.tipo | byDefault}}</td>

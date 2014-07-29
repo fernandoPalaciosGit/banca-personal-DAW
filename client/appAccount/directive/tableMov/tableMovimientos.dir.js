@@ -32,6 +32,7 @@ var tablaMov = function(){
 };
 
 appDirectives.directive('tablaMovimientos', tablaMov);
+
 appDirectives.directive('redirectSelectMov', function () {
     return {
         restrict: 'A',

@@ -49,6 +49,7 @@ tbody tr:hover{
 .selectedInput{
         border: 3px solid rgb(88, 189, 10) !important;
 }
+
 .meanSentido{
     position: absolute;
     top: -12px;
@@ -59,6 +60,27 @@ tbody tr:hover{
     font-weight: bold;
     letter-spacing: 1px;
 }
+
+.movReferenceDoc{
+    position: relative;
+}
+.movReferenceDoc>span{
+    position: absolute;
+    height: 100%;
+}
+.movReferenceDoc>span:first-child{
+    left: 0;
+    width: 20%;
+}
+.movReferenceDoc>span:last-child{
+    right: 0;
+    width: 80%;
+    text-align: center;
+}
+.movReferenceDoc .setWidth{
+    max-width: 130px;
+}
+
 input[type='text']:valid:focus,
 input[type='url']:valid:focus,
 input[type='search']:valid:focus,
@@ -98,6 +120,16 @@ input[type='email']:valid:focus{
 #newMovForm .small {
     color: rgb(255, 255, 255);
 }
+
+#newMovForm textarea,
+#newMovForm [name="factura"],
+#newMovForm [name="fecha"],
+#newMovForm [name="categ"],
+#newMovForm [name="importe"]{
+    /*text-align: center;*/
+    text-indent: 15px;
+}
+
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
