@@ -1,8 +1,8 @@
 (function(w, ng, appAng, plugin){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
 	var AccountingCtrl = function($rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory){
-		var	scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
-		this.fechaActual = new Date().toJSON().split('T')[0];
+		var	scope = this, //referncia al scope del controlador, para los callback de las peticiones REST
+				fechaActual = new Date().toJSON().split('T')[0];
 
 		//encabezados de directivas <mensaje>
 		this.titulo = {
@@ -41,9 +41,15 @@
 		}
 
 		this.saveMovimiento = function (){
-			var auxCopyMov = ng.copy(this.nuevoMovimiento);
 
 			if( !this.checkValidImporte() || this.nuevoMovimiento.esNulo === true ){
+				//bug, fijar franja horaria
+				var dateMov = this.nuevoMovimiento.fecha;
+				this.nuevoMovimiento.fecha = (dateMov === fechaActual) ? new Date() : dateMov;
+
+				//asignamos hora del nuevo movimiento
+				var auxCopyMov = ng.copy(this.nuevoMovimiento);
+
 				/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
 				movimientosFactory.setMovimientos(auxCopyMov)
 										.success(function(data, status, headers, config) {
@@ -90,7 +96,7 @@
 			this.nuevoMovimiento.categoria = '';
 			this.nuevoMovimiento.importe = 0;
 			this.nuevoMovimiento.concepto = '';
-			this.nuevoMovimiento.fecha = this.fechaActual;
+			this.nuevoMovimiento.fecha = fechaActual;
 		};
 
 		this.resetTipo = function(typeMov){

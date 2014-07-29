@@ -88,9 +88,15 @@ input[type='email']:valid:focus{
     display: none;
 }
 
-.small {
-    font-size: 85%;
+.small{
+    font-size: 75% !important;
+}
+#tableCountList .small {
     color: rgb(165, 144, 144);
+}
+
+#newMovForm .small {
+    color: rgb(255, 255, 255);
 }
 /* ==========================================================================
    Chrome Frame prompt

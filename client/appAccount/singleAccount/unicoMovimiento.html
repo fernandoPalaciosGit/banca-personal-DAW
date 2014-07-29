@@ -1,5 +1,5 @@
 <section name="verMovimiento" class="row-fluid">
-    <form class="form-horizontal text-left">
+    <form class="form-horizontal text-left" id="newMovForm">
         <fieldset>
             <div id="legend">
                 <legend class="">Ver el movimiento {{ filtroMovCtrl.movId}} </legend>
@@ -32,7 +32,9 @@
                     <div class="control-group">
                         <label class="control-label" for="fecha">Fecha</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.fecha | byDefault | date:"dd MMMM yyyy @ HH:mma" }}
+                            {{  filtroMovCtrl.filtroMov.fecha
+                                | date:"dd MMMM yyyy@HH:mm@a"
+                                | checkDate }}
                         </div>
                     </div>
                     <div class="control-group">

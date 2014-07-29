@@ -101,9 +101,26 @@ var dateRange = function(){
 	};
 };
 
+var checkDate = function (){
+	return function(inputDate){
+		if( plugin.isEmpty(inputDate) ){
+			return '---';
+		}else if( !!inputDate ){
+			if(inputDate.split('@')[1] !== '00:00'){
+				return	inputDate.split('@')[0]+', '+
+							inputDate.split('@')[1]+' '+
+							inputDate.split('@')[2];
+			}else{
+				return inputDate.split('@')[0];
+			}
+		}
+	};
+}
+
 appFilters.filter('impInput', impInput);
 appFilters.filter('cutInput', cutInput);
 appFilters.filter('parseAmount', parseAmount);
 appFilters.filter('dateRange', dateRange);
 appFilters.filter('byDefault', byDefault);
 appFilters.filter('capitalyzeAll', capitalyzeAll);
+appFilters.filter('checkDate', checkDate);
