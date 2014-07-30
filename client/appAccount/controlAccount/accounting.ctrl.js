@@ -1,9 +1,9 @@
 (function(w, ng, appAng, plugin){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
 	var AccountingCtrl = function($rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory){
+		window.scrollTo(0,0); //reset plugin fixed table footer
 		var	scope = this, //referncia al scope del controlador, para los callback de las peticiones REST
 				fechaActual = new Date().toJSON().split('T')[0];
-
 		//encabezados de directivas <mensaje>
 		this.titulo = {
 			totMovTpl: 'Controlar el Balance de tus movimientos.',

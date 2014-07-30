@@ -1,5 +1,6 @@
 (function(w, ng, angApp){
 	var registerCtrl = function($scope, $rootScope, $location, $http, $cookieStore){
+		window.scrollTo(0,0); //reset plugin fixed table footer
 		$scope.urlBase = "http://localhost:3000/api/";
 		$scope.accessUserForm = {};
 		$scope.usuario = {email: '', password: ''};

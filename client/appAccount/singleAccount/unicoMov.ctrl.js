@@ -1,5 +1,6 @@
 (function(w, ng, ngApp){
 	var filtroMovCtrl = function($routeParams, movimientosFactory){
+		window.scrollTo(0,0); //reset plugin fixed table footer
 		var scope = this;
 		//1 - cargo en la vista la URL con el parametro :movId
 		//2 - recuperar parametros de URL a travesde la dependencia $routeParams del controlador

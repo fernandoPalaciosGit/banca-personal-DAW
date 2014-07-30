@@ -1,3 +1,4 @@
+
 #accountSectionViews {
 	top: 100px;
 }
@@ -129,7 +130,17 @@ input[type='email']:valid:focus{
     /*text-align: center;*/
     text-indent: 15px;
 }
-
+#tableCountList tfoot td{
+    font-size: 0.7em;
+    line-height: 0.7em;
+    text-transform: uppercase;
+    font-weight: bold;
+    vertical-align: middle;
+}
+#tableCountList tfoot tr>td:last-child{
+    font-size: 16px;
+    line-height: 16px;
+}
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
@@ -173,6 +184,18 @@ input[type='email']:valid:focus{
     }
     .btn-group.btnValorBuscado {
         display: flex;
+    }
+}
+
+.noWrap:before{
+    content: " : ";
+}
+@media only screen and (max-width : 1200px){
+    .noWrap{
+        display: block;
+    }
+    .noWrap:before{
+        content: "";
     }
 }
 
