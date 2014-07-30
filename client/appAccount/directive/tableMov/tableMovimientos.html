@@ -1,7 +1,7 @@
 <output-impresion class="printView"></output-impresion>
 
 <!-- LISTA DE MOVIMIENTOS --> 
-<div class="table-responsive">    
+<div class="table-responsive">
 <table footer-fixed data-table-fixed="tableCountList" class="table table-hover" id="tableCountList">
     <thead><tr class="info">
         <th class="col-md-2 col-sm-2 orderCampo">
@@ -27,14 +27,40 @@
                 <button type="button"
                         ng-class=" {    'btn btn-xs btn-default' : filtroMovCtr.valorBuscado == 'gasto',
                                         'btn btn-xs btn-success' : filtroMovCtr.valorBuscado != 'gasto' } "
+                        reset-fixed-table
                         ng-click="filtroMovCtr.valorBuscado='ingreso'">ingresos</button>
                 <button type="button"
                         ng-class=" {    'btn btn-xs btn-default' : filtroMovCtr.valorBuscado == 'ingreso',
                                         'btn btn-xs btn-success' : filtroMovCtr.valorBuscado != 'ingreso' } "
+                        reset-fixed-table
                         ng-click="filtroMovCtr.valorBuscado='gasto'">gastos</button>
             </div>
         </th>
-        <th class="col-md-2 col-sm-2">categoria</th>
+        <th class="col-md-2 col-sm-2">categoria
+              <select name="categ"
+                  ng-show="filtroMovCtr.valorBuscado=='ingreso'"
+                  ng-model="filtroMovCtr.categoria"
+                  categoria-buscada
+                  ng-options='categ | capitalyzeAll for categ in  filtroMovCtr.categoria.categoriasIngresos'
+                  >
+                <option value=""></option>
+              </select>
+              <select name="categ"
+                      ng-show="filtroMovCtr.valorBuscado=='gasto'"
+                      ng-model="filtroMovCtr.categoria"
+                      categoria-buscada
+                      ng-options="categ | capitalyzeAll for categ in filtroMovCtr.categoria.categoriasGastos"
+                      >
+                  <option value=""></option>
+              </select>
+              <select name="categ"
+                      ng-show="filtroMovCtr.valorBuscado!='gasto' && filtroMovCtr.valorBuscado!='ingreso'"
+                      ng-model="filtroMovCtr.categoria"
+                      categoria-buscada
+                      ng-options="categ |capitalyzeAll for categ in filtroMovCtr.categoria.categoriasIngresos.concat(accountsCtrl.maestros.categoriasGastos)">
+                  <option value=""></option>
+              </select>
+        </th>
         <th class="col-md-2 col-sm-2">concepto</th>
         <th class="col-md-2 col-sm-2 orderCampo">
             <a href="" ng-click="tablaMovCtr.checkCampoSentido('importe')">importe</a>
@@ -83,5 +109,4 @@
        </tr>
    </tfoot>   
 </table>
-<p class="">En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.</p>
 </div>

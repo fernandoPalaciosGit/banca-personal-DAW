@@ -2,6 +2,7 @@
 <p>
     <label for="importe" class="control-label">Filtrar</label> : 
     <input type="search" name="filtro" class="input text-center"
+            reset-fixed-table
             placeholder="qué buscas?" autofocus='autofocus'
             ng-class="{ 'selectedInput' : !!filtroMovCtr.valorBuscado }"
             ng-model="filtroMovCtr.valorBuscado" />
@@ -20,25 +21,32 @@
 
 <ul class="pagination pagination-sm">
     <li ><a href="" ng-click="filtroMovCtr.valorCorte=false"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==false } ">
          importe nulo</a></li>
 </ul>
 
 <ul class="pagination pagination-sm">
     <li><a href=""  ng-click="filtroMovCtr.valorCorte=500"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==500 } ">&gt; 500</a></li>
     <li><a href=""  ng-click="filtroMovCtr.valorCorte=1000"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==1000 } ">&gt;  1000</a></li>
     <li><a href=""  ng-click="filtroMovCtr.valorCorte=5000"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==5000 } ">&gt; 5000</a></li>
 </ul>
 
 <ul class="pagination pagination-sm btn-info">
     <li><a href=""  ng-click="filtroMovCtr.valorCorte=-500"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==-500 } ">&lt; 500</a></li>
     <li><a href=""  ng-click="filtroMovCtr.valorCorte=-1000"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==-1000 } ">&lt; 1000</a></li>
     <li><a href=""  ng-click="filtroMovCtr.valorCorte=-5000"
+                    reset-fixed-table
                     ng-class=" { 'selectedButon' : filtroMovCtr.valorCorte==-5000 } ">&lt; 5000</a></li>
 </ul>
 
@@ -48,6 +56,7 @@
     <!-- SWITCH DATA FILTER -->
     <li><input type="checkbox" id="dateFilter" name="dateFilter"
             ng-model="filtroMovCtr.checkData"
+            reset-fixed-table
             ng-click="filtroMovCtr.resetDate()" >
         <label for="dateFilter">filtro fecha</label>
     </li><BR/>
@@ -56,6 +65,7 @@
     <li>desde: <input type="date" class="filterDate text-center"
             ng-disabled="!filtroMovCtr.checkData"
             ng-class=" { 'selectedButon' : filtroMovCtr.checkData } "
+            reset-fixed-table
             prevent-data-change
             ng-model="filtroMovCtr.start_date"></li>
 

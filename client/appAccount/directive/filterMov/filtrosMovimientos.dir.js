@@ -1,6 +1,8 @@
 // CONTROLADOR DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMovController = function (){
-	var fechaActual = new Date().toJSON().split('T')[0];
+var filtroMovController = function (maestrosFactory){
+	var	fechaActual = new Date().toJSON().split('T')[0],
+			scope = this;
+	
 
 	//RESETEAR VALORES DE FILTROS 
 	this.resetValues = function (){
@@ -26,6 +28,19 @@ var filtroMovController = function (){
 	// researlos valores predeterminados
 	this.resetValues();
 	this.resetDate();
+
+	this.getMaestrosFactory = function (){
+		maestrosFactory.getMaestros()
+						.success(function (data){
+							scope.categoria = data;
+						})
+						.error(function (dataError){
+							scope.categoria = {categoriasGastos: [], categoriasIngresos: []};
+						});
+	};
+
+	this.categoria = this.getMaestrosFactory();
+	
 	
 	this.setActualMonth = function(){
 		if( plugin.isEmpty(this.checkActualMonth) ){
@@ -97,7 +112,7 @@ var filtroMovController = function (){
 };
 
 // CONFIGURACION DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMov = function(){
+var filtroMov = function(maestrosFactory){
 	return {
 		restrict: 'E',
 		templateUrl: 'directive/filterMov/filtrosMovimientos.html',
@@ -107,7 +122,7 @@ var filtroMov = function(){
 };
 
 // DIRECTIVA DE FILTRO-MOVIMIENTOS
-appDirectives.directive('filtrosMovimientos', filtroMov);
+appDirectives.directive('filtrosMovimientos', ['maestrosFactory', filtroMov]);
 appDirectives.directive('preventDataChange', function() {
     return {
         restrict: 'A',
@@ -135,4 +150,34 @@ appDirectives.directive('preventDataChange', function() {
         	});
         }
     };
+});
+appDirectives.directive('categoriaBuscada', function (){
+	return {
+		restrict: 'A',
+		priority: 1, // needed for angular 1.2.x
+		link: function (scope, elm, attr){
+			elm.bind('change', function (event){
+				scope.$apply(function(){
+					scope.filtroMovCtr.valorBuscado = scope.filtroMovCtr.categoria;
+					scope.filtroMovCtr.categoria = scope.filtroMovCtr.getMaestrosFactory();
+				});
+				window.setTimeout(function (){
+					window.scrollTo(5, 0);	
+				}, 100);
+			});	
+		}
+	};
+});
+appDirectives.directive('resetFixedTable', function (){
+	return {
+		restrict: 'A',
+		priority: 1,
+		link: function (scope, elm, attr){
+			elm.bind('click input change', function (event){
+				window.setTimeout(function (){
+					window.scrollTo(5, 0);	
+				}, 100);
+			});
+		}
+	};
 });
