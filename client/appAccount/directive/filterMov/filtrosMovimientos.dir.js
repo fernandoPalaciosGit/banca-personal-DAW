@@ -123,6 +123,8 @@ var filtroMov = function(maestrosFactory){
 
 // DIRECTIVA DE FILTRO-MOVIMIENTOS
 appDirectives.directive('filtrosMovimientos', ['maestrosFactory', filtroMov]);
+
+//controlar el rango de fechas filtrados correctp
 appDirectives.directive('preventDataChange', function() {
     return {
         restrict: 'A',
@@ -151,6 +153,8 @@ appDirectives.directive('preventDataChange', function() {
         }
     };
 });
+
+//cargar la categoria buscada a la propiedad de filtros.categoria y controlar el error del footer de la tabla
 appDirectives.directive('categoriaBuscada', function (){
 	return {
 		restrict: 'A',
@@ -168,6 +172,8 @@ appDirectives.directive('categoriaBuscada', function (){
 		}
 	};
 });
+
+//controlar el error del footer de la tabla
 appDirectives.directive('resetFixedTable', function (){
 	return {
 		restrict: 'A',
@@ -177,6 +183,20 @@ appDirectives.directive('resetFixedTable', function (){
 				window.setTimeout(function (){
 					window.scrollTo(5, 0);	
 				}, 100);
+			});
+		}
+	};
+});
+
+//panel de filtros avanzados drop-down efect
+appDirectives.directive('displayPanelFilters', function (){
+	return {
+		restrict: 'A',
+		priority: 1,
+		link: function (scope, elm, attr){
+			elm.bind('click', function (event){
+				$(elm[0].nextElementSibling).slideToggle();
+				$(elm[0]).find('[data-toggle="collapse"]').toggleClass('collapseGlyphicons')
 			});
 		}
 	};

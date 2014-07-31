@@ -22,7 +22,7 @@
                         ng-show="!tablaMovCtr.sentido"></span>
             </span>
         </th>
-        <th class="col-md-2 col-sm-2">tipo
+        <th class="col-md-2 col-sm-2 tipoMov">tipo
             <div class="btn-group btnValorBuscado">
                 <button type="button"
                         ng-class=" {    'btn btn-xs btn-default' : filtroMovCtr.valorBuscado == 'gasto',
@@ -36,29 +36,30 @@
                         ng-click="filtroMovCtr.valorBuscado='gasto'">gastos</button>
             </div>
         </th>
-        <th class="col-md-2 col-sm-2">categoria
-              <select name="categ"
+        <th class="col-md-2 col-sm-2">
+              categoria
+              <select name="categ" class="form-control"
                   ng-show="filtroMovCtr.valorBuscado=='ingreso'"
                   ng-model="filtroMovCtr.categoria"
                   categoria-buscada
                   ng-options='categ | capitalyzeAll for categ in  filtroMovCtr.categoria.categoriasIngresos'
                   >
-                <option value=""></option>
+                <option></option>
               </select>
-              <select name="categ"
+              <select name="categ" class="form-control"
                       ng-show="filtroMovCtr.valorBuscado=='gasto'"
                       ng-model="filtroMovCtr.categoria"
                       categoria-buscada
                       ng-options="categ | capitalyzeAll for categ in filtroMovCtr.categoria.categoriasGastos"
                       >
-                  <option value=""></option>
+                  <option></option>
               </select>
-              <select name="categ"
+              <select name="categ" class="form-control"
                       ng-show="filtroMovCtr.valorBuscado!='gasto' && filtroMovCtr.valorBuscado!='ingreso'"
                       ng-model="filtroMovCtr.categoria"
                       categoria-buscada
                       ng-options="categ |capitalyzeAll for categ in filtroMovCtr.categoria.categoriasIngresos.concat(accountsCtrl.maestros.categoriasGastos)">
-                  <option value=""></option>
+                  <option></option>
               </select>
         </th>
         <th class="col-md-2 col-sm-2">concepto</th>
@@ -102,10 +103,23 @@
     <tfoot>
        <tr class="info">
            <td>{{tablaMovCtr.filteredMov.length}} documentos</td>
-           <td>fecha</td><td>tipo</td><td>categoria</td><td>concepto</td>
+           <td>fecha</td>
+           <td>tipo</td>
+           <td class="categMov">
+              <span ng-show="filtroMovCtr.categoria.categoriasIngresos.concat(accountsCtrl.maestros.categoriasGastos).concat(['ingreso']).concat(['gasto']).indexOf(filtroMovCtr.valorBuscado)==-1">
+                todas las categorias
+              </span>
+              <span>
+                <span ng-show="filtroMovCtr.valorBuscado=='ingreso'">todos los Ingresos</span>
+                <span ng-show="filtroMovCtr.valorBuscado=='gasto'">todos los Gastos</span>
+                <span ng-show="filtroMovCtr.categoria.categoriasIngresos.concat(accountsCtrl.maestros.categoriasGastos).indexOf(filtroMovCtr.valorBuscado)!=-1">categorias: {{filtroMovCtr.valorBuscado}}</span>
+              </span>
+           </td>
+           <td>concepto</td>
            <td ng-class=" { 'text-danger'   : tablaMovCtr.getTotal() < 0,
                             'text-success' : tablaMovCtr.getTotal() >= 0} ">
-            total<span class="noWrap">{{ tablaMovCtr.getTotal() | number:2 | parseAmount:'Euros' }}</span></strong></td>
+            total
+            <span class="noWrap">{{ tablaMovCtr.getTotal() | number:2 | parseAmount:'Euros' }}</span></strong></td>
        </tr>
    </tfoot>   
 </table>

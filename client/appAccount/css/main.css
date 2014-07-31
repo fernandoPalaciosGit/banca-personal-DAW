@@ -16,11 +16,30 @@
 #tableCountList th,
 #tableCountList td{
 	text-align: center;
+    vertical-align: middle !important;
+}
+#tableCountList tbody td{   
+    vertical-align: initial !important;
 }
 #tableCountList .glyphicon{
     color: rgb(88, 189, 10) !important;
 }
-
+#tableCountList .categMov>span{
+    text-transform: capitalize;
+    line-height: 2em;
+}
+/*#tableCountList .categMov>span:before{
+    content: ' : ';
+}*/
+#tableCountList select{
+    display: inline;
+    vertical-align: sub;
+    width: 10px;
+    height: 25px;
+}
+#tableCountList .tipoMov .btn-group{   
+    vertical-align: sub;
+}
 /*configurar elipsi de propiedad 'concepto' a 150px
 --> th.col-md-2.colsm-2*/
 .setWidth{
@@ -137,9 +156,40 @@ input[type='email']:valid:focus{
     font-weight: bold;
     vertical-align: middle;
 }
+#tableCountList tfoot td.categMov{
+    line-height: 1.5em;
+}
 #tableCountList tfoot tr>td:last-child{
     font-size: 16px;
     line-height: 16px;
+}
+.panel-heading{
+    text-transform: capitalize;
+    font-family: serif;
+    word-spacing: 5px;
+    letter-spacing: 1px;
+}
+.panel-heading a:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    font-size: 0.7em;
+    float: right; 
+    color: grey;
+    line-height: 1.7em;
+}
+
+.collapseGlyphicons:after {
+    content: "\e080" !important;
+    font-size: 1em !important;
+    line-height: 1em !important;
+}
+
+#personalSearchFilter,
+#panelAdvancedFilters{
+    margin: 30px auto; /*fusion de margenes verticales*/
+}
+#collapseOne{
+    display: none;
 }
 /* ==========================================================================
    Chrome Frame prompt
@@ -199,6 +249,13 @@ input[type='email']:valid:focus{
     }
 }
 
+@media only screen and (max-width : 992px){
+    #tableCountList th:first-child{
+        color: red;
+        padding-top: 20px;
+    }
+}
+
 @media only screen and (min-width : 768px) and (max-width : 992px){
     .orderCampo{ position: relative !important; }
     .orderCampo .orderCampoId{
@@ -212,5 +269,8 @@ input[type='email']:valid:focus{
     }
     .btn-group.btnValorBuscado {
         display: inline-flex;
+    }
+    #tableCountList select{
+        width: 100%;
     }
 }

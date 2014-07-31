@@ -1,5 +1,5 @@
 <!-- FILTROO BUSQUEDA PERSONAL -->
-<p>
+<p id="personalSearchFilter">
     <label for="importe" class="control-label">Filtrar</label> : 
     <input type="search" name="filtro" class="input text-center"
             reset-fixed-table
@@ -12,6 +12,22 @@
     </a>
 </p>
 
+
+<!-- PANEL DE FILITROS PERSONALIZADOS: por importe, rango de fechas, tipo de importe y categoria del importe-->
+<div class="panel panel-default" id="panelAdvancedFilters">
+    <div    class="panel-heading"
+            display-panel-filters>
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-target="#collapseOne" 
+           href="">
+          filtros avanzados
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+
+<!-- ******************************************************************************* -->
 <!-- FILTRO POR IMPORTE -->
 <ul class="pagination pagination-sm">
     <li ><a href="" ng-click="filtroMovCtr.valorCorte=true"
@@ -75,8 +91,7 @@
             prevent-data-change
             ng-model="filtroMovCtr.end_date"></li>
 
-    <!-- FILTRO MES ACTUAL
-    ************************************************************************************************* -->
+    <!-- FILTRO MES ACTUAL  -->
     <li><input
             type="radio" id="dateActualMonth" name="dateActual"
             ng-checked="false"
@@ -116,3 +131,8 @@
         <label for="dateActualDay">Hoy</label>
     </li>
 </ul>
+<!-- ******************************************************************************* -->
+
+      </div>
+    </div>
+  </div>
