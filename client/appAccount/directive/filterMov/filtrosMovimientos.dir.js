@@ -1,8 +1,7 @@
 // CONTROLADOR DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMovController = function (maestrosFactory){
+var filtroMovController = function (maestrosFactory, movimientosFiltrados){
 	var	fechaActual = new Date().toJSON().split('T')[0],
 			scope = this;
-	
 
 	//RESETEAR VALORES DE FILTROS 
 	this.resetValues = function (){
@@ -25,9 +24,22 @@ var filtroMovController = function (maestrosFactory){
 		this.checkActualWeek = false;
 	};
 
+	/*
 	// researlos valores predeterminados
 	this.resetValues();
 	this.resetDate();
+	*/
+
+	// cargar los valores por defecto desde la factoria
+	this.valorBuscado = movimientosFiltrados.valorBuscado;
+	this.valorCorte = movimientosFiltrados.valorCorte;
+	this.checkData = movimientosFiltrados.checkData;
+	this.start_date = movimientosFiltrados.start_date;
+	this.end_date = movimientosFiltrados.end_date;
+	this.checkToday = movimientosFiltrados.checkToday;
+	this.checkActualMonth = movimientosFiltrados.checkActualMonth;
+	this.checkActualYear = movimientosFiltrados.checkActualYear;
+	this.checkActualWeek = movimientosFiltrados.checkActualWeek;
 
 	this.getMaestrosFactory = function (){
 		maestrosFactory.getMaestros()
@@ -112,17 +124,39 @@ var filtroMovController = function (maestrosFactory){
 };
 
 // CONFIGURACION DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMov = function(maestrosFactory){
+var filtroMov = function(maestrosFactory, movimientosFiltrados){
 	return {
 		restrict: 'E',
 		templateUrl: 'directive/filterMov/filtrosMovimientos.html',
 		controller: filtroMovController,
-		controllerAs: 'filtroMovCtr'
+		controllerAs: 'filtroMovCtr',
+		link: function(scope, element, attrs) {
+			/* Recuperamos el binding de todos las propiedades del controlador para esta directiva,
+				y cuando hay un nuevo valor, actualizamos una factoria que la usaremos para recuperar el valor por defecto de esta propiedades al cargar la vista y su controlador */ 
+         scope.$watch('this.filtroMovCtr.valorBuscado', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.valorBuscado = newValue; });
+         scope.$watch('this.filtroMovCtr.valorCorte', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.valorCorte = newValue; });
+         scope.$watch('this.filtroMovCtr.checkData', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.checkData = newValue; });
+         scope.$watch('this.filtroMovCtr.start_date', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.start_date = newValue; });
+         scope.$watch('this.filtroMovCtr.end_date', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.end_date = newValue; });
+         scope.$watch('this.filtroMovCtr.checkToday', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.checkToday = newValue; });
+         scope.$watch('this.filtroMovCtr.checkActualMonth', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.checkActualMonth = newValue; });
+         scope.$watch('this.filtroMovCtr.checkActualYear', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.checkActualYear = newValue; });
+         scope.$watch('this.filtroMovCtr.checkActualWeek', function(newValue, oldValue) {
+             if (newValue) movimientosFiltrados.checkActualWeek = newValue; });
+     }
 	};
 };
 
 // DIRECTIVA DE FILTRO-MOVIMIENTOS
-appDirectives.directive('filtrosMovimientos', ['maestrosFactory', filtroMov]);
+appDirectives.directive('filtrosMovimientos', ['maestrosFactory', 'movimientosFiltrados', filtroMov]);
 
 //controlar el rango de fechas filtrados correctp
 appDirectives.directive('preventDataChange', function() {

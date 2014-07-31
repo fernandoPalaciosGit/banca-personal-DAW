@@ -16,7 +16,8 @@
 	.btnValorBuscado,
 	.orderCampoImporte,
 	.orderCampoId,
-	.orderCampoFecha{
+	.orderCampoFecha,
+  select{
 		display: none;
 	}
 
@@ -44,7 +45,11 @@
   }
   #totalPrintMov h2{
     font-size: 14px;
-    color: blueº !important;
+  }
+  #tableCountList tfoot tr>td:last-child {
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: uppercase;
   }
 
   .msgPrint time, #totalPrintMov>dl{

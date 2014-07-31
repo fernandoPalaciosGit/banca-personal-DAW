@@ -24,11 +24,13 @@ var byDefault = function(){
 //capitalizar palabras del input
 var capitalyzeAll = function(){
 	return function (inputValue, separator){
-		var	flag = separator || ' ',
-				parseValue = inputValue.split(flag).map(function(arr, item){
-					return arr.charAt(0).toUpperCase() + arr.substring(1);
-				}).join(flag);
-		return parseValue;
+		if(!!inputValue){
+			var	flag = separator || ' ',
+					parseValue = inputValue.split(flag).map(function(arr, item){
+						return arr.charAt(0).toUpperCase() + arr.substring(1);
+					}).join(flag);
+			return parseValue;
+		}
 	};
 };
 

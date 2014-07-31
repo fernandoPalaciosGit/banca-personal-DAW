@@ -17,12 +17,12 @@
 	      <dd>{{outPrintCtrl.valoresFiltrados(filtroMovCtr.valorCorte)}}</dd>
 
 	  <dt>Categorias filtradas</dt>
-	      <dd>{{outPrintCtrl.categMov(filtroMovCtr.valorBuscado) | capitalyzeAll:'y'}}</dd>
+	      <dd>{{outPrintCtrl.categMov(filtroMovCtr.valorBuscado, filtroMovCtr.categoria) | capitalyzeAll:'y'}}</dd>
 
 		<span ng-show="!!filtroMovCtr.valorBuscado">
 		 	<span ng-show="!outPrintCtrl.IsValorBuscadoType(filtroMovCtr.valorBuscado)">
 		     <dt>Filtro de Búsqueda</dt>
-		         <dd>{{filtroMovCtr.valorBuscado}}</dd>
+		         <dd>{{filtroMovCtr.valorBuscado | capitalyzeAll}}</dd>
 		 	</span>
 		</span>
 	 </dl>

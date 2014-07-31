@@ -20,9 +20,24 @@ var outputImpresion = function(){
 				return (valorBuscado == 'ingreso' || valorBuscado == 'gasto') ? true : false;
 			};
 
-			this.categMov = function (valorBuscado){
-				return	(valorBuscado !== 'ingreso' && valorBuscado !== 'gasto' )
-							? "Ingresos y Gastos" : valorBuscado;
+			this.categMov = function (valorBuscado, filtroCategoria){
+
+				if( valorBuscado == 'ingreso' || valorBuscado == 'gasto'  ){
+					return valorBuscado.charAt(0).toUpperCase() + valorBuscado.substring(1);
+				}else{
+					//si el valor buscado esta en el array de filtros categoria
+					if(	!!filtroCategoria &&
+							!!filtroCategoria["categoriasIngresos"] && !!filtroCategoria["categoriasGastos"]){
+						if(filtroCategoria["categoriasIngresos"].indexOf(valorBuscado) != -1){
+							return 'Ingresos';
+						}else if(filtroCategoria["categoriasGastos"].indexOf(valorBuscado) != -1){
+							return 'Gastos';
+						}else{
+							return "Ingresos y Gastos";
+						}
+					}
+				}
+
 			};
 
 			this.fechasFiltradas = function (startDate, endDate){
