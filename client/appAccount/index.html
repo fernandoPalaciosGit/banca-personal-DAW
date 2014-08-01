@@ -45,16 +45,25 @@
              <div class="navbar-inner">
                <div class="container">
 
-                     <ul class="nav navbar-nav">
+                    <!-- mostrar si hay sesion -->
+                   <ul class="nav navbar-nav"
+                       ng-show="menuCtrl.checkIsLogin()">
                        <li ng-class="{ 'active': menuCtrl.isActive('/') }">
                           <a href="#/">Totales</a></li>
                        <li ng-class="{ 'active': menuCtrl.isActive('/nuevo') }">
                           <a href="#/nuevo">Nuevo</a></li>
                        <li ng-class="{ 'active': menuCtrl.isActive('/lista') }">
                           <a href="#/lista">Lista</a></li>
-                       <li ng-class="{ 'active': menuCtrl.isActive('/registro') }">
-                            <a href="#/registro">Acceso</a></li>
-                    </ul>
+                       <li><a href="" un-login>Cerrar sesion</a></li>
+                   </ul>
+                   
+                   <!-- mostrar si NO hay sesion -->
+                   <ul  class="nav navbar-nav"
+                        ng-show="!menuCtrl.checkIsLogin()">
+                     <li ng-class="{ 'active': menuCtrl.isActive('/registro') }">
+                          <a href="#/registro">Acceso</a></li>
+                   </ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="text-danger" href="#">{{mensaje}}</a></li>
                     </ul>

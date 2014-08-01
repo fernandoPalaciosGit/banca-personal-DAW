@@ -140,4 +140,5 @@
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
 	appAng.controller(	'bankAccountsController',
 	['$rootScope', '$location', '$cookieStore', 'maestrosFactory', 'movimientosFactory', 'movimientosFiltrados', AccountingCtrl] );
+
 })(window, window.angular, app, plugin);
