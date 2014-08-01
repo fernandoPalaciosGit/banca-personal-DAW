@@ -1,9 +1,11 @@
 (function(w, ng, appAng, plugin){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
-	var AccountingCtrl = function($rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory){
+	var AccountingCtrl = function($rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory, movimientosFiltrados){
 		window.scrollTo(0,0); //reset plugin fixed table footer
-		var	scope = this, //referncia al scope del controlador, para los callback de las peticiones REST
-				fechaActual = new Date().toJSON().split('T')[0];
+		var	scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
+			
+		this.fechaActual = new Date().toJSON().split('T')[0];
+		
 		//encabezados de directivas <mensaje>
 		this.titulo = {
 			totMovTpl: 'Controlar el Balance de tus movimientos.',
@@ -48,7 +50,7 @@
 				
 				//bug, fijar franja horaria
 				var dateMov = this.nuevoMovimiento.fecha;
-				this.nuevoMovimiento.fecha = (dateMov === fechaActual) ? new Date() : dateMov;
+				this.nuevoMovimiento.fecha = (dateMov === this.fechaActual) ? new Date() : dateMov;
 
 				//asignamos hora del nuevo movimiento
 				var auxCopyMov = ng.copy(this.nuevoMovimiento);
@@ -66,8 +68,13 @@
 							});
 						}
 				});
-				/*actualizar vista*/
+										
+				// resetear valores de nuevo movimiento
 				this.resetMovimiento();
+
+				//resetear filtros almacenados en factoria
+				movimientosFiltrados.resetValues();
+				movimientosFiltrados.resetDate();
 			}else{
 				w.alert('Falta la cantidad del movimiento');
 			}
@@ -100,7 +107,7 @@
 			this.nuevoMovimiento.importe = 0;
 			this.nuevoMovimiento.concepto = '';
 			this.nuevoMovimiento.factura = '';
-			this.nuevoMovimiento.fecha = fechaActual;
+			this.nuevoMovimiento.fecha = this.fechaActual;
 		};
 
 		this.checkTipoMovimiento = function (){
@@ -132,5 +139,5 @@
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
 	appAng.controller(	'bankAccountsController',
-	['$rootScope', '$location', '$cookieStore', 'maestrosFactory', 'movimientosFactory', AccountingCtrl] );
+	['$rootScope', '$location', '$cookieStore', 'maestrosFactory', 'movimientosFactory', 'movimientosFiltrados', AccountingCtrl] );
 })(window, window.angular, app, plugin);

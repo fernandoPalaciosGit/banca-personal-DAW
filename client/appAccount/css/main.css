@@ -28,9 +28,19 @@
     text-transform: capitalize;
     line-height: 2em;
 }
-/*#tableCountList .categMov>span:before{
-    content: ' : ';
-}*/
+
+input[name="resetMovFilterBtn"]{
+    transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -webkit-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out;
+}
+.filterActive{
+    font-size: 1.2em;
+    background-color: #F0954E;
+    border-color: #EE7836;
+}
+
 #tableCountList select{
     display: inline;
     vertical-align: sub;
@@ -149,6 +159,22 @@ input[type='email']:valid:focus{
     /*text-align: center;*/
     text-indent: 15px;
 }
+
+#filterMovForm .control-label{
+    text-transform: uppercase;
+}
+#filterMovForm .control-label + div{
+    text-indent: 1em;
+    margin-bottom: 0.5em;
+}
+#filterMovForm [for="tipo"] + div,
+#filterMovForm [for="categ"] + div{
+    text-transform: capitalize;
+}
+#filterMovForm [for="concepto"] + div:first-letter{
+    text-transform: capitalize;
+}
+
 #tableCountList tfoot td{
     font-size: 0.7em;
     line-height: 0.7em;

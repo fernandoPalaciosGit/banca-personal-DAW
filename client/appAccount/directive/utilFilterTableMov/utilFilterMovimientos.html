@@ -1,9 +1,7 @@
 <p>
 	<input	type="button" name="resetMovFilterBtn"
 				class="btn btn-xs btn-warning" value="Resetea Filtros"
-				ng-click="	filtroMovCtr.resetValues();
-								filtroMovCtr.resetDate();
-								tablaMovCtr.checkCampoSentido('id'); "/>
+				ng-click="filtroMovCtr.resetAllFilters()"/>
 	<input	type="button" name="printMovFilterBtn"
 				class="btn btn-xs btn-primary" value="Imprimir"
 				ng-click="utilFilterMovCtrl.printMovFilter('htmlPrintOut')" />

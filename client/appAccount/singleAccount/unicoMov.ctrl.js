@@ -15,7 +15,7 @@
 		//servicio de consulta REST
 		movimientosFactory.getMovFilter(this.movId)
 								.success(function (data){
-									scope.filtroMov = data; 
+									scope.filtroMov = data;
 									scope.msg = (!data) ? "no existe este movimiento" : "" ;
 								});
 	};

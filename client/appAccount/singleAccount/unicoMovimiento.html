@@ -1,8 +1,11 @@
 <section name="verMovimiento" class="row-fluid">
-    <form class="form-horizontal text-left" id="newMovForm">
+    <form class="form-horizontal text-left" id="filterMovForm">
         <fieldset>
             <div id="legend">
-                <legend class="">Ver el movimiento {{ filtroMovCtrl.movId}} </legend>
+                <legend ng-show="filtroMovCtrl.filtroMov.factura!='s/n'">
+                    Factura del Movimiento : <strong>{{ filtroMovCtrl.filtroMov.factura }}</strong> </legend>
+                <legend ng-show="filtroMovCtrl.filtroMov.factura=='s/n'">
+                    Movimiento #{{ filtroMovCtrl.movId }} <small> : sin factura</small></legend>
             </div>
             <div class="row-fluid"
                  ng-show="filtroMovCtrl.isSetFiltro()">
@@ -10,9 +13,7 @@
                     <div class="control-group">
                         <label class="control-label" for="tipo">Tipo</label>
                         <div class="controls">
-                            <div class="btn-group">
-                                {{filtroMovCtrl.filtroMov.tipo | byDefault}}
-                            </div>
+                            {{filtroMovCtrl.filtroMov.tipo | byDefault}}
                         </div>
                     </div>
                     <div class="control-group">
@@ -22,7 +23,7 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="categ">Concepto</label>
+                        <label class="control-label" for="concepto">Concepto</label>
                         <div class="controls">
                             {{ filtroMovCtrl.filtroMov.concepto | byDefault }}
                         </div>

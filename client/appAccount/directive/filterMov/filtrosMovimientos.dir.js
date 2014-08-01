@@ -1,45 +1,56 @@
 // CONTROLADOR DE DIRECTIVA FILTRO-MOVIMIENTOS
-var filtroMovController = function (maestrosFactory, movimientosFiltrados){
+var filtroMovController = function ($scope, maestrosFactory, movimientosFiltrados){
 	var	fechaActual = new Date().toJSON().split('T')[0],
 			scope = this;
 
-	//RESETEAR VALORES DE FILTROS 
+	/* RESETEAR VALORES DE FILTROS
+	Tanto en la factoria como en la vista del controlador*/
 	this.resetValues = function (){
-		//filtro personalizado
-		this.valorBuscado = '';
-		//filtro por valor (search)
-		this.valorCorte = true; //todos los movimientos
+		movimientosFiltrados.resetValues();
+		this.resetProperties();
+	};
+
+	this.resetSearch = function (){
+		movimientosFiltrados.resetSearch();
+		this.resetProperties();
 	};
 
 	this.resetDate = function (){
-		// Switch de todos los filtro-fechas
-		this.checkData = false;
-		//fecha de inicio-fin
-		this.start_date = '';
-		this.end_date = fechaActual;
-		// Switch de filtro-fechas especificos
-		this.checkToday = false;
-		this.checkActualMonth = false;
-		this.checkActualYear = false;
-		this.checkActualWeek = false;
+		movimientosFiltrados.resetDate();
+		this.resetProperties();
 	};
 
-	/*
-	// researlos valores predeterminados
-	this.resetValues();
-	this.resetDate();
-	*/
-
 	// cargar los valores por defecto desde la factoria
-	this.valorBuscado = movimientosFiltrados.valorBuscado;
-	this.valorCorte = movimientosFiltrados.valorCorte;
-	this.checkData = movimientosFiltrados.checkData;
-	this.start_date = movimientosFiltrados.start_date;
-	this.end_date = movimientosFiltrados.end_date;
-	this.checkToday = movimientosFiltrados.checkToday;
-	this.checkActualMonth = movimientosFiltrados.checkActualMonth;
-	this.checkActualYear = movimientosFiltrados.checkActualYear;
-	this.checkActualWeek = movimientosFiltrados.checkActualWeek;
+	this.resetProperties = function (){
+		this.valorBuscado = movimientosFiltrados.valorBuscado;
+		this.valorCorte = movimientosFiltrados.valorCorte;
+		this.checkData = movimientosFiltrados.checkData;
+		this.start_date = movimientosFiltrados.start_date;
+		this.end_date = movimientosFiltrados.end_date;
+		this.checkToday = movimientosFiltrados.checkToday;
+		this.checkActualMonth = movimientosFiltrados.checkActualMonth;
+		this.checkActualYear = movimientosFiltrados.checkActualYear;
+		this.checkActualWeek = movimientosFiltrados.checkActualWeek;
+		// indicador de filtros seteados
+		window.setTimeout(function (){
+			if( movimientosFiltrados.isFiltered() ){
+				$('[name="resetMovFilterBtn"]').addClass('filterActive');
+			}else{
+				$('[name="resetMovFilterBtn"]').removeClass('filterActive');
+			}
+		}, 100);
+	}
+
+	this.resetProperties();
+
+	this.resetAllFilters = function (){
+		this.resetValues();
+		this.resetDate();
+		$scope.tablaMovCtr.checkCampoSentido('id');
+		window.setTimeout(function (){
+			$('[name="resetMovFilterBtn"]').removeClass('filterActive');
+		}, 100);
+	}
 
 	this.getMaestrosFactory = function (){
 		maestrosFactory.getMaestros()
@@ -133,24 +144,31 @@ var filtroMov = function(maestrosFactory, movimientosFiltrados){
 		link: function(scope, element, attrs) {
 			/* Recuperamos el binding de todos las propiedades del controlador para esta directiva,
 				y cuando hay un nuevo valor, actualizamos una factoria que la usaremos para recuperar el valor por defecto de esta propiedades al cargar la vista y su controlador */ 
-         scope.$watch('this.filtroMovCtr.valorBuscado', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.valorBuscado = newValue; });
-         scope.$watch('this.filtroMovCtr.valorCorte', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.valorCorte = newValue; });
-         scope.$watch('this.filtroMovCtr.checkData', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.checkData = newValue; });
-         scope.$watch('this.filtroMovCtr.start_date', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.start_date = newValue; });
-         scope.$watch('this.filtroMovCtr.end_date', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.end_date = newValue; });
-         scope.$watch('this.filtroMovCtr.checkToday', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.checkToday = newValue; });
-         scope.$watch('this.filtroMovCtr.checkActualMonth', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.checkActualMonth = newValue; });
-         scope.$watch('this.filtroMovCtr.checkActualYear', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.checkActualYear = newValue; });
-         scope.$watch('this.filtroMovCtr.checkActualWeek', function(newValue, oldValue) {
-             if (newValue) movimientosFiltrados.checkActualWeek = newValue; });
+			scope.$watch(	'this.filtroMovCtr.valorBuscado',
+								function(newValue, oldValue) { resetProperties("valorBuscado", newValue) });
+         scope.$watch(	'this.filtroMovCtr.valorCorte',
+         					function(newValue, oldValue) { resetProperties("valorCorte", newValue) });
+         scope.$watch(	'this.filtroMovCtr.checkData',
+         					function(newValue, oldValue) { resetProperties("checkData", newValue, true) });
+         scope.$watch(	'this.filtroMovCtr.start_date',
+         					function(newValue, oldValue) { resetProperties("start_date", newValue) });
+         scope.$watch(	'this.filtroMovCtr.end_date',
+         					function(newValue, oldValue) { resetProperties("end_date", newValue) });
+         scope.$watch(	'this.filtroMovCtr.checkToday',
+         					function(newValue, oldValue) { resetProperties("checkToday", newValue) });
+         scope.$watch(	'this.filtroMovCtr.checkActualMonth',
+         					function(newValue, oldValue) { resetProperties("checkActualMonth", newValue) });
+         scope.$watch(	'this.filtroMovCtr.checkActualYear',
+         					function(newValue, oldValue) { resetProperties("checkActualYear", newValue) });
+         scope.$watch(	'this.filtroMovCtr.checkActualWeek',
+         					function(newValue, oldValue) { resetProperties("checkActualWeek", newValue) });
+
+         var resetProperties = function (property, value, isFlag){
+             if ( !!value ) {	movimientosFiltrados[property] = value; }
+             if( !($('[name="resetMovFilterBtn"]').hasClass('filterActive')) && !isFlag) {
+             	$('[name="resetMovFilterBtn"]').addClass('filterActive');
+             }
+         };
      }
 	};
 };

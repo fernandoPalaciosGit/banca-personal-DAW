@@ -6,7 +6,7 @@
             placeholder="qué buscas?" autofocus='autofocus'
             ng-class="{ 'selectedInput' : !!filtroMovCtr.valorBuscado }"
             ng-model="filtroMovCtr.valorBuscado" />
-    <a href=""  ng-click="filtroMovCtr.valorBuscado=''"
+    <a href=""  ng-click="filtroMovCtr.resetSearch()"
                 ng-show="filtroMovCtr.valorBuscado!=''">
         <span class="glyphicon glyphicon-remove-circle"></span>
     </a>
@@ -17,8 +17,7 @@
     <div    class="panel-heading"
             display-panel-filters>
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-target="#collapseOne" 
-           href="">
+        <a data-toggle="collapse" data-target="#collapseOne" href="">
           filtros avanzados
         </a>
       </h4>
