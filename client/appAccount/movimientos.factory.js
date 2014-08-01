@@ -2,7 +2,9 @@
 	var movimientosFactory = function($http){
 		var	factoryAPI = {},
 				urlBaseMov = "/api/priv/movimientos",
-				urlBaseTot = "/api/priv/total";
+				urlBaseTot = "/api/priv/total",
+				urlUpdateMov = "/api/priv/updateMovimiento",
+				urlDeleteMov = "/api/priv/deleteMovimiento";
 
 		factoryAPI.getMovimientos = function () {
 			return $http.get(urlBaseMov);
@@ -18,6 +20,14 @@
 			//los objetos que acumulamos es en el backend
 			//una peticion POST es una peticion http, que suele llevar una carga de datos en el body
 			return $http.post(urlBaseMov, movimiento);
+		};
+
+		factoryAPI.updateMovimientos = function (movimiento) {
+			return $http.post(urlUpdateMov, movimiento);
+		};
+
+		factoryAPI.deleteMovimientos = function (movimiento) {
+			return $http.post(urlDeleteMov, movimiento);
 		};
 
 		factoryAPI.getTotal = function () {

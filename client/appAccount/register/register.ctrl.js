@@ -1,4 +1,4 @@
-(function(w, ng, angApp){
+(function(w, ng, angApp, plugin){
 	var registerCtrl = function($scope, $rootScope, $location, $http, $cookieStore){
 		window.scrollTo(0,0); //reset plugin fixed table footer
 		$scope.urlBase = "http://localhost:3000/api/";
@@ -13,7 +13,7 @@
 					password = accessField.password.$viewValue;
 
 			//NO campos vacios y formulario valido
-			if( !isEmpty(email) && !isEmpty(password) && accessField.$valid ){
+			if( !plugin.isEmpty(email) && !plugin.isEmpty(password) && accessField.$valid ){
 				$scope.usuario = {email: email, password: password};				
 				this.validAccessUserForm = false;
 				this.accessApp(fnAccess);
@@ -53,9 +53,4 @@
 
 	angApp.controller("loginRegisterController",
 							['$scope', '$rootScope', '$location', '$http', '$cookieStore', registerCtrl]);
-}(window, window.angular, app));
-
-/*comprobar si es nula una variable*/
-var isEmpty = function(str) {
-   return (!str || 0 === str.length);
-};
+}(window, window.angular, app, plugin));

@@ -75,6 +75,8 @@
 				//resetear filtros almacenados en factoria
 				movimientosFiltrados.resetValues();
 				movimientosFiltrados.resetDate();
+
+				window.alert('NO REDIRECCIONAR: avisar de una nuevo movimiento por su numero de factura');
 			}else{
 				w.alert('Falta la cantidad del movimiento');
 			}

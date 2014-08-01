@@ -19,7 +19,7 @@
     vertical-align: middle !important;
 }
 #tableCountList tbody td{   
-    vertical-align: initial !important;
+    vertical-align: middle !important;
 }
 #tableCountList .glyphicon{
     color: rgb(88, 189, 10) !important;
@@ -29,16 +29,22 @@
     line-height: 2em;
 }
 
-input[name="resetMovFilterBtn"]{
+input[name="resetMovFilterBtn"],
+.closeSessionBtn{
     transition: all 0.15s ease-in-out;
     -moz-transition: all 0.15s ease-in-out;
     -webkit-transition: all 0.15s ease-in-out;
     -o-transition: all 0.15s ease-in-out;
 }
-.filterActive{
-    font-size: 1.2em;
+.filterActive,
+.closeSessionBtn:hover{
+    font-size: 1.1em;
     background-color: #F0954E;
     border-color: #EE7836;
+}
+
+.closeSessionBtn:hover > a{
+    color: white !important;   
 }
 
 #tableCountList select{
@@ -93,19 +99,23 @@ tbody tr:hover{
 
 .movReferenceDoc{
     position: relative;
+    line-height: 2em !important;
 }
 .movReferenceDoc>span{
     position: absolute;
     height: 100%;
+    top: 25%;
 }
 .movReferenceDoc>span:first-child{
     left: 0;
     width: 20%;
+    line-height: 2.5em;
 }
 .movReferenceDoc>span:last-child{
     right: 0;
     width: 80%;
     text-align: center;
+    line-height: 1.8em;
 }
 .movReferenceDoc .setWidth{
     max-width: 130px;
@@ -216,6 +226,42 @@ input[type='email']:valid:focus{
 }
 #collapseOne{
     display: none;
+}
+
+.editSingleMovBtn,
+.UpdateSingleMovBtn,
+.resetSingleMovBtn{
+    margin-left: 50px;
+    font-size: 0.7em;
+}
+.deleteSingleMovBtn{
+ font-size: 0.7em;   
+}
+.msgClientUpdateMov,
+.msgClientDeleteMov{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 50;
+}
+.bannerMsgclient{
+position: absolute;
+text-transform: capitalize;
+width: 300px;
+height: 100px;
+font-size: 0.8em;
+line-height: 1.5em;
+color: rgb(24, 114, 7);
+font-weight: bold;
+top: calc( 50% - 50px );
+left: calc( 50% - 150px );
+}
+section[name="verMovimiento"]{
+    z-index: 10;
 }
 /* ==========================================================================
    Chrome Frame prompt

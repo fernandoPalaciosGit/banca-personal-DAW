@@ -86,6 +86,8 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 					$rootScope.mensaje = "Credencial Invalida";
 					$rootScope.mensaje += ( !$cookieStore.get('sessionId') ) ?
 						', Registrate' : ', vuelve a loguearte';
+					$cookieStore.remove('sessionId');
+					$cookieStore.remove('sessionName');
 					$location.path('registro');
 					break;
 				case 409:

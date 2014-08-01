@@ -1,11 +1,29 @@
+<mensaje-client class="msgClientUpdateMov">movimiento actualizado correctamente</mensaje-client>
+<mensaje-client class="msgClientDeleteMov">movimiento eliminado correctamente</mensaje-client>
+
 <section name="verMovimiento" class="row-fluid">
     <form class="form-horizontal text-left" id="filterMovForm">
         <fieldset>
             <div id="legend">
-                <legend ng-show="filtroMovCtrl.filtroMov.factura!='s/n'">
-                    Factura del Movimiento : <strong>{{ filtroMovCtrl.filtroMov.factura }}</strong> </legend>
-                <legend ng-show="filtroMovCtrl.filtroMov.factura=='s/n'">
-                    Movimiento #{{ filtroMovCtrl.movId }} <small> : sin factura</small></legend>
+                <legend>
+                    <span ng-show="filtroMovCtrl.filtroMov.factura!='s/n'">
+                        Factura del Movimiento : <strong>{{ filtroMovCtrl.filtroMov.factura }}</strong>    
+                    </span>
+                    <span ng-show="filtroMovCtrl.filtroMov.factura=='s/n'">
+                        Movimiento #{{ filtroMovCtrl.movId }} <small> : sin factura</small></span>
+                    
+                    <input  type="button" class="btn btn-success btn-sm UpdateSingleMovBtn" value="Atualizar"
+                            ng-show="!!filtroMovCtrl.editMovCtr" ng-click="filtroMovCtrl.updateMovCtr()">
+
+                    <input  type="button" class="btn btn-danger btn-sm deleteSingleMovBtn" value="Eliminar"
+                            ng-show="!!filtroMovCtrl.editMovCtr" ng-click="filtroMovCtrl.deleteMovCtr()">
+
+                    <input  type="button" class="btn btn-link resetSingleMovBtn" value="Resetear"
+                            ng-show="!!filtroMovCtrl.editMovCtr" ng-click="filtroMovCtrl.resetMovCtr()">
+
+                    <input  type="button" class="btn btn-primary btn-sm editSingleMovBtn" value="Editar"
+                            ng-hide="!!filtroMovCtrl.editMovCtr" ng-click="filtroMovCtrl.isEditMovCtr()">
+                </legend>
             </div>
             <div class="row-fluid"
                  ng-show="filtroMovCtrl.isSetFiltro()">
@@ -16,16 +34,30 @@
                             {{filtroMovCtrl.filtroMov.tipo | byDefault}}
                         </div>
                     </div>
+
                     <div class="control-group">
-                        <label class="control-label" for="categ">Categoría</label>
+                        <label class="control-label" for="categ">Categoría</label>    
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.categoria | byDefault }}
+                            <span ng-hide="!!filtroMovCtrl.editMovCtr">
+                                {{ filtroMovCtrl.filtroMov.categoria | byDefault }}</span>
+                            <select name="categ"
+                                  ng-show="!!filtroMovCtrl.editMovCtr"
+                                  ng-model="filtroMovCtrl.filtroMov.categoria"
+                                  ng-options="categ | capitalyzeAll for categ in filtroMovCtrl.categoria"
+                                  >
+                              <span value="">{{filtroMovCtrl.filtroMov.categoria}}</span>
+                          </select>
                         </div>
                     </div>
+
                     <div class="control-group">
                         <label class="control-label" for="concepto">Concepto</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.concepto | byDefault }}
+                            <span ng-hide="!!filtroMovCtrl.editMovCtr">
+                                {{ filtroMovCtrl.filtroMov.concepto | byDefault }}</span>
+                            <input  ng-show="!!filtroMovCtrl.editMovCtr"
+                                    type="text" value="{{filtroMovCtrl.filtroMov.concepto}}"
+                                    ng-model="filtroMovCtrl.filtroMov.concepto"/>
                         </div>
                     </div>
                 </div>
@@ -33,21 +65,34 @@
                     <div class="control-group">
                         <label class="control-label" for="factura">factura</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.factura }}
+                            <span ng-hide="!!filtroMovCtrl.editMovCtr">
+                                {{ filtroMovCtrl.filtroMov.factura }}</span>
+                            <input  ng-show="!!filtroMovCtrl.editMovCtr"
+                                    type="text" value="{{filtroMovCtrl.filtroMov.factura}}"
+                                    ng-model="filtroMovCtrl.filtroMov.factura"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="fecha">Fecha</label>
                         <div class="controls">
-                            {{  filtroMovCtrl.filtroMov.fecha
-                                | date:"dd MMMM yyyy@HH:mm@a"
-                                | checkDate }}
+                            <span ng-hide="!!filtroMovCtrl.editMovCtr">
+                                {{  filtroMovCtrl.filtroMov.fecha
+                                    | date:"dd MMMM yyyy@HH:mm@a"
+                                    | checkDate }} </span>
+                            <input  ng-show="!!filtroMovCtrl.editMovCtr" type="date"
+                                    value="filtroMovCtrl.filtroMov.fecha"
+                                    ng-model="filtroMovCtrl.filtroMov.fecha"/>
                         </div>
                     </div>
+                    
                     <div class="control-group">
                         <label class="control-label" for="importe">Importe</label>
                         <div class="controls">
-                            {{ filtroMovCtrl.filtroMov.importe | number:2 | parseAmount:'Euros'}}
+                            <span ng-hide="!!filtroMovCtrl.editMovCtr">
+                                {{ filtroMovCtrl.filtroMov.importe | number:2 | parseAmount:'Euros'}}</span>
+                            <input  ng-show="!!filtroMovCtrl.editMovCtr"
+                                    type="number" value="{{filtroMovCtrl.filtroMov.importe}}"
+                                    ng-model="filtroMovCtrl.filtroMov.importe"/>
                         </div>
                     </div>
                 </div>

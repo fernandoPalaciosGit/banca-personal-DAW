@@ -14,7 +14,7 @@
 	app.controller( 'navigationMenuController', ['$location', '$cookieStore', MainMenuCtr] );
 
 	//unlogin the user
-	app.directive('unLogin', ['$location', function (){
+	app.directive('unLogin', ['movimientosFiltrados', function (movimientosFiltrados){
 		return {
 			restrict: 'A',
 			priority: 1,
@@ -22,8 +22,18 @@
 				elm.bind('click', function (event){
 					// si la sesion esta abierta, cerrarla y redireccionar hacia '#/acceso'
 					if( !plugin.isEmpty(plugin.getCookie('sessionId')) ){
+						//eliminar cookies
 						document.cookie = "sessionId=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 						document.cookie = "sessionName=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+						//resetear mensajes a sevidor
+						if( !!scope.$parent ){
+							scope.$parent.nombre = '';
+							scope.$parent.mensaje = '';
+						}
+						//resetear valores filtrados en factoria
+						movimientosFiltrados.resetValues();
+						movimientosFiltrados.resetDate();
+						//redireccionar hacia registro
 						document.location.hash = "#/registro";
 					}
 				});

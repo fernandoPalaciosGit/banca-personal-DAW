@@ -17,9 +17,9 @@ var maxId = 0,
     total = { ingresos: 0, gastos: 0 },
     maestros = {
         categoriasIngresos  :
-            ['otros ingresos', 'alquiler inmueble', 'nómina', 'propiedades', 'servicios profesoinales'],
+            ['otros ingresos', 'alquiler inmueble', 'nómina', 'propiedades', 'servicios profesionales'],
         categoriasGastos    :
-            ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'educación', 'colegio profesional', 'alquiler', 'luz', 'agua', 'telefono', 'compras']
+            ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'educación', 'colegio profesional', 'alquiler', 'luz', 'agua', 'teléfono', 'compras']
     },
     //AUTENTICACION
     usuarios = [],
@@ -125,6 +125,41 @@ app.route('/api/priv/movimientos')
         movimientos.push(movimiento);
         res.status(200);
         res.json(movimiento);   //callback promises cliente
+    });
+
+// ACTUALIZAR PROPIEDADES DE UN MOVIMIENTO
+app.route('/api/priv/updateMovimiento')
+    .post(function (req, res, next) {
+        var reqBody = req.body,
+            matchMov = movimientos.filter(function (movimiento){
+                if( movimiento.id == reqBody.id ){
+                    movimiento.esIngreso = reqBody.esIngreso,
+                    movimiento.esGasto = reqBody.esGasto,
+                    movimiento.importe = reqBody.importe,
+                    movimiento.fecha = reqBody.fecha,
+                    movimiento.tipo = reqBody.tipo,
+                    movimiento.categoria = reqBody.categoria,
+                    movimiento.factura = reqBody.factura,
+                    movimiento.concepto = reqBody.concepto
+                    console.log('Movimiento Actualizado: #'+movimiento.id);
+                    res.status(200);
+                    res.json(movimiento);   //callback promises cliente
+                }
+            })[0];
+    });
+
+//ELIMIANAR UN MOVIMIENTO
+app.route('/api/priv/deleteMovimiento')
+    .post(function (req, res, next) {
+        var reqBody = req.body,
+            matchMov = movimientos.filter(function (movimiento){
+                if( movimiento.id == reqBody.id ){
+                    movimientos.splice(movimiento.id, 1);
+                    console.log('Movimiento Eliminado: #'+movimiento.id);
+                    res.status(200);
+                    res.json(movimiento);   //callback promises cliente
+                }
+            })[0];
     });
 
 //API REST: recuperar maestros
