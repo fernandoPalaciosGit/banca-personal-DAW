@@ -10,10 +10,14 @@
 			return $http.get(urlBaseMov);
 		};
 
-		factoryAPI.getMovFilter = function(movId){
+		factoryAPI.getMovFilter = function (movId){
 			//{id:movId} -> cofig rest, parametro de peticoin GET
 			//console.log(movId);
 			return $http.get(	'/api/priv/filter_movimiento', { params: { id: movId } });
+		};
+
+		factoryAPI.getFacturaMovimiento = function (numFactura){
+			return $http.get(	'/api/priv/factura_movimiento', { params: { factura: numFactura } });
 		};
 
 		factoryAPI.setMovimientos = function (movimiento) {

@@ -1,6 +1,6 @@
 (function(w, ng, appAng, plugin){
 	/*	CONTROLADOR bankAccountsController, inicializar propiedades del modelo de aplicacion */
-	var AccountingCtrl = function($rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory, movimientosFiltrados){
+	var AccountingCtrl = function($scope, $rootScope, $location, $cookieStore, maestrosFactory, movimientosFactory, movimientosFiltrados){
 		window.scrollTo(0,0); //reset plugin fixed table footer
 		var	scope = this; //referncia al scope del controlador, para los callback de las peticiones REST
 			
@@ -42,42 +42,75 @@
 			$location.path('registro');
 		}
 
-		this.saveMovimiento = function (){
+		var saveNewMovimiento = function (){
+			console.log(scope.nuevoMovimiento);
+			//valor por defecto de la factura
+			scope.nuevoMovimiento.factura = scope.nuevoMovimiento.factura || 's/n';
+			
+			//bug, fijar franja horaria
+			var dateMov = scope.nuevoMovimiento.fecha;
+			scope.nuevoMovimiento.fecha = (dateMov === scope.fechaActual) ? new Date() : dateMov;
 
-			if( !this.checkValidImporte() || this.nuevoMovimiento.esNulo === true ){
-				//valor por defecto de la factura
-				this.nuevoMovimiento.factura = this.nuevoMovimiento.factura || 's/n';
-				
-				//bug, fijar franja horaria
-				var dateMov = this.nuevoMovimiento.fecha;
-				this.nuevoMovimiento.fecha = (dateMov === this.fechaActual) ? new Date() : dateMov;
+			//asignamos hora del nuevo movimiento
+			var auxCopyMov = ng.copy(scope.nuevoMovimiento);
 
-				//asignamos hora del nuevo movimiento
-				var auxCopyMov = ng.copy(this.nuevoMovimiento);
+			/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
+			movimientosFactory.setMovimientos(auxCopyMov)
+									.success(function (data, status, headers, config) {
+					//asegurar el update de nuevo movimiento
+					if(status == 200){
+						movimientosFactory.getTotal().success(function (data){
+							scope.total = data;
+						});
+						movimientosFactory.getMovimientos().success(function (data){
+							scope.movimientos = data;
+						});
+					}
+			});
+									
+			// resetear valores de nuevo movimiento
+			scope.resetMovimiento();
 
-				/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
-				movimientosFactory.setMovimientos(auxCopyMov)
-										.success(function(data, status, headers, config) {
-						//asegurar el update de nuevo movimiento
-						if(status == 200){
-							movimientosFactory.getTotal().success(function(data){
-								scope.total = data;
-							});
-							movimientosFactory.getMovimientos().success(function(data){
-								scope.movimientos = data;
-							});
-						}
+			//resetear filtros almacenados en factoria
+			movimientosFiltrados.resetValues();
+			movimientosFiltrados.resetDate();
+
+			//avisar de movimiento actualizado
+			console.log('Movimiento Actualizado: #'+auxCopyMov.id);
+			$('.msgClientNewMov').fadeIn();
+			window.setTimeout(function (){
+				$('.msgClientNewMov').fadeOut();
+				$scope.$apply(function(){
+					$location.path('/lista');
 				});
-										
-				// resetear valores de nuevo movimiento
-				this.resetMovimiento();
+			}, 2000);
+		};
 
-				//resetear filtros almacenados en factoria
-				movimientosFiltrados.resetValues();
-				movimientosFiltrados.resetDate();
+		var checkNewMovFactura = function (){
+			movimientosFactory.getFacturaMovimiento(scope.nuevoMovimiento.factura)
+								.success(function (data, status, headers, config){
+									if( !!data.isFactura ){
+										//avisar de que existe factura repetida
+										w.alert(	'Factura Repetida\nCoincidencia: '+
+													'#'+data.matchMov.id+' : '+data.matchMov.factura);
+									}else{
+										//añadir nuevo movimiento
+										saveNewMovimiento();
+									}
+								});
+		};
 
-				window.alert('NO REDIRECCIONAR: avisar de una nuevo movimiento por su numero de factura');
-			}else{
+		// BTNCLICK SaveMov
+		this.saveMovimiento = function (){
+			//comprobar importe valido, no anulable
+			if( !this.checkValidImporte() || this.nuevoMovimiento.esNulo === true ){
+				//comprobar numero de factura repetida
+				if( !plugin.isEmpty(this.nuevoMovimiento.factura) ) {
+					checkNewMovFactura();
+				} else {
+					saveNewMovimiento();
+				}
+			} else {
 				w.alert('Falta la cantidad del movimiento');
 			}
 		};
@@ -141,6 +174,6 @@
 
 	//CONTROLADORES DE APLICACION y dependencia de controlador $location
 	appAng.controller(	'bankAccountsController',
-	['$rootScope', '$location', '$cookieStore', 'maestrosFactory', 'movimientosFactory', 'movimientosFiltrados', AccountingCtrl] );
+	['$scope', '$rootScope', '$location', '$cookieStore', 'maestrosFactory', 'movimientosFactory', 'movimientosFiltrados', AccountingCtrl] );
 
 })(window, window.angular, app, plugin);

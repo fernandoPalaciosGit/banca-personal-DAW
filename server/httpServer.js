@@ -99,6 +99,26 @@ app.get("/api/priv/filter_movimiento", function (req, res, next){
     res.json(matchMov);
 });
 
+//API REST: comprobar Factura repetida****************************************************************************************************************************************************
+app.get("/api/priv/factura_movimiento", function (req, res, next){
+    //iterar sobre todos los movimientos y encontrar la factura
+    var matchFactura = req.query.factura,
+        resFactura = {
+            isFactura: false,
+            matchMov: {}
+        },
+        matchMov = movimientos.filter(function (movimiento){
+            if( movimiento.factura == matchFactura ){
+                resFactura = {
+                    isFactura: true,
+                    matchMov: movimiento
+                }
+                res.json(resFactura);
+            }
+        })[0];
+        res.json(resFactura);
+});
+
 //API REST: recuperar y configurar movimientos
 app.route('/api/priv/movimientos')
 	.get(function (req, res, next) {

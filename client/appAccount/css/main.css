@@ -238,7 +238,8 @@ input[type='email']:valid:focus{
  font-size: 0.7em;   
 }
 .msgClientUpdateMov,
-.msgClientDeleteMov{
+.msgClientDeleteMov,
+.msgClientNewMov{
     display: none;
     position: fixed;
     width: 100%;

@@ -84,17 +84,18 @@ var parseAmount = function(){
 // rango de fecha del movimiento
 var dateRange = function(){
   return function (movimientos, start_date, end_date, checkData) {
+  	// console.log(start_date, end_date, checkData);
 		// date filters
 		var	result = [],
 				parse_start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0,
 				parse_end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
 		
 		// if the conversations are loaded
-		if (checkData && movimientos && movimientos.length > 0){
+		if (checkData && !plugin.isEmpty(movimientos) ){
 			for (var i = 0, len = movimientos.length; i < len; i++) {
 				var	movimiento = movimientos[i],
-						movimientoDate = new Date(movimiento.fecha);
-				if ( movimientoDate >= parse_start_date && movimientoDate <= parse_end_date ){
+						movimientoDate = new Date(movimiento.fecha.split('T')[0]);
+				if ( +movimientoDate >= parse_start_date && +movimientoDate <= parse_end_date ){
 					result.push(movimiento);
 				}
 			}
