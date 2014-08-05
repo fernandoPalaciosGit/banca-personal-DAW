@@ -16,10 +16,20 @@ var maxId = 0,
     movimientos = [],
     total = { ingresos: 0, gastos: 0 },
     maestros = {
-        categoriasIngresos  :
-            ['otros ingresos', 'alquiler inmueble', 'nómina', 'propiedades', 'servicios profesionales'],
-        categoriasGastos    :
-            ['gastos personales', 'gastos profesionales', 'seguros', 'impuestos', 'educación', 'colegio profesional', 'alquiler', 'luz', 'agua', 'teléfono', 'compras']
+        categoriasIngresosPersonal  :
+            ['ingresos varios', 'propiedades', 'alquileres', 'salario', 'servicios profesionales'],
+        categoriasGastosHogar :
+            ['varios hogar', 'hipoteca', 'alquileres', 'seguro del hogar', 'impuestos del hogar', 'electricidad', 'gas', 'agua', 'teléfono', 'televisión de pago', 'internet', 'muebles / aparatos', 'mantenimiento / suministros', 'mejoras del hogar'],
+        categoriasGastosTransporte :
+            ['varios transporte', 'préstamo de vehículos', 'seguro de vehículos', 'impuesto de vehículos', 'combustible', 'transporte publico', 'reparaciones'],
+        categoriasGastosSanitario :
+            ['varios sanitario', 'seguro de salud', 'dentista', 'medicinas', '  seguro de vida'],
+        categoriasGastosDiarios :
+            ['gastos personales', 'comestibles', 'ropa', 'limpieza', 'educación', 'comer fuera de casa', 'peluquería', 'mascotas'],
+        categoriasGastosEntretenimiento :
+            ['varios entretenimiento', 'vídeos / DVDs', 'música', 'juegos', 'cine / teatro', 'conciertos', 'libros / revistas', 'deporte', 'juguetes / gadgets', 'vacaciones'],
+        categoriasGastosAhorro :
+            ['ahorro en general', 'fondo de emergencia', 'cuantía de ahorro', 'jubilación', 'inversiones', 'ahorro en educación']
     },
     //AUTENTICACION
     usuarios = [],
@@ -99,7 +109,7 @@ app.get("/api/priv/filter_movimiento", function (req, res, next){
     res.json(matchMov);
 });
 
-//API REST: comprobar Factura repetida****************************************************************************************************************************************************
+//API REST: comprobar Factura repetida
 app.get("/api/priv/factura_movimiento", function (req, res, next){
     //iterar sobre todos los movimientos y encontrar la factura
     var matchFactura = req.query.factura,
@@ -112,7 +122,7 @@ app.get("/api/priv/factura_movimiento", function (req, res, next){
                 resFactura = {
                     isFactura: true,
                     matchMov: movimiento
-                }
+                };
                 res.json(resFactura);
             }
         })[0];
@@ -153,17 +163,27 @@ app.route('/api/priv/updateMovimiento')
         var reqBody = req.body,
             matchMov = movimientos.filter(function (movimiento){
                 if( movimiento.id == reqBody.id ){
-                    movimiento.esIngreso = reqBody.esIngreso,
-                    movimiento.esGasto = reqBody.esGasto,
-                    movimiento.importe = reqBody.importe,
-                    movimiento.fecha = reqBody.fecha,
-                    movimiento.tipo = reqBody.tipo,
-                    movimiento.categoria = reqBody.categoria,
-                    movimiento.factura = reqBody.factura,
-                    movimiento.concepto = reqBody.concepto
+                    //actualizar totales antiguos
+                    ( !movimiento.esIngreso )   ? total.gastos   -= movimiento.importe
+                                                : total.ingresos -= movimiento.importe;
+
+                    movimiento.esIngreso = reqBody.esIngreso;
+                    movimiento.esGasto = reqBody.esGasto;
+                    movimiento.importe = reqBody.importe;
+                    movimiento.fecha = reqBody.fecha;
+                    movimiento.tipo = reqBody.tipo;
+                    movimiento.categoria = reqBody.categoria;
+                    movimiento.factura = reqBody.factura;
+                    movimiento.concepto = reqBody.concepto;
                     console.log('Movimiento Actualizado: #'+movimiento.id);
+
+                    //actualizar totales nuevos
+                    ( !movimiento.esIngreso )   ? total.gastos   += movimiento.importe
+                                                : total.ingresos += movimiento.importe;
+
+                    //callback promises cliente
                     res.status(200);
-                    res.json(movimiento);   //callback promises cliente
+                    res.json(movimiento);
                 }
             })[0];
     });
@@ -172,12 +192,18 @@ app.route('/api/priv/updateMovimiento')
 app.route('/api/priv/deleteMovimiento')
     .post(function (req, res, next) {
         var reqBody = req.body,
-            matchMov = movimientos.filter(function (movimiento){
+            matchMov = movimientos.filter(function (movimiento, posInMov){
                 if( movimiento.id == reqBody.id ){
-                    movimientos.splice(movimiento.id, 1);
+                    movimientos.splice(posInMov, 1);
                     console.log('Movimiento Eliminado: #'+movimiento.id);
+
+                    //actualizar totales
+                    ( !movimiento.esIngreso )   ? total.gastos   -= movimiento.importe
+                                                : total.ingresos -= movimiento.importe;
+                    
+                    //callback promises cliente
                     res.status(200);
-                    res.json(movimiento);   //callback promises cliente
+                    res.json(movimiento);   
                 }
             })[0];
     });

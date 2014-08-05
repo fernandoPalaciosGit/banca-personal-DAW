@@ -40,7 +40,7 @@ var httpStatusControl = function($q, $location, $cookieStore, $rootScope){
 		},
 		//CADA VEZ QUE HAY UNA RESPUESTA DEL SERVIDOR
 		response: function(response){
-			console.log(response.status);
+			console.log(response.status, response.statusText, 'SID->'+response.config.headers.sessionId);
 			/**si la respuesta es que se ha desconectado el servidor,
 			enviar un aviso de web socket para  la cookie de sesion**/
 			return response || $q.when(response);

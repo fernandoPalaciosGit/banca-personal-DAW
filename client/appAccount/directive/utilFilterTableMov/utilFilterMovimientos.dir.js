@@ -5,8 +5,27 @@ var utilFilterMovController = function ($rootScope){
 		var	tableBodyData = tableBodyRow.querySelectorAll('td'),
 				myObject = {};
 
-	   for (var i = 0, len = tableBodyData.length; i < len; i++) {
-	       myObject[ tableHeadRow[i] ] = tableBodyData[i].innerText;
+	   for (var i = 0, len = tableHeadRow.length; i < len; i++) {
+	   	if( i === 0 ){ //primer valor
+	   		var arrIdFactMov = tableBodyData[i].innerText.split('#');
+	   		myObject[ tableHeadRow[0] ] = arrIdFactMov[0]; 
+	   		myObject[ tableHeadRow[1] ] = arrIdFactMov[1];
+	   		continue;
+	   	}
+	   	
+	   	myObject[ tableHeadRow[i] ] = tableBodyData[i-1].innerText;
+	   	
+	   	//RETOQUES DE OUTPUT
+	   	if( i === 1 ){ //primer valor
+	   		myObject[ tableHeadRow[i] ] = myObject[ tableHeadRow[i] ].split('#')[1] ;
+	   	}
+	   	if( i === len-1 ){ //ultimo valor
+	   		var	value = tableBodyData[i-1].innerText,
+	   				entero = parseFloat(value.split(',')[0].trim().replace('.', '')),
+	   				decimal = '0.'+parseFloat(value.split(',')[1]),
+	   				total = parseFloat(entero) + parseFloat(decimal);
+	   		myObject[ tableHeadRow[i] ] = total.toString().replace('.', ',');
+	   	}
 	   }
 	    return myObject;
 	};
@@ -27,7 +46,7 @@ var utilFilterMovController = function ($rootScope){
 		var	tableBodyRows = document.querySelectorAll("#"+tableName+" tbody tr"),
 				tableCaption = 'cuentas-'+$rootScope.nombre+'-'+fechaActual,
 				sourcePHPPrint = 'http://localhost:80/last_update/houseAccount/server/saveExcelMovFilter.php',
-				tableHeadRow = ["DOCUMENTOS", "FECHA", "TIPO", "CATEGORIA", "CONCEPTO", "IMPORTE"],
+				tableHeadRow = ["DOCUMENTOS", "FACTURA", "FECHA", "TIPO", "CATEGORIA", "CONCEPTO", "IMPORTE"],
 				tableBodyData = [];
 
 		for (var i = 0, len = tableBodyRows.length; i < len; i++) {

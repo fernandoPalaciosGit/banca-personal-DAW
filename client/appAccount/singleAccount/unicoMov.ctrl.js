@@ -11,6 +11,7 @@
 		this.copyFiltroMov = {};
 		this.msg = "";
 		this.categoria = [];
+		this.tipoCategoria = '';
 
 		this.isEditMovCtr = function (){
 			// mostrar formulario de actualizaciones
@@ -22,8 +23,25 @@
 
 			// seleccionarlos maestros del movimeiento
 			maestrosFactory.getMaestros().success(function (data){
-				scope.categoria	= (scope.filtroMov.tipo === 'ingreso') ?
-											data.categoriasIngresos : data.categoriasGastos;
+				if( plugin.isEmpty(scope.filtroMov.categoria) ){
+					// recrremos todas las categorias del mismo tipo
+					scope.categoria	= (scope.filtroMov.tipo === 'ingreso') ?
+												data.categoriasIngresosPersonal : 
+												data.categoriasGastosHogar.concat(data.categoriasGastosTransporte).concat(data.categoriasGastosSanitario).concat(data.categoriasGastosDiarios).concat(data.categoriasGastosEntretenimiento).concat(data.categoriasGastosAhorro);
+				}else{
+					//recorremos laas categorias de un tipo buscando si hay coincidencia - salir del bucle a la primera coincidencia
+					for (var key in data) {
+					   var obj = data[key];
+					   for (var prop in obj) {
+					      // not from prototype prop inherited
+					      if(obj.hasOwnProperty(prop) && obj[prop] === scope.filtroMov.categoria){
+					        scope.categoria = obj;
+					        scope.tipoCategoria = key.replace('categorias', '');
+					        return true;
+					      }
+					   }
+					}
+				}
 			});
 
 			this.copyFiltroMov = ng.copy(this.filtroMov);

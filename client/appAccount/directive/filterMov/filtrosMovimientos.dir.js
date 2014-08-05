@@ -22,6 +22,7 @@ var filtroMovController = function ($scope, maestrosFactory, movimientosFiltrado
 
 	// cargar los valores por defecto desde la factoria
 	this.resetProperties = function (){
+
 		this.valorBuscado = movimientosFiltrados.valorBuscado;
 		this.valorCorte = movimientosFiltrados.valorCorte;
 		this.checkData = movimientosFiltrados.checkData;
@@ -39,6 +40,8 @@ var filtroMovController = function ($scope, maestrosFactory, movimientosFiltrado
 				$('[name="resetMovFilterBtn"]').removeClass('filterActive');
 			}
 		}, 100);
+
+		// window.scroll();
 	}
 
 	this.resetProperties();
@@ -143,28 +146,38 @@ var filtroMov = function(maestrosFactory, movimientosFiltrados){
 		controllerAs: 'filtroMovCtr',
 		link: function(scope, element, attrs) {
 			/* Recuperamos el binding de todos las propiedades del controlador para esta directiva,
-				y cuando hay un nuevo valor, actualizamos una factoria que la usaremos para recuperar el valor por defecto de esta propiedades al cargar la vista y su controlador */ 
+				y cuando hay un nuevo valor, actualizamos una factoria que la usaremos para recuperar el valor por defecto de esta propiedades al cargar la vista y su controlador */
 			scope.$watch(	'this.filtroMovCtr.valorBuscado',
-								function(newValue, oldValue) { resetProperties("valorBuscado", newValue) });
+					function(newValue, oldValue) {
+						//BUG: resetear valorBuscado cuando no hay search
+						if( newValue === ''){
+							movimientosFiltrados.valorBuscado = '';
+						} else{
+							resetProperties("valorBuscado", newValue);
+						}
+					});
          scope.$watch(	'this.filtroMovCtr.valorCorte',
-         					function(newValue, oldValue) { resetProperties("valorCorte", newValue) });
-         scope.$watch(	'this.filtroMovCtr.checkData',
-         					function(newValue, oldValue) { resetProperties("checkData", newValue, true) });
-         scope.$watch(	'this.filtroMovCtr.start_date',
-         					function(newValue, oldValue) { resetProperties("start_date", newValue) });
-         scope.$watch(	'this.filtroMovCtr.end_date',
-         					function(newValue, oldValue) { resetProperties("end_date", newValue) });
-         scope.$watch(	'this.filtroMovCtr.checkToday',
-         					function(newValue, oldValue) { resetProperties("checkToday", newValue) });
-         scope.$watch(	'this.filtroMovCtr.checkActualMonth',
-         					function(newValue, oldValue) { resetProperties("checkActualMonth", newValue) });
-         scope.$watch(	'this.filtroMovCtr.checkActualYear',
-         					function(newValue, oldValue) { resetProperties("checkActualYear", newValue) });
-         scope.$watch(	'this.filtroMovCtr.checkActualWeek',
-         					function(newValue, oldValue) { resetProperties("checkActualWeek", newValue) });
+					function(newValue, oldValue) { resetProperties("valorCorte", newValue); });
+			scope.$watch(	'this.filtroMovCtr.checkData',
+					function(newValue, oldValue) { resetProperties("checkData", newValue, true); });
+			scope.$watch(	'this.filtroMovCtr.start_date',
+					function(newValue, oldValue) { resetProperties("start_date", newValue); });
+			scope.$watch(	'this.filtroMovCtr.end_date',
+					function(newValue, oldValue) { resetProperties("end_date", newValue); });
+
+			//BUG: persistencia de input.radio.rangoFechas
+			scope.$watch(	'this.filtroMovCtr.checkToday',
+					function(newValue, oldValue) { movimientosFiltrados.checkToday = newValue; });
+			scope.$watch(	'this.filtroMovCtr.checkActualMonth',
+					function(newValue, oldValue) { movimientosFiltrados.checkActualMonth = newValue; });
+			scope.$watch(	'this.filtroMovCtr.checkActualYear',
+					function(newValue, oldValue) { movimientosFiltrados.checkActualYear = newValue; });
+			scope.$watch(	'this.filtroMovCtr.checkActualWeek',
+					function(newValue, oldValue) { movimientosFiltrados.checkActualWeek = newValue; });
 
          var resetProperties = function (property, value, isFlag){
              if ( !!value ) {	movimientosFiltrados[property] = value; }
+
              if( !($('[name="resetMovFilterBtn"]').hasClass('filterActive')) && !isFlag) {
              	$('[name="resetMovFilterBtn"]').addClass('filterActive');
              }
@@ -192,7 +205,14 @@ appDirectives.directive('preventDataChange', function() {
         	elm.bind('change', function(event){
         		var	filtroMovCtr = scope.filtroMovCtr,
         				diffDate =  +new Date(filtroMovCtr.end_date) - +new Date(filtroMovCtr.start_date);
-				
+
+				scope.$apply(function(){
+					scope.filtroMovCtr.checkToday = false;
+					scope.filtroMovCtr.checkActualMonth = false;
+					scope.filtroMovCtr.checkActualYear = false;
+					scope.filtroMovCtr.checkActualWeek = false;
+				});
+
 				//inhabilitar si la diferencia del rango de fechas es negativa
 				if( !!filtroMovCtr.end_date && !!filtroMovCtr.start_date && diffDate < 0 ){
         			window.alert('rango de fechas incorrecto');
@@ -213,13 +233,18 @@ appDirectives.directive('categoriaBuscada', function (){
 		priority: 1, // needed for angular 1.2.x
 		link: function (scope, elm, attr){
 			elm.bind('change', function (event){
-				scope.$apply(function(){
-					scope.filtroMovCtr.valorBuscado = scope.filtroMovCtr.categoria;
-					scope.filtroMovCtr.categoria = scope.filtroMovCtr.getMaestrosFactory();
-				});
-				window.setTimeout(function (){
-					window.scrollTo(5, 0);	
-				}, 100);
+				//esta directiva de atributo se comparte en varias vistas, asi que comprobamos si el controlador de scope superio existe
+				if( !!scope.$parent.filtroMovCtr ){
+					scope.$apply(function(){
+						scope.$parent.filtroMovCtr.valorBuscado = scope.$parent.filtroMovCtr.categoria;
+						scope.$parent.filtroMovCtr.categoria = scope.$parent.filtroMovCtr.getMaestrosFactory();
+					});
+
+					//reseteamos la posicion de la tabla para evitar bug de plugin
+					window.setTimeout(function (){
+						window.scroll(window.scrollX, window.scrollY);
+					}, 100);
+				}
 			});	
 		}
 	};
@@ -232,9 +257,52 @@ appDirectives.directive('resetFixedTable', function (){
 		priority: 1,
 		link: function (scope, elm, attr){
 			elm.bind('click input change', function (event){
+				//reseteamos la posicion de la tabla para evitar bug de plugin
 				window.setTimeout(function (){
-					window.scrollTo(5, 0);	
+					window.scroll(window.scrollX, window.scrollY);
 				}, 100);
+			});
+		}
+	};
+});
+
+// var preventDefaultScroll = function() {
+//     return {
+//         restrict: 'E',
+//         link: function(scope, elem, attrs) {
+//             if(attrs.ngClick || attrs.href === '' || attrs.href === '#'){
+//                 elem.on('click', function(e){
+//                     e.preventDefault();
+//                     return false;
+//                 });
+//             }
+//         }
+//    };
+// }
+// app.directive('input', preventDefaultScroll);
+// app.directive('a', preventDefaultScroll);
+// app.directive('button', preventDefaultScroll);
+
+appDirectives.directive('resetCateg', function (){
+	return {
+		restrict: 'A',
+		priority: 1,
+		link: function (scope, elm, attr){
+			elm.bind('click input change', function (event){
+				//compruebo cual es el scope del controller en el que llamo a la directiva
+				if( !scope.filtroMovCtr ){
+					scope.$apply(function(){
+						attr.tablecateg = attr.tablecateg || 'ingreso';
+						scope.accountsCtrl.nuevoMovimiento.tipo = 
+							scope.accountsCtrl.nuevoMovimiento.tipo || attr.tablecateg;
+						scope.accountsCtrl.nuevoMovimiento.categoria = '';
+					});
+					$('#groupBtnCteg .changeCateg').triggerHandler('click'); //reset //$watch
+				}else{
+					scope.$apply(function(){
+						scope.filtroMovCtr.valorBuscado = attr.tablecateg;
+					});	
+				}
 			});
 		}
 	};

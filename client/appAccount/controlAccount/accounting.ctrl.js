@@ -26,9 +26,9 @@
 			$rootScope.nombre = $cookieStore.get('sessionName');
 
 			//NOTA: aunque haya sesion, al llamar a los movimientos o totales, el servidor se encarga de comprobar si esta dado de alta el usuario en el sistema;
-			maestrosFactory.getMaestros().success(function (data){
-				scope.maestros = data;
-			});
+			// maestrosFactory.getMaestros().success(function (data){
+			// 	scope.maestros = data;
+			// });
 
 			movimientosFactory.getMovimientos().success(function (data){
 				scope.movimientos = data;
@@ -43,47 +43,52 @@
 		}
 
 		var saveNewMovimiento = function (){
-			console.log(scope.nuevoMovimiento);
-			//valor por defecto de la factura
-			scope.nuevoMovimiento.factura = scope.nuevoMovimiento.factura || 's/n';
-			
-			//bug, fijar franja horaria
-			var dateMov = scope.nuevoMovimiento.fecha;
-			scope.nuevoMovimiento.fecha = (dateMov === scope.fechaActual) ? new Date() : dateMov;
 
-			//asignamos hora del nuevo movimiento
-			var auxCopyMov = ng.copy(scope.nuevoMovimiento);
+			var confirm = window.confirm(	"¿ Quieres Añadir un nuevo "+scope.nuevoMovimiento.tipo+" ?\n"+
+													"Movimiento: "+(scope.nuevoMovimiento.factura || 's/n')+".");
+			if( confirm ){
+				console.log(scope.nuevoMovimiento);
+				//valor por defecto de la factura
+				scope.nuevoMovimiento.factura = scope.nuevoMovimiento.factura || 's/n';
+				
+				//bug, fijar franja horaria
+				var dateMov = scope.nuevoMovimiento.fecha;
+				scope.nuevoMovimiento.fecha = (dateMov === scope.fechaActual) ? new Date() : dateMov;
 
-			/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
-			movimientosFactory.setMovimientos(auxCopyMov)
-									.success(function (data, status, headers, config) {
-					//asegurar el update de nuevo movimiento
-					if(status == 200){
-						movimientosFactory.getTotal().success(function (data){
-							scope.total = data;
-						});
-						movimientosFactory.getMovimientos().success(function (data){
-							scope.movimientos = data;
-						});
-					}
-			});
-									
-			// resetear valores de nuevo movimiento
-			scope.resetMovimiento();
+				//asignamos hora del nuevo movimiento
+				var auxCopyMov = ng.copy(scope.nuevoMovimiento);
 
-			//resetear filtros almacenados en factoria
-			movimientosFiltrados.resetValues();
-			movimientosFiltrados.resetDate();
-
-			//avisar de movimiento actualizado
-			console.log('Movimiento Actualizado: #'+auxCopyMov.id);
-			$('.msgClientNewMov').fadeIn();
-			window.setTimeout(function (){
-				$('.msgClientNewMov').fadeOut();
-				$scope.$apply(function(){
-					$location.path('/lista');
+				/*almacenar datos en el server y recuperar nuevos movimentos y totales*/
+				movimientosFactory.setMovimientos(auxCopyMov)
+										.success(function (data, status, headers, config) {
+						//asegurar el update de nuevo movimiento
+						if(status == 200){
+							movimientosFactory.getTotal().success(function (data){
+								scope.total = data;
+							});
+							movimientosFactory.getMovimientos().success(function (data){
+								scope.movimientos = data;
+							});
+						}
 				});
-			}, 2000);
+										
+				// resetear valores de nuevo movimiento
+				scope.resetMovimiento();
+
+				//resetear filtros almacenados en factoria
+				movimientosFiltrados.resetValues();
+				movimientosFiltrados.resetDate();
+
+				//avisar de movimiento actualizado
+				console.log('Movimiento Actualizado: #'+auxCopyMov.id);
+				$('.msgClientNewMov').fadeIn();
+				window.setTimeout(function (){
+					$('.msgClientNewMov').fadeOut();
+					$scope.$apply(function(){
+						$location.path('/lista');
+					});
+				}, 2000);
+			}
 		};
 
 		var checkNewMovFactura = function (){
@@ -138,7 +143,7 @@
 		this.resetMovimiento = function (){
 			this.checkTipoMovimiento();
 			this.nuevoMovimiento.esNulo = false;
-			this.nuevoMovimiento.categoria = '';
+			// this.nuevoMovimiento.categoria = '';
 			this.nuevoMovimiento.importe = 0;
 			this.nuevoMovimiento.concepto = '';
 			this.nuevoMovimiento.factura = '';
@@ -153,7 +158,7 @@
 			this.nuevoMovimiento.tipo = typeMov;
 			this.nuevoMovimiento.esIngreso = (typeMov === 'ingreso') ? 1 : 0;
 			this.nuevoMovimiento.esGasto = (typeMov === 'gasto') ? 1 : 0;
-			this.nuevoMovimiento.categoria = '';
+			// this.nuevoMovimiento.categoria = '';
 		};
 
 		this.balance = function (){

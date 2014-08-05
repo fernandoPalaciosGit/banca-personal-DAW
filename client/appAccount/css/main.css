@@ -145,7 +145,18 @@ input[type='email']:valid:focus{
     50%{ background-color: rgb(88, 189, 10); }
     to{ background-color: rgb(193, 250, 149); }
 }
-
+input:valid:focus::-webkit-input-placeholder {
+   color: rgb(100, 100, 100);
+}
+input:valid:focus:-moz-placeholder { /* Firefox 18- */
+   color: rgb(100, 100, 100);
+}
+input:valid:focus::-moz-placeholder {  /* Firefox 19+ */
+   color: rgb(100, 100, 100);
+}
+input:valid:focus:-ms-input-placeholder {  
+   color: rgb(100, 100, 100);
+}
 .printView{
     display: none;
 }
@@ -161,7 +172,15 @@ input[type='email']:valid:focus{
     color: rgb(255, 255, 255);
 }
 
-#newMovForm textarea,
+#newMovForm [for="tipo"],
+#newMovForm [for="concepto"],
+#newMovForm [for="factura"],
+#newMovForm [for="fecha"],
+#newMovForm [for="categ"],
+#newMovForm [for="importe"]{
+    margin-bottom: 5px;
+}
+#newMovForm [name="concepto"],
 #newMovForm [name="factura"],
 #newMovForm [name="fecha"],
 #newMovForm [name="categ"],
@@ -169,14 +188,15 @@ input[type='email']:valid:focus{
     /*text-align: center;*/
     text-indent: 15px;
 }
+#newMovForm .control-group{
+    margin-bottom: 1.5em;
+}
 
 #filterMovForm .control-label{
     text-transform: uppercase;
 }
 #filterMovForm .control-label + div{
-    text-indent: 1em;
-    margin-bottom: 0.5em;
-}
+margin: 0.2em 0 1em 1em;}
 #filterMovForm [for="tipo"] + div,
 #filterMovForm [for="categ"] + div{
     text-transform: capitalize;
@@ -264,6 +284,139 @@ left: calc( 50% - 150px );
 section[name="verMovimiento"]{
     z-index: 10;
 }
+.importeBlock{
+    position: relative;
+}
+/*////mover el select de cantidades al extremo del importe, y colocar los euros justo a la izquierda*/
+select[name="optImpport"]{
+position: absolute;
+z-index: 10;
+top: 35px;
+left: 103px;
+height: 30%;
+border: none;
+outline: none;
+text-align: center;
+background-color: #428bca;
+border-radius: 4px;
+background-color: rgb(235, 235, 228);
+border: 1px solid rgb(185, 175, 175);
+}
+input[name="importe"]::-webkit-inner-spin-button, 
+input[name="importe"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+select[name="optImpport"]:disabled{
+    display: none;
+}
+select[name="optImpport"] option{
+    background-color: #fff !important;
+}
+label[for="importe"]>small{
+    color: #31708f;
+}
+
+.btnsaveNewMov{
+    border-top: 1px solid grey;
+    padding-top: 2em;
+    text-align: center;
+}
+categoria-movimientos-ingresos select,
+categoria-movimientos-gastos select{
+    left: 13.5em;
+    position: absolute;
+    width: 15em;
+}
+categoria-movimientos-ingresos select{
+    left: 9.5em;
+}
+
+label[for="categ"]{
+    position: relative;
+    color: #31708f;
+}
+label[for="categ"]:after{
+    content: " : ";
+    display: block;
+    position: absolute;
+    left: 11em;
+    top: 0;
+}
+categoria-movimientos-ingresos label[for="categ"]:after{
+    left: 6em;
+}
+#collapseOne h3 {
+    text-transform: uppercase;
+    font-style: oblique;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+    font-size: 1.4em;
+    border-bottom: 1px solid grey;
+    width: 50%;
+}
+#collapseOne header + .row{
+    margin-top: 2em;
+}
+
+.panelFilterImporte .pagination,
+.filterPanel.panelFilterCateg{
+    margin-bottom: 0;
+}
+.filterPanel{
+    position: relative;
+    margin: 0 0 3em;
+}
+.panelFilterCateg div[class^='col']:last-child,
+.panelFilterFecha div[class^='col']:last-child,
+.panelFilterFecha div[class^="col"]{
+    text-align: left;
+}
+.panelFilterFecha div[class^="col"]:first-of-type{
+    margin-left: 15%;
+    margin-right: -20%;
+    text-transform: capitalize;
+}
+.panelFilterFecha ul[role="tablist"]:nth-of-type(2){
+    color: #2a6496;
+    margin-left: 1em;
+}
+
+.panelFilterFecha div[class^="col"]:last-of-type ul li{
+    position: relative;
+    line-height: 3em;
+    text-transform: capitalize;
+    color: #2a6496;
+}
+/*.panelFilterFecha div[class^="col"]:last-of-type ul li:after{
+    content : ": ";
+}*/
+/*.panelFilterFecha div[class^="col"]:last-of-type ul li:last-child{
+    margin-top: 1.5em;
+}
+*/
+.panelFilterFecha .filterDate{
+    position: absolute;
+    left: 4em;
+}
+
+.panelFilterFecha .filterDate + .glyphicon {
+    left: 8.5em;
+    font-size: 1.5em;
+    top: 0.2em;
+}
+.forFilterDate{
+    display: inline-block;
+    width: 45px;
+}
+.panelFilterCateg .btnValorBuscado>button {
+    font-size: 1em;
+    line-height: 2em;
+    padding: 0 1em;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
@@ -280,6 +433,12 @@ section[name="verMovimiento"]{
 {
     color: #239407;
     text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        width: 890px;
+    }
 }
 
 @media screen and (max-width: 768px){
@@ -305,6 +464,7 @@ section[name="verMovimiento"]{
         width: 100px;
         right: -80px;
     }
+
     .btn-group.btnValorBuscado {
         display: flex;
     }
@@ -333,7 +493,7 @@ section[name="verMovimiento"]{
     .orderCampo{ position: relative !important; }
     .orderCampo .orderCampoId{
         position: absolute;
-        top: 10px;
+        top: 4px;
         left: 23px;
     }
     .meanSentido {

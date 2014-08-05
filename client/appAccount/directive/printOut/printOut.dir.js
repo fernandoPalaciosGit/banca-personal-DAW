@@ -21,16 +21,19 @@ var outputImpresion = function(){
 			};
 
 			this.categMov = function (valorBuscado, filtroCategoria){
-
 				if( valorBuscado == 'ingreso' || valorBuscado == 'gasto'  ){
-					return valorBuscado.charAt(0).toUpperCase() + valorBuscado.substring(1);
+					return valorBuscado.charAt(0).toUpperCase() + valorBuscado.substring(1)+'s';
 				}else{
 					//si el valor buscado esta en el array de filtros categoria
-					if(	!!filtroCategoria &&
-							!!filtroCategoria["categoriasIngresos"] && !!filtroCategoria["categoriasGastos"]){
-						if(filtroCategoria["categoriasIngresos"].indexOf(valorBuscado) != -1){
+					if( !plugin.isEmpty(filtroCategoria) ){
+						if(filtroCategoria["categoriasIngresosPersonal"].indexOf(valorBuscado) != -1){
 							return 'Ingresos';
-						}else if(filtroCategoria["categoriasGastos"].indexOf(valorBuscado) != -1){
+						}else if(filtroCategoria["categoriasGastosSanitario"].indexOf(valorBuscado) != -1 ||
+									filtroCategoria["categoriasGastosHogar"].indexOf(valorBuscado) != -1 ||
+									filtroCategoria["categoriasGastosTransporte"].indexOf(valorBuscado) != -1 ||
+									filtroCategoria["categoriasGastosDiarios"].indexOf(valorBuscado) != -1 ||
+									filtroCategoria["categoriasGastosEntretenimiento"].indexOf(valorBuscado) != -1 ||
+									filtroCategoria["categoriasGastosAhorro"].indexOf(valorBuscado) != -1 ){
 							return 'Gastos';
 						}else{
 							return "Ingresos y Gastos";

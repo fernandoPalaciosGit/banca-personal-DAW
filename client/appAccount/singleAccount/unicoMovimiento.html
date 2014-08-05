@@ -40,13 +40,15 @@
                         <div class="controls">
                             <span ng-hide="!!filtroMovCtrl.editMovCtr">
                                 {{ filtroMovCtrl.filtroMov.categoria | byDefault }}</span>
-                            <select name="categ"
-                                  ng-show="!!filtroMovCtrl.editMovCtr"
-                                  ng-model="filtroMovCtrl.filtroMov.categoria"
-                                  ng-options="categ | capitalyzeAll for categ in filtroMovCtrl.categoria"
-                                  >
-                              <span value="">{{filtroMovCtrl.filtroMov.categoria}}</span>
-                          </select>
+                            <span ng-show="!!filtroMovCtrl.editMovCtr">
+                                <small class="text-info">{{filtroMovCtrl.tipoCategoria}}</small><br>
+                                <select name="categ"
+                                      ng-model="filtroMovCtrl.filtroMov.categoria"
+                                      ng-options="categ | capitalyzeAll for categ in filtroMovCtrl.categoria"
+                                      >
+                                  <span value="">{{filtroMovCtrl.filtroMov.categoria}}</span>
+                                </select>
+                            </span>
                         </div>
                     </div>
 
@@ -55,15 +57,17 @@
                         <div class="controls">
                             <span ng-hide="!!filtroMovCtrl.editMovCtr">
                                 {{ filtroMovCtrl.filtroMov.concepto | byDefault }}</span>
-                            <input  ng-show="!!filtroMovCtrl.editMovCtr"
-                                    type="text" value="{{filtroMovCtrl.filtroMov.concepto}}"
-                                    ng-model="filtroMovCtrl.filtroMov.concepto"/>
+                            <textarea ng-show="!!filtroMovCtrl.editMovCtr"
+                                      placeholder="justificacion del movimiento"
+                                      ng-model="filtroMovCtrl.filtroMov.concepto">
+                                {{filtroMovCtrl.filtroMov.concepto}}
+                            </textarea>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="control-group">
-                        <label class="control-label" for="factura">factura</label>
+                        <label class="control-label" for="factura">id / factura</label>
                         <div class="controls">
                             <span ng-hide="!!filtroMovCtrl.editMovCtr">
                                 {{ filtroMovCtrl.filtroMov.factura }}</span>
@@ -86,7 +90,7 @@
                     </div>
                     
                     <div class="control-group">
-                        <label class="control-label" for="importe">Importe</label>
+                        <label class="control-label" for="importe">importe</label>
                         <div class="controls">
                             <span ng-hide="!!filtroMovCtrl.editMovCtr">
                                 {{ filtroMovCtrl.filtroMov.importe | number:2 | parseAmount:'Euros'}}</span>

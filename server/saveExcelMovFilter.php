@@ -24,7 +24,7 @@ header("Content-Disposition: attachment; filename=$captionTable.xls");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 	<title><?php echo $captionTable; ?></title>
 </head>
 <body>
