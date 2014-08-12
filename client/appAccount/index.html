@@ -18,6 +18,7 @@
     <script src="../vendor/js/angular-1.2.17-cookies.min.js"></script>
     <script src="../vendor/js/jquery-1.10.2.min.js"></script>
     <script src="../vendor/js/jquery.thfloat-0.7.2.min.js"></script>
+    <script src="../vendor/js/Chart.min.js"></script>
     <!--[if lt IE 7]>
         <p class="chromeframe">
            You are using an <strong>outdated</strong> browser.<br/>
@@ -54,6 +55,8 @@
                           <a href="#/nuevo">Nuevo</a></li>
                        <li ng-class="{ 'active': menuCtrl.isActive('/lista') }">
                           <a href="#/lista">Lista</a></li>
+                       <li ng-class="{ 'active': menuCtrl.isActive('/estadistica') }">
+                          <a href="#/estadistica">Estadisticas</a></li>
                        <li class="closeSessionBtn"><a href="" un-login>Cerrar sesion</a></li>
                    </ul>
                    
@@ -94,5 +97,6 @@
     <script src="filterAccount/filterValues.factory.js"></script>
     <script src="directive/clientMsg/message.dir.js"></script>
     <script src="directive/categMov/categoriaMov.dir.js"></script>
+    <script src="estadistica/estadistica.ctrl.js"></script>
 </body>
 </html>

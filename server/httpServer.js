@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////
+//http://localhost:3000/appAccount?ID=00000000000000000029&KEY=javier@gmail.com //
+//////////////////////////////////////////////////////////////////////////////////
+
 var express = require('express'),         //MVC
     bodyParser = require('body-parser'),  //recuperar datos de formulario por POST
     http = require('http'),               //controlar eventos de express
@@ -13,8 +17,36 @@ var app = express(),            //aplicacion MVC basada en express
 
     //PERSISTENCIA DE MOVIMIENTOS
 var maxId = 0,
-    movimientos = [],
-    total = { ingresos: 0, gastos: 0 },
+    movimientos = [
+                                    //TEST: INGRESOS
+        {categoria: "ingresos varios", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-01-09", id: 0, importe: 200, tipo: "ingreso"},
+        {categoria: "ingresos varios", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-02-09", id: 1, importe: 1569, tipo: "ingreso"},
+        {categoria: "ingresos varios", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-03-09", id: 2, importe: 356, tipo: "ingreso"},
+        {categoria: "ingresos varios", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-04-09", id: 3, importe: 500, tipo: "ingreso"},
+        {categoria: "alquileres", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-05-09", id: 4, importe: 900, tipo: "ingreso"},
+        //TEST: JUNIO NO TIENE INGRESOS
+        {categoria: "propiedades", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-07-09", id: 6, importe: 549, tipo: "ingreso"},
+        {categoria: "propiedades", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-08-09", id: 7, importe: 1214, tipo: "ingreso"},
+        {categoria: "salario", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-09-09", id: 8, importe: 622, tipo: "ingreso"},
+        {categoria: "", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-10-09", id: 9, importe: 842, tipo: "ingreso"},
+        {categoria: "salario", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-11-09", id: 10, importe: 1200, tipo: "ingreso"},
+        {categoria: "salario", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-12-09", id: 11, importe: 2500, tipo: "ingreso"},
+
+                        //TEST: GASTOS
+        {categoria: "", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-01-09", id: 12, importe: 2156, tipo: "gasto"},
+        {categoria: "seguro de vida", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-02-09", id: 13, importe: 200, tipo: "gasto"},
+        {categoria: "gadgets", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-03-09", id: 14, importe: 156, tipo: "gasto"},
+        {categoria: "juguetes", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-04-09", id: 15, importe: 154, tipo: "gasto"},
+        {categoria: "ahorro en general", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-05-09", id: 16, importe: 164, tipo: "gasto"},
+        {categoria: "jubilación", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-06-09", id: 17, importe: 149, tipo: "gasto"},
+        {categoria: "juegos", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-07-09", id: 18, importe: 1542, tipo: "gasto"},
+        {categoria: "reparaciones", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-08-09", id: 19, importe: 135, tipo: "gasto"},
+            //TEST: SEPTIEMBRE NO TIENE GASTOS
+        {categoria: "limpieza", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-10-09", id: 21, importe: 566, tipo: "gasto"},
+        {categoria: "internet", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-11-09", id: 54, importe: 444, tipo: "gasto"},
+        {categoria: "alquileres", concepto: "", esGasto: 0, esIngreso: 1, factura: "s/n", fecha: "2014-12-09", id: 110, importe: 2100, tipo: "gasto"}
+    ],
+    total = { ingresos: 10452, gastos: 7766 },
     maestros = {
         categoriasIngresosPersonal  :
             ['ingresos varios', 'propiedades', 'alquileres', 'salario', 'servicios profesionales'],
@@ -23,7 +55,7 @@ var maxId = 0,
         categoriasGastosTransporte :
             ['varios transporte', 'préstamo de vehículos', 'seguro de vehículos', 'impuesto de vehículos', 'combustible', 'transporte publico', 'reparaciones'],
         categoriasGastosSanitario :
-            ['varios sanitario', 'seguro de salud', 'dentista', 'medicinas', '  seguro de vida'],
+            ['varios sanitario', 'seguro de salud', 'dentista', 'medicinas', 'seguro de vida'],
         categoriasGastosDiarios :
             ['gastos personales', 'comestibles', 'ropa', 'limpieza', 'educación', 'comer fuera de casa', 'peluquería', 'mascotas'],
         categoriasGastosEntretenimiento :
@@ -31,6 +63,8 @@ var maxId = 0,
         categoriasGastosAhorro :
             ['ahorro en general', 'fondo de emergencia', 'cuantía de ahorro', 'jubilación', 'inversiones', 'ahorro en educación']
     },
+    //PERSISTENCIA DE ESTADISDISTICAS
+    monthEstatistics = { "Enero": 0, "Febrero": 1, "Marzo": 2, "Abril": 3, "Mayo": 4, "Junio": 5, "Julio": 6, "Agosto": 7, "Septiembre": 8, "Octubre": 9, "Noviembre": 10, "Diciembre": 11 },
     //AUTENTICACION
     usuarios = [],
     sesiones = [];
@@ -97,6 +131,55 @@ app.use( '/api/priv/', function (req, res, next){
 //API REST: recuperar totales
 app.get('/api/priv/total', function (req, res, next) {
     res.json(total);
+});
+
+//API REST: recuperar meses
+app.get('/api/priv/month_estatistics', function (req, res, next) {
+    var months = [];
+    for (var key in monthEstatistics) {
+        months.push(key);
+    }
+    res.json(months);
+});
+
+// {tipo: "ingreso", anyo: 2014}
+//API REST: recuperar datos de movimientos
+app.get('/api/priv/saldoAnual_movimiento', function (req, res, next) {
+    var matchCateg = req.query.tipo, //'ingreso' || 'gasto'
+        matchYear = req.query.anyo, //2014
+        sumMonthCateg = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];// leng = 12
+
+    //calcular el total mensual (de año especificado) de ingresos o gastos
+    for(var i = 0, len = movimientos.length; i < len; i++) {
+        var movimientoTipo = movimientos[i].tipo,
+            movimientoFecha = new Date( movimientos[i].fecha ).getFullYear();
+
+    /*  capturar de cada tipo (ingresos/gastos),
+        que pertenecen al año seleccionado,
+        seleccionar su mes, y añadir su cantidad al stack de meses
+    */
+        if( movimientoTipo == matchCateg && movimientoFecha == matchYear){
+            var matchMonth = new Date( movimientos[i].fecha ).getMonth(); //mes del año [0-11]
+            sumMonthCateg[matchMonth] += movimientos[i].importe;
+        }
+    };
+
+    res.json(sumMonthCateg);
+});
+
+//API REST: recuperar datos de movimientos
+app.get('/api/priv/categAnual_movimiento', function (req, res, next) {
+    var matchCateg = req.query.tipo, //'ingreso' || 'gasto'
+        matchYear = req.query.anyo, //2014
+        sumCateg = [];
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //NECESITO UNA ENDIDAD RELACION QUE ME FAVOREZCA EL REUTILIZAR LOS NOMBRES DE CLAVES PRIMERIAS //
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // dataCategGastos
+    // [{categ: 'string', value: 0}, {}, {}...]
+
+    res.json(sumCateg); //[{categ: 'string', value: 0}, {}, {}...]
 });
 
 //API REST: recuperar movimientos por parametros

@@ -31,6 +31,7 @@
 			// });
 
 			movimientosFactory.getMovimientos().success(function (data){
+				// console.log(data);
 				scope.movimientos = data;
 			});
 

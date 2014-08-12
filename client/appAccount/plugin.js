@@ -42,6 +42,7 @@ var plugin = (function(w){
         }
         return letterCount;
     };
+
     
     return {
         //CREAR UNA COOKIE

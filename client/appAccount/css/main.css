@@ -417,6 +417,83 @@ categoria-movimientos-ingresos label[for="categ"]:after{
     letter-spacing: 1px;
 }
 
+.estadisticaContainer{
+    width: 100%;
+}
+/*.estadisticaContainer div[class^="col"]{
+    box-shadow: inset 1px -1px 1px #A1A1EE, inset -1px 1px 1px #A1A1EE;
+    height: 300px;
+}
+.estadisticaContainer div[class^="col"]:nth-child(odd){
+    box-shadow: inset 1px -1px 1px #A1A1EE, inset 0  1px 1px #A1A1EE;
+}*/
+canvas {
+    box-shadow: inset 1px -1px 10px #A1A1EE, inset 0px 1px 1px #A1A1EE;
+    height: 300px; /*solo al cargar, ChartJS la resetea*/
+}
+.chartStat{
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    height: 30px; /*asi mantenemos diempre la misma altira en los contenerdores de canvas*/
+    margin-bottom: 0;
+}
+.chartStat>li{
+    position: relative;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    width: 100px;
+    text-transform: capitalize;
+}
+.chartStat>li:before{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 10px;
+    top: 5px;
+    border-radius: 3px;
+}
+.chartStat>li[data-categ="ingreso"]:before,
+.chartStat>li[data-categ="saldo"]:before
+{ background-color: rgb(151,187,205); }
+.chartStat>li[data-categ="gasto"]:before{ background-color: rgb(220,220,220); }
+
+.estadisticaContainer .titleStat{
+    font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 5px;
+}
+.estadisticaContainer .titleStat small{
+    color: #31708f;  
+}
+.canvasStat{
+    width: 100%;
+    height: 240px;
+    text-align: center
+}
+.canvasStat>canvas{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #dedef8;
+}
+.upgrade [data-disabled="true"]{
+    visibility: visible;
+    transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -webkit-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out;
+}
+.upgrade:hover [data-disabled="true"]{
+    background-color: #D89898;
+    opacity: 0.5;
+}
+.estadisticaContainer input{
+    text-align: center;
+}
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
@@ -468,6 +545,9 @@ categoria-movimientos-ingresos label[for="categ"]:after{
     .btn-group.btnValorBuscado {
         display: flex;
     }
+    .canvasStat>canvas{
+        width: 100% !important;
+    }
 }
 
 .noWrap:before{
@@ -486,6 +566,20 @@ categoria-movimientos-ingresos label[for="categ"]:after{
     #tableCountList th:first-child{
         color: red;
         padding-top: 20px;
+    }
+    .canvasStat {
+        height: inherit;
+    }
+    /*.canvasStat>canvas{
+        width: 70%;
+    }*/
+}
+@media only screen and (min-width: 992px){
+    .estadisticaContainer{
+        width: 100%;
+    }
+    .container{
+        padding: 0;
     }
 }
 

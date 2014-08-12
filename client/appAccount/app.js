@@ -25,6 +25,11 @@ var httpRoutes = function($routeProvider){
 			controllerAs: 'filtroMovCtrl',
 			templateUrl: 'singleAccount/unicoMovimiento.html'
 		})
+		.when('/estadistica', {
+			controller: 'estadisticaController',
+			controllerAs: 'estadisticaCtrl',
+			templateUrl: 'estadistica/estadistica.html'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
