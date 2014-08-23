@@ -1,8 +1,9 @@
 <div id="registerHouseAccountViews">
 	<p><h2>regístrate de manera gratuita en <span class="noBreak">nuestro servicio</span></h2></p>
 	<p class="errorServer">{{errorServer}}</p>
+	
 	<?php
-	if(	isset($_POST['access']) &&
+	if(	isset($_POST['userMail']) &&
 			User::checkUser($_REQUEST['userName'], $_REQUEST['userMail'], $_REQUEST['userPass'], $_REQUEST['userPass2']) ){
 
 			//Cargar el mismo php que si estuvieramos desconectados de javascript
@@ -10,6 +11,7 @@
 			//ALERTA: aqui se imprimiran el objeto de permisos
 		
 	}else{ ?>
+
 	<form action="<?php $_SERVER['REQUEST_URI'] ?>" name="formRegisterApp"
 				post-access data-access="register"
 				method="POST" novalidate>
@@ -69,6 +71,5 @@
 			<input	type="submit" value="acceder" />
 		</p>
 	</form>
-
 	<?php } ?>
 </div>

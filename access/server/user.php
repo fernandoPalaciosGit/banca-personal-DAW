@@ -14,6 +14,10 @@ class User{
 	    return preg_match("/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i", $email);
 	}
 
+	public static function validarPasswordPatter($pass){
+		return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{1,}$/", $pass);	
+	}
+
 	public static function validarPasswords($pass1, $pass2) {
 	    return $pass1 == $pass2 && strlen($pass1) > 5;
 	}
@@ -25,6 +29,14 @@ class User{
 		else  return false;
 		// throw new Exception("Error algunos datos estan vacios", 1);
 	}
+
+	public static function checkUserLogin($userMail, $userPass){
+		if( self::validarEmail($userMail) && self::validarPasswordPatter($userPass) ) return true;
+		else  return false;
+		// throw new Exception("Error algunos datos estan vacios", 1);
+	}
+
+
 
 	//crear conexion a BD
 	public function connectUserDB($serverHost, $schemaDB, $userDB, $passDB){

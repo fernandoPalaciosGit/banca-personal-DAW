@@ -291,8 +291,8 @@ section[name="verMovimiento"]{
 select[name="optImpport"]{
 position: absolute;
 z-index: 10;
-top: 35px;
-left: 103px;
+top: 36px;
+left: 90px;
 height: 30%;
 border: none;
 outline: none;

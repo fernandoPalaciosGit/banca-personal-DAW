@@ -1,15 +1,16 @@
 <div id="loginHouseAccountViews">
 	<p><h2>accede a tus <span class="noBreak">cuentas de usuario</span></h2></p>
 	<p class="errorServer">{{errorServer}}</p>	
-	<?php
-	if(	isset($_POST['access']) &&
-			User::checkUser($_REQUEST['userName'], $_REQUEST['userMail'], $_REQUEST['userPass'], $_REQUEST['userPass2']) ){
 
+	<?php
+	if(	isset($_POST['userMail']) &&
+			User::checkUser( $_REQUEST['userMail'], $_REQUEST['userPass'] ) ){
 			//Cargar el mismo php que si estuvieramos desconectados de javascript
 			include_once('server/loginRegisterAccess.php');
 			//ALERTA: aqui se imprimiran el objeto de permisos
 		
 	}else{ ?>
+
 	<form action="<?php $_SERVER['REQUEST_URI'] ?>" name="formLoginApp"
 				post-access data-access="login"
 				method="POST" novalidate>
@@ -46,6 +47,5 @@
 		</p>
 
 	</form>
-
 	<?php } ?>
 </div>

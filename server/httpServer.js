@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////
-//http://localhost:3000/appAccount?ID=00000000000000000029&KEY=javier@gmail.com //
+//http://localhost:3000/appAccount?ID=00000000000000000024&KEY=fernando@gmail.com //
 //////////////////////////////////////////////////////////////////////////////////
 
 var express = require('express'),         //MVC
@@ -98,9 +98,6 @@ var shutDown = function (){
 //MIDDLEWARE: parsear encabezados http y parametros de peticion GET
 app.use( bodyParser() );
 
-//MIDDLEWARE, acceso a recursos estaticos desde este servidor
-app.use( express.static('../client') );
-
 //MIDDLEWARE, validacion de sesiones: cualquier ruta de consulta REST, que comienze por /api/priv
 app.use( '/api/priv/', function (req, res, next){
 
@@ -127,6 +124,19 @@ app.use( '/api/priv/', function (req, res, next){
     El middelware debe permitir acceder a la ruta con la extension api/priv/... */
     next();
 });
+
+/*
+app.get("/appAccount", function(req, res) {
+    var permId = req.query.ID,
+        permKey = req.query.KEY;
+
+    console.log(permId, permKey);
+    // res.redirect();
+});
+ */
+
+// MIDDLEWARE, acceso a recursos estaticos desde este servidor
+app.use( express.static('../client') );
 
 //API REST: recuperar totales
 app.get('/api/priv/total', function (req, res, next) {
@@ -314,7 +324,7 @@ app.route('/api/usuarios/')
         })) {
             //si no esta registrado, crear token de sesion y devolverlo al cliente
             usuarios.push(checkUsuario);
-            console.log('Nuevo usuario sesion creada en '+checkUsuario.email);
+            console.log('Nuevo usuario, sesion creada en '+checkUsuario.email);
             var sessionID = newSession(checkUsuario.email);
             res.json(sessionID);
         } else {

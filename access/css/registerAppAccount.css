@@ -447,6 +447,7 @@ left: 49%;
         content: "";
         display: block;
         position: absolute;
+        z-index: 5;
         top: 0;
         width: 100%;
         height: 100%;
@@ -457,6 +458,19 @@ left: 49%;
         -khtml-filter: blur(9px) brightness(2);
         -ms-filter: blur(9px) brightness(2);
         -chrome-filter: blur(9px) brightness(2);
+    }
+    body:after{
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    body>*{
+        z-index: 20;
     }
     header {
         border-bottom: 4px solid rgb(0, 138, 206);
